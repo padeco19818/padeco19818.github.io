@@ -150,4 +150,7 @@ videoheroes.tv, 212747, RESELLER, 064bc410192443d8
 opera.com, pub7275292332480, RESELLER, 55a0c5fd61378de3
 sharethrough.com, 6qlnf8SY, RESELLER, d53b998a7bd4ecd2
 sharethrough.com, 4343, reseller, d53b998a7bd4ecd2
+uis.mobfox.com, 2290, reseller, 5529a3d1f59865be
+kidoz.net, 15568, reseller, a109366414b7335e
+pubmatic.com, 165708, reseller, 5d62403b186f2ace
 
