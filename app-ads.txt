@@ -154,5 +154,6 @@ uis.mobfox.com, 2290, reseller, 5529a3d1f59865be
 kidoz.net, 15568, reseller, a109366414b7335e
 pubmatic.com, 165708, reseller, 5d62403b186f2ace
 vungle.com, 69208e10d16e272621cc6de4, DIRECT, c107d686becd2d77
+facebook.com, 845090381457259, DIRECT, c3e20eee3f780d68
 
 
