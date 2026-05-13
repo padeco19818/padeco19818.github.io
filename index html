@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>padeco19818 | Digital Space</title>
+  <!-- Google Fonts for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafcff;
+      color: #0a1e2f;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2f8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b9c8e8;
+      border-radius: 20px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8aa9cc;
+    }
+
+    /* container utility */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1f3a5f;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover {
+      color: #2a6f8f;
+    }
+    .btn-outline-light {
+      background: transparent;
+      border: 1.5px solid #cbdde9;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      color: #1f3a5f;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-outline-light:hover {
+      border-color: #2a6f8f;
+      background: rgba(42, 111, 143, 0.05);
+    }
+
+    /* hero section */
+    .hero {
+      padding: 4rem 0 5rem 0;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: #eef3fc;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2c6280;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #0b2b44, #1d5a7a, #2c7f9e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #2c475e;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #1f6392;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .btn-primary:hover {
+      background: #0f4a6f;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid #c4d3e3;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: #1f6392;
+      background: #f0f6fe;
+    }
+
+    /* featured section */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2.5rem;
+      color: #0a2b3e;
+    }
+    .cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0 3rem;
+    }
+    .card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.8rem;
+      flex: 1 1 280px;
+      max-width: 320px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.03), 0 5px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid #eef2f8;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 40px rgba(0, 20, 40, 0.08);
+      border-color: #dae9f2;
+    }
+    .card-icon {
+      font-size: 2.5rem;
+      color: #2a6f8f;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .card p {
+      color: #3b5e7a;
+      font-size: 0.95rem;
+    }
+
+    /* about section */
+    .about-stats {
+      background: linear-gradient(145deg, #ffffff, #f8fafd);
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border: 1px solid #e9f0f5;
+    }
+    .stats-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item h4 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #1b4f6e;
+    }
+    .stat-item p {
+      font-weight: 500;
+      color: #517e9b;
+    }
+
+    /* cta section */
+    .cta-section {
+      background: #0a2538;
+      border-radius: 48px;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      margin: 3rem 0;
+      color: white;
+    }
+    .cta-section h2 {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .cta-section p {
+      opacity: 0.85;
+      margin-bottom: 1.8rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-cta {
+      background: #ffbc6e;
+      border: none;
+      color: #1f3a2f;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-cta:hover {
+      background: #ffa843;
+      transform: scale(1.02);
+    }
+
+    /* footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem 0 2rem;
+      border-top: 1px solid #e2ecf5;
+      margin-top: 2rem;
+      color: #4e6e8a;
+      font-size: 0.85rem;
+    }
+    .social-icons {
+      margin-bottom: 1rem;
+    }
+    .social-icons a {
+      color: #5982a3;
+      font-size: 1.2rem;
+      margin: 0 0.6rem;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .social-icons a:hover {
+      color: #1f6392;
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      .navbar {
+        flex-direction: column;
+      }
+      .hero h1 {
+        font-size: 2.3rem;
+      }
+      .section-title {
+        font-size: 1.7rem;
+      }
+      .about-stats {
+        padding: 2rem 1rem;
+      }
+      .stat-item h4 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      .card {
+        max-width: 100%;
+      }
+    }
+
+    /* toast message */
+    .demo-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a2f3f;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- navigation -->
+  <nav class="navbar">
+    <div class="logo">✦ padeco19818</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <button class="btn-outline-light" id="contactNavBtn">Contact</button>
+  </nav>
+
+  <!-- hero -->
+  <section class="hero">
+    <span class="badge"><i class="fas fa-terminal" style="margin-right: 6px;"></i>  padeco19818.github.io</span>
+    <h1>Welcome to my digital space</h1>
+    <p>Exploring code, creativity, and everything in between. Join me on this journey.</p>
+    <div class="btn-group">
+      <button class="btn-primary" id="exploreBtn">Explore work <i class="fas fa-arrow-right"></i></button>
+      <button class="btn-secondary" id="contactBtn">Get in touch</button>
+    </div>
+  </section>
+
+  <!-- featured / what i do -->
+  <div class="section-title">What I do</div>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-code"></i></div>
+      <h3>Web Development</h3>
+      <p>Building responsive, modern websites and web applications with clean code.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+      <h3>UI/UX Design</h3>
+      <p>Crafting intuitive interfaces and delightful user experiences.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+      <h3>GitHub Projects</h3>
+      <p>Open source contributions and personal projects hosted right here.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+      <h3>Tech Writing</h3>
+      <p>Sharing knowledge through tutorials and technical articles.</p>
+    </div>
+  </div>
+
+  <!-- stats & about -->
+  <div class="about-stats">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h2 style="font-size: 1.8rem; font-weight: 600;">Building in public since 2021</h2>
+      <p style="color: #3c6e8c; max-width: 550px; margin: 0.5rem auto 0;">Passionate developer, lifelong learner, and open source enthusiast.</p>
+    </div>
+    <div class="stats-container">
+      <div class="stat-item">
+        <h4 id="projectsCount">20+</h4>
+        <p>GitHub repos</p>
+      </div>
+      <div class="stat-item">
+        <h4 id="commitsCount">500+</h4>
+        <p>contributions</p>
+      </div>
+      <div class="stat-item">
+        <h4 id="starsCount">150+</h4>
+        <p>stars earned</p>
+      </div>
+      <div class="stat-item">
+        <h4>🚀</h4>
+        <p>always learning</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- call to action -->
+  <div class="cta-section">
+    <h2>Let's connect and build something great</h2>
+    <p>Whether it's a project collaboration or just a tech chat — I'd love to hear from you.</p>
+    <button class="btn-cta" id="ctaMainBtn">Say hello <i class="fas fa-paper-plane"></i></button>
+  </div>
+
+  <!-- footer -->
+  <footer>
+    <div class="social-icons">
+      <a href="https://github.com/padeco19818" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
+    </div>
+    <p>© 2025 padeco19818 · Built with <i class="fas fa-heart" style="color: #e25555;"></i> on GitHub Pages</p>
+    <p style="margin-top: 0.5rem;"><i class="fas fa-code-branch"></i>  Open source · Available for collaborations</p>
+  </footer>
+</div>
+
+<!-- toast notification -->
+<div id="demoToast" class="demo-toast">✨ Welcome to my corner of the web!</div>
+
+<script>
+  (function() {
+    // toast system
+    const toast = document.getElementById('demoToast');
+    
+    function showMessage(msg, duration = 2500) {
+      if (!toast) return;
+      toast.textContent = msg || '✨ Thanks for stopping by!';
+      toast.style.opacity = '1';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+      }, duration);
+    }
+
+    // Button interactions
+    const exploreBtn = document.getElementById('exploreBtn');
+    const contactBtn = document.getElementById('contactBtn');
+    const ctaMain = document.getElementById('ctaMainBtn');
+    const contactNav = document.getElementById('contactNavBtn');
+
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', () => {
+        showMessage('📂 Check out my GitHub repos: github.com/padeco19818');
+      });
+    }
+    if (contactBtn) {
+      contactBtn.addEventListener('click', () => {
+        showMessage('📧 Reach me: padeco19818@example.com (or connect on GitHub!)');
+      });
+    }
+    if (ctaMain) {
+      ctaMain.addEventListener('click', () => {
+        showMessage('💬 Let\'s collaborate! Feel free to open an issue or DM.');
+      });
+    }
+    if (contactNav) {
+      contactNav.addEventListener('click', () => {
+        showMessage('📬 Let\'s connect — I\'m just a message away!');
+      });
+    }
+
+    // Animate stats counter with Intersection Observer
+    const projectsEl = document.getElementById('projectsCount');
+    const commitsEl = document.getElementById('commitsCount');
+    const starsEl = document.getElementById('starsCount');
+    
+    function animateNumber(element, targetValue, suffix = '+') {
+      if (!element) return;
+      let current = 0;
+      const steps = 30;
+      const increment = targetValue / steps;
+      let step = 0;
+      const timer = setInterval(() => {
+        step++;
+        if (step >= steps) {
+          element.innerText = targetValue + suffix;
+          clearInterval(timer);
+        } else {
+          let val = Math.floor(increment * step);
+          element.innerText = val + suffix;
+        }
+      }, 20);
+    }
+
+    const statsSection = document.querySelector('.about-stats');
+    if (statsSection && window.IntersectionObserver) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (projectsEl && projectsEl.innerText === '20+') animateNumber(projectsEl, 20, '+');
+            if (commitsEl && commitsEl.innerText === '500+') animateNumber(commitsEl, 500, '+');
+            if (starsEl && starsEl.innerText === '150+') animateNumber(starsEl, 150, '+');
+            observer.unobserve(statsSection);
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(statsSection);
+    } else {
+      // fallback
+      if (projectsEl) projectsEl.innerText = '20+';
+      if (commitsEl) commitsEl.innerText = '500+';
+      if (starsEl) starsEl.innerText = '150+';
+    }
+
+    // Card hover effect
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        const icon = card.querySelector('.card-icon i');
+        if (icon) {
+          icon.style.transform = 'scale(1.08)';
+          icon.style.transition = 'transform 0.2s ease';
+        }
+      });
+      card.addEventListener('mouseleave', () => {
+        const icon = card.querySelector('.card-icon i');
+        if (icon) icon.style.transform = 'scale(1)';
+      });
+    });
+
+    // Update footer year dynamically
+    const footerYear = document.querySelector('footer p:first-of-type');
+    if (footerYear) {
+      const currentYear = new Date().getFullYear();
+      footerYear.innerHTML = footerYear.innerHTML.replace('2025', currentYear);
+    }
+
+    // Show welcome message on load
+    setTimeout(() => {
+      showMessage('👋 Hey there! Welcome to padeco19818\'s site.', 3000);
+    }, 500);
+  })();
+</script>
+</body>
+</html>
