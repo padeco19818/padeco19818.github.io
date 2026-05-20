@@ -84,9 +84,9 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "games.padeco",
+      "package_name": "smart.mathematicsformulabook",
       "sha256_cert_fingerprints": [
-        "12:56:EE:79:97:37:6B:C3:A3:38:C9:7E:A1:B2:39:E1:12:D0:71:6A:26:DA:26:E8:F8:7E:52:7D:F0:9B:DA:EF"
+        "35:E6:3B:DD:98:9C:CF:EF:4B:16:A8:38:50:35:69:D8:A4:80:E9:E3:AE:7D:65:E6:B4:71:4D:2A:3E:B1:3C:2F"
       ]
     }
   }
