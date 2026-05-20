@@ -1,4 +1,4 @@
-[
+ [
   {
     "relation": [
       "delegate_permission/common.handle_all_urls",
@@ -89,5 +89,18 @@
         "35:E6:3B:DD:98:9C:CF:EF:4B:16:A8:38:50:35:69:D8:A4:80:E9:E3:AE:7D:65:E6:B4:71:4D:2A:3E:B1:3C:2F"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "obstetrics.calculators",
+      "sha256_cert_fingerprints": [
+        "A4:C6:FF:4F:76:DA:3C:6D:DF:37:C3:AE:8B:ED:0D:91:C5:A1:DF:3D:B0:4D:5A:F0:4C:8A:FE:EE:4E:5F:3C:B8"
+      ]
+    }
   }
-]
+] 
