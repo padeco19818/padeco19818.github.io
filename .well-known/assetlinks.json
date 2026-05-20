@@ -50,5 +50,18 @@
         "8D:95:4F:2D:8F:61:2C:3B:DF:5A:DD:0E:A2:55:A0:B7:6A:BD:57:0F:02:4E:A8:48:D3:23:09:F9:B3:E6:23:4C"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "periodic.tablesmart",
+      "sha256_cert_fingerprints": [
+        "EC:34:29:53:0C:68:08:C7:29:C1:EB:E4:83:5B:07:6E:9C:92:03:41:3D:21:BC:4D:76:37:F3:55:99:2C:DE:4B"
+      ]
+    }
   }
 ]
