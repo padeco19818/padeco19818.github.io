@@ -11,20 +11,6 @@
         "5A:A0:CA:C2:A3:84:08:D5:2F:4D:C6:9F:CA:61:6D:93:D6:F3:CC:A2:D6:99:07:0D:AE:6D:F9:64:12:C1:B0:C7"
       ]
     }
-  }
-[
-  {
-    "relation": [
-      "delegate_permission/common.handle_all_urls",
-      "delegate_permission/common.get_login_creds"
-    ],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "physics.formulabook",
-      "sha256_cert_fingerprints": [
-        "5A:A0:CA:C2:A3:84:08:D5:2F:4D:C6:9F:CA:61:6D:93:D6:F3:CC:A2:D6:99:07:0D:AE:6D:F9:64:12:C1:B0:C7"
-      ]
-    }
   },
   {
     "relation": [
