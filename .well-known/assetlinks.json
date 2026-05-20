@@ -37,5 +37,18 @@
         "A0:F1:C1:26:00:0B:16:C6:45:C1:B3:05:53:52:2C:7C:CA:EC:4F:A8:01:97:C1:2B:70:57:03:61:BF:AA:05:E9"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "pain.scoreapp",
+      "sha256_cert_fingerprints": [
+        "8D:95:4F:2D:8F:61:2C:3B:DF:5A:DD:0E:A2:55:A0:B7:6A:BD:57:0F:02:4E:A8:48:D3:23:09:F9:B3:E6:23:4C"
+      ]
+    }
   }
 ]
