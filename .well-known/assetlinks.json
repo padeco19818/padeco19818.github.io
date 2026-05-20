@@ -63,5 +63,18 @@
         "EC:34:29:53:0C:68:08:C7:29:C1:EB:E4:83:5B:07:6E:9C:92:03:41:3D:21:BC:4D:76:37:F3:55:99:2C:DE:4B"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "smart.chemistryformulaapp",
+      "sha256_cert_fingerprints": [
+        "C4:E5:79:99:A8:F5:EE:5B:8C:C0:8B:B6:C0:58:B2:F5:1B:DD:DA:D7:F8:F0:1A:AB:C4:4E:48:1F:AF:6F:86:9E"
+      ]
+    }
   }
 ]
