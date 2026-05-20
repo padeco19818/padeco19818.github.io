@@ -76,5 +76,18 @@
         "C4:E5:79:99:A8:F5:EE:5B:8C:C0:8B:B6:C0:58:B2:F5:1B:DD:DA:D7:F8:F0:1A:AB:C4:4E:48:1F:AF:6F:86:9E"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "games.padeco",
+      "sha256_cert_fingerprints": [
+        "12:56:EE:79:97:37:6B:C3:A3:38:C9:7E:A1:B2:39:E1:12:D0:71:6A:26:DA:26:E8:F8:7E:52:7D:F0:9B:DA:EF"
+      ]
+    }
   }
 ]
