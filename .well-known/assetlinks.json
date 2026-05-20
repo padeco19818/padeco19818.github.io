@@ -12,4 +12,31 @@
       ]
     }
   }
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "physics.formulabook",
+      "sha256_cert_fingerprints": [
+        "5A:A0:CA:C2:A3:84:08:D5:2F:4D:C6:9F:CA:61:6D:93:D6:F3:CC:A2:D6:99:07:0D:AE:6D:F9:64:12:C1:B0:C7"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "financial.formulaapp",
+      "sha256_cert_fingerprints": [
+        "63:25:4C:42:F7:CC:08:18:55:11:A4:45:75:65:3F:07:C0:B2:66:CF:A8:53:FA:24:EA:95:AA:DB:9B:E4:AC:52"
+      ]
+    }
+  }
 ]
