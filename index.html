@@ -5,12 +5,13 @@
      crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>padeco19818 | Digital Space</title>
-  <!-- Google Fonts for modern typography -->
+  <title>padeco19818 | Home</title>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 (free icons) -->
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* === RESET & BASE === */
     * {
       margin: 0;
       padding: 0;
@@ -25,7 +26,6 @@
       scroll-behavior: smooth;
     }
 
-    /* custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -40,14 +40,13 @@
       background: #8aa9cc;
     }
 
-    /* container utility */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 2rem;
     }
 
-    /* navigation */
+    /* === NAVIGATION === */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -75,9 +74,14 @@
       font-weight: 500;
       color: #1f3a5f;
       transition: color 0.2s ease;
+      padding-bottom: 4px;
     }
     .nav-links a:hover {
       color: #2a6f8f;
+    }
+    .nav-links a.active {
+      color: #2a6f8f;
+      border-bottom: 2px solid #2a6f8f;
     }
     .btn-outline-light {
       background: transparent;
@@ -88,13 +92,14 @@
       color: #1f3a5f;
       cursor: pointer;
       transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
     }
     .btn-outline-light:hover {
       border-color: #2a6f8f;
       background: rgba(42, 111, 143, 0.05);
     }
 
-    /* hero section */
+    /* === HERO === */
     .hero {
       padding: 4rem 0 5rem 0;
       text-align: center;
@@ -143,6 +148,8 @@
       cursor: pointer;
       transition: all 0.25s;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
     }
     .btn-primary:hover {
       background: #0f4a6f;
@@ -156,13 +163,15 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
     }
     .btn-secondary:hover {
       border-color: #1f6392;
       background: #f0f6fe;
     }
 
-    /* featured section */
+    /* === FEATURED / CARDS === */
     .section-title {
       text-align: center;
       font-size: 2rem;
@@ -206,7 +215,7 @@
       font-size: 0.95rem;
     }
 
-    /* about section */
+    /* === ABOUT / STATS === */
     .about-stats {
       background: linear-gradient(145deg, #ffffff, #f8fafd);
       border-radius: 48px;
@@ -231,7 +240,7 @@
       color: #517e9b;
     }
 
-    /* cta section */
+    /* === CTA === */
     .cta-section {
       background: #0a2538;
       border-radius: 48px;
@@ -261,13 +270,14 @@
       font-size: 1rem;
       cursor: pointer;
       transition: 0.2s;
+      font-family: 'Inter', sans-serif;
     }
     .btn-cta:hover {
       background: #ffa843;
       transform: scale(1.02);
     }
 
-    /* footer */
+    /* === FOOTER === */
     footer {
       text-align: center;
       padding: 2.5rem 0 2rem;
@@ -290,7 +300,26 @@
       color: #1f6392;
     }
 
-    /* responsive */
+    /* === TOAST === */
+    .demo-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a2f3f;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       .container {
         padding: 0 1.5rem;
@@ -321,239 +350,283 @@
         max-width: 100%;
       }
     }
-
-    /* toast message */
-    .demo-toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1a2f3f;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.85rem;
-      z-index: 1000;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <!-- navigation -->
-  <nav class="navbar">
-    <div class="logo">✦ padeco19818</div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Projects</a></li>
-      <li><a href="#">Blog</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
-    <button class="btn-outline-light" id="contactNavBtn">Contact</button>
-  </nav>
+  <!-- Nav placeholder (loaded from nav.html) -->
+  <div id="nav-placeholder"></div>
 
-  <!-- hero -->
-  <section class="hero">
-    <span class="badge"><i class="fas fa-terminal" style="margin-right: 6px;"></i>  padeco19818.github.io</span>
-    <h1>Welcome to my digital space</h1>
-    <p>Exploring code, creativity, and everything in between. Join me on this journey.</p>
-    <div class="btn-group">
-      <button class="btn-primary" id="exploreBtn">Explore work <i class="fas fa-arrow-right"></i></button>
-      <button class="btn-secondary" id="contactBtn">Get in touch</button>
-    </div>
-  </section>
+  <div class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <span class="badge"><i class="fas fa-terminal" style="margin-right: 6px;"></i>  padeco19818.github.io</span>
+      <h1>Welcome to my digital space</h1>
+      <p>Exploring code, creativity, and everything in between. Join me on this journey.</p>
+      <div class="btn-group">
+        <button class="btn-primary" id="exploreBtn">Explore work <i class="fas fa-arrow-right"></i></button>
+        <button class="btn-secondary" id="contactBtn">Get in touch</button>
+      </div>
+    </section>
 
-  <!-- featured / what i do -->
-  <div class="section-title">What I do</div>
-  <div class="cards-grid">
-    <div class="card">
-      <div class="card-icon"><i class="fas fa-code"></i></div>
-      <h3>Web Development</h3>
-      <p>Building responsive, modern websites and web applications with clean code.</p>
+    <!-- Featured / What I do -->
+    <div class="section-title">What I do</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-code"></i></div>
+        <h3>Web Development</h3>
+        <p>Building responsive, modern websites and web applications with clean code.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+        <h3>UI/UX Design</h3>
+        <p>Crafting intuitive interfaces and delightful user experiences.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <h3>GitHub Projects</h3>
+        <p>Open source contributions and personal projects hosted right here.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Tech Writing</h3>
+        <p>Sharing knowledge through tutorials and technical articles.</p>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
-      <h3>UI/UX Design</h3>
-      <p>Crafting intuitive interfaces and delightful user experiences.</p>
+
+    <!-- Stats / About -->
+    <div class="about-stats">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.8rem; font-weight: 600;">Building in public since 2021</h2>
+        <p style="color: #3c6e8c; max-width: 550px; margin: 0.5rem auto 0;">Passionate developer, lifelong learner, and open source enthusiast.</p>
+      </div>
+      <div class="stats-container">
+        <div class="stat-item">
+          <h4 id="projectsCount">20+</h4>
+          <p>GitHub repos</p>
+        </div>
+        <div class="stat-item">
+          <h4 id="commitsCount">500+</h4>
+          <p>contributions</p>
+        </div>
+        <div class="stat-item">
+          <h4 id="starsCount">150+</h4>
+          <p>stars earned</p>
+        </div>
+        <div class="stat-item">
+          <h4>🚀</h4>
+          <p>always learning</p>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-      <h3>GitHub Projects</h3>
-      <p>Open source contributions and personal projects hosted right here.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-      <h3>Tech Writing</h3>
-      <p>Sharing knowledge through tutorials and technical articles.</p>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>Let's connect and build something great</h2>
+      <p>Whether it's a project collaboration or just a tech chat — I'd love to hear from you.</p>
+      <button class="btn-cta" id="ctaMainBtn">Say hello <i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 
-  <!-- stats & about -->
-  <div class="about-stats">
-    <div style="text-align: center; margin-bottom: 2rem;">
-      <h2 style="font-size: 1.8rem; font-weight: 600;">Building in public since 2021</h2>
-      <p style="color: #3c6e8c; max-width: 550px; margin: 0.5rem auto 0;">Passionate developer, lifelong learner, and open source enthusiast.</p>
-    </div>
-    <div class="stats-container">
-      <div class="stat-item">
-        <h4 id="projectsCount">20+</h4>
-        <p>GitHub repos</p>
-      </div>
-      <div class="stat-item">
-        <h4 id="commitsCount">500+</h4>
-        <p>contributions</p>
-      </div>
-      <div class="stat-item">
-        <h4 id="starsCount">150+</h4>
-        <p>stars earned</p>
-      </div>
-      <div class="stat-item">
-        <h4>🚀</h4>
-        <p>always learning</p>
-      </div>
-    </div>
-  </div>
+  <!-- Footer placeholder (loaded from footer.html) -->
+  <div id="footer-placeholder"></div>
 
-  <!-- call to action -->
-  <div class="cta-section">
-    <h2>Let's connect and build something great</h2>
-    <p>Whether it's a project collaboration or just a tech chat — I'd love to hear from you.</p>
-    <button class="btn-cta" id="ctaMainBtn">Say hello <i class="fas fa-paper-plane"></i></button>
-  </div>
+  <!-- Toast -->
+  <div id="demoToast" class="demo-toast">✨ Welcome to my corner of the web!</div>
 
-  <!-- footer -->
-  <footer>
-    <div class="social-icons">
-      <a href="https://github.com/padeco19818" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="#" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
-    </div>
-    <p>© 2025 padeco19818 · Built with <i class="fas fa-heart" style="color: #e25555;"></i> on GitHub Pages</p>
-    <p style="margin-top: 0.5rem;"><i class="fas fa-code-branch"></i>  Open source · Available for collaborations</p>
-  </footer>
-</div>
-
-<!-- toast notification -->
-<div id="demoToast" class="demo-toast">✨ Welcome to my corner of the web!</div>
-
-<script>
-  (function() {
-    // toast system
-    const toast = document.getElementById('demoToast');
-    
-    function showMessage(msg, duration = 2500) {
-      if (!toast) return;
-      toast.textContent = msg || '✨ Thanks for stopping by!';
-      toast.style.opacity = '1';
-      setTimeout(() => {
-        toast.style.opacity = '0';
-      }, duration);
-    }
-
-    // Button interactions
-    const exploreBtn = document.getElementById('exploreBtn');
-    const contactBtn = document.getElementById('contactBtn');
-    const ctaMain = document.getElementById('ctaMainBtn');
-    const contactNav = document.getElementById('contactNavBtn');
-
-    if (exploreBtn) {
-      exploreBtn.addEventListener('click', () => {
-        showMessage('📂 Check out my GitHub repos: github.com/padeco19818');
-      });
-    }
-    if (contactBtn) {
-      contactBtn.addEventListener('click', () => {
-        showMessage('📧 Reach me: padeco19818@example.com (or connect on GitHub!)');
-      });
-    }
-    if (ctaMain) {
-      ctaMain.addEventListener('click', () => {
-        showMessage('💬 Let\'s collaborate! Feel free to open an issue or DM.');
-      });
-    }
-    if (contactNav) {
-      contactNav.addEventListener('click', () => {
-        showMessage('📬 Let\'s connect — I\'m just a message away!');
-      });
-    }
-
-    // Animate stats counter with Intersection Observer
-    const projectsEl = document.getElementById('projectsCount');
-    const commitsEl = document.getElementById('commitsCount');
-    const starsEl = document.getElementById('starsCount');
-    
-    function animateNumber(element, targetValue, suffix = '+') {
-      if (!element) return;
-      let current = 0;
-      const steps = 30;
-      const increment = targetValue / steps;
-      let step = 0;
-      const timer = setInterval(() => {
-        step++;
-        if (step >= steps) {
-          element.innerText = targetValue + suffix;
-          clearInterval(timer);
-        } else {
-          let val = Math.floor(increment * step);
-          element.innerText = val + suffix;
+  <script>
+    (function() {
+      // === SHARED COMPONENT LOADER ===
+      async function loadComponent(elementId, filePath) {
+        try {
+          const response = await fetch(filePath);
+          if (!response.ok) throw new Error('Failed to load ' + filePath);
+          const html = await response.text();
+          document.getElementById(elementId).innerHTML = html;
+          // After nav loads, highlight active link
+          if (elementId === 'nav-placeholder') {
+            highlightActiveNav();
+          }
+        } catch (err) {
+          console.warn('Could not load ' + filePath + ' — using inline fallback');
+          if (elementId === 'nav-placeholder') {
+            document.getElementById(elementId).innerHTML = getInlineNav();
+          } else if (elementId === 'footer-placeholder') {
+            document.getElementById(elementId).innerHTML = getInlineFooter();
+          }
+          highlightActiveNav();
         }
-      }, 20);
-    }
+      }
 
-    const statsSection = document.querySelector('.about-stats');
-    if (statsSection && window.IntersectionObserver) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            if (projectsEl && projectsEl.innerText === '20+') animateNumber(projectsEl, 20, '+');
-            if (commitsEl && commitsEl.innerText === '500+') animateNumber(commitsEl, 500, '+');
-            if (starsEl && starsEl.innerText === '150+') animateNumber(starsEl, 150, '+');
-            observer.unobserve(statsSection);
+      // Inline fallback nav (works without nav.html file)
+      function getInlineNav() {
+        return `
+          <div class="container">
+            <nav class="navbar">
+              <div class="logo">✦ padeco19818</div>
+              <ul class="nav-links">
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="projects.html" id="nav-projects">Projects</a></li>
+                <li><a href="blog.html" id="nav-blog">Blog</a></li>
+                <li><a href="about.html" id="nav-about">About</a></li>
+              </ul>
+              <button class="btn-outline-light" id="contactNavBtn">Contact</button>
+            </nav>
+          </div>
+        `;
+      }
+
+      // Inline fallback footer
+      function getInlineFooter() {
+        return `
+          <div class="container">
+            <footer>
+              <div class="social-icons">
+                <a href="https://github.com/padeco19818" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
+              </div>
+              <p>© <span id="year">2025</span> padeco19818 · Built with <i class="fas fa-heart" style="color: #e25555;"></i> on GitHub Pages</p>
+              <p style="margin-top: 0.5rem;"><i class="fas fa-code-branch"></i>  Open source · Available for collaborations</p>
+            </footer>
+          </div>
+        `;
+      }
+
+      // Highlight current page in nav
+      function highlightActiveNav() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === currentPage) {
+            link.classList.add('active');
           }
         });
-      }, { threshold: 0.3 });
-      observer.observe(statsSection);
-    } else {
-      // fallback
-      if (projectsEl) projectsEl.innerText = '20+';
-      if (commitsEl) commitsEl.innerText = '500+';
-      if (starsEl) starsEl.innerText = '150+';
-    }
+      }
 
-    // Card hover effect
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        const icon = card.querySelector('.card-icon i');
-        if (icon) {
-          icon.style.transform = 'scale(1.08)';
-          icon.style.transition = 'transform 0.2s ease';
+      // === TOAST SYSTEM ===
+      const toast = document.getElementById('demoToast');
+
+      function showMessage(msg, duration = 2500) {
+        if (!toast) return;
+        toast.textContent = msg || '✨ Thanks for stopping by!';
+        toast.style.opacity = '1';
+        setTimeout(() => {
+          toast.style.opacity = '0';
+        }, duration);
+      }
+
+      // === BUTTON BINDING (with retry for dynamic nav) ===
+      function bindButtons() {
+        const exploreBtn = document.getElementById('exploreBtn');
+        const contactBtn = document.getElementById('contactBtn');
+        const ctaMain = document.getElementById('ctaMainBtn');
+        const contactNav = document.getElementById('contactNavBtn');
+
+        if (exploreBtn) {
+          exploreBtn.addEventListener('click', () => {
+            showMessage('📂 Check out my GitHub repos: github.com/padeco19818');
+          });
         }
-      });
-      card.addEventListener('mouseleave', () => {
-        const icon = card.querySelector('.card-icon i');
-        if (icon) icon.style.transform = 'scale(1)';
-      });
-    });
+        if (contactBtn) {
+          contactBtn.addEventListener('click', () => {
+            showMessage('📧 Reach me: padeco19818@example.com (or connect on GitHub!)');
+          });
+        }
+        if (ctaMain) {
+          ctaMain.addEventListener('click', () => {
+            showMessage('💬 Let\'s collaborate! Feel free to open an issue or DM.');
+          });
+        }
+        if (contactNav) {
+          contactNav.addEventListener('click', () => {
+            showMessage('📬 Let\'s connect — I\'m just a message away!');
+          });
+        }
+      }
 
-    // Update footer year dynamically
-    const footerYear = document.querySelector('footer p:first-of-type');
-    if (footerYear) {
-      const currentYear = new Date().getFullYear();
-      footerYear.innerHTML = footerYear.innerHTML.replace('2025', currentYear);
-    }
+      // === STATS COUNTER ANIMATION ===
+      function animateNumber(element, targetValue, suffix = '+') {
+        if (!element) return;
+        let current = 0;
+        const steps = 30;
+        const increment = targetValue / steps;
+        let step = 0;
+        const timer = setInterval(() => {
+          step++;
+          if (step >= steps) {
+            element.innerText = targetValue + suffix;
+            clearInterval(timer);
+          } else {
+            let val = Math.floor(increment * step);
+            element.innerText = val + suffix;
+          }
+        }, 20);
+      }
 
-    // Show welcome message on load
-    setTimeout(() => {
-      showMessage('👋 Hey there! Welcome to padeco19818\'s site.', 3000);
-    }, 500);
-  })();
-</script>
+      // === INIT ===
+      document.addEventListener('DOMContentLoaded', () => {
+        // Load shared components
+        loadComponent('nav-placeholder', 'nav.html');
+        loadComponent('footer-placeholder', 'footer.html');
+
+        // Bind buttons after a short delay to wait for dynamic nav
+        setTimeout(bindButtons, 300);
+
+        // Stats observer
+        const projectsEl = document.getElementById('projectsCount');
+        const commitsEl = document.getElementById('commitsCount');
+        const starsEl = document.getElementById('starsCount');
+        const statsSection = document.querySelector('.about-stats');
+
+        if (statsSection && window.IntersectionObserver) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                if (projectsEl && projectsEl.innerText === '20+') animateNumber(projectsEl, 20, '+');
+                if (commitsEl && commitsEl.innerText === '500+') animateNumber(commitsEl, 500, '+');
+                if (starsEl && starsEl.innerText === '150+') animateNumber(starsEl, 150, '+');
+                observer.unobserve(statsSection);
+              }
+            });
+          }, { threshold: 0.3 });
+          observer.observe(statsSection);
+        } else {
+          if (projectsEl) projectsEl.innerText = '20+';
+          if (commitsEl) commitsEl.innerText = '500+';
+          if (starsEl) starsEl.innerText = '150+';
+        }
+
+        // Card icon hover effect
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+          card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.card-icon i');
+            if (icon) {
+              icon.style.transform = 'scale(1.08)';
+              icon.style.transition = 'transform 0.2s ease';
+            }
+          });
+          card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.card-icon i');
+            if (icon) icon.style.transform = 'scale(1)';
+          });
+        });
+
+        // Update footer year dynamically
+        const yearSpan = document.getElementById('year');
+        if (yearSpan) {
+          yearSpan.textContent = new Date().getFullYear();
+        }
+
+        // Welcome message on load
+        setTimeout(() => {
+          showMessage('👋 Hey there! Welcome to padeco19818\'s site.', 3000);
+        }, 500);
+      });
+    })();
+  </script>
 </body>
 </html>
