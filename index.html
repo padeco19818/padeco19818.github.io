@@ -14,7 +14,7 @@
 
     /* navigation */
     .nav-holder { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; flex-wrap:wrap; gap:1rem; }
-    .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; background:linear-gradient(135deg,#1e3c72,#2a5298); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; font-style:italic !important; color:#2e7d32 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; }
     .nav-links { display:flex; gap:2rem; list-style:none; }
     .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; padding-bottom:4px; cursor:pointer; }
     .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
@@ -23,12 +23,18 @@
     .page { display:none; }
     .page.active-page { display:block; }
 
-    /* ----- green titles ----- */
+    /* ----- all titles green ----- */
     h1, h2, h3, h4, .section-title,
     .vision-card h3, .blog-card h3, .project-card h3,
     .about-wrap h2, .blog-wrap h2, .projects-wrap h2,
     .articles-section h2, .vision-section h2, .vision-section h3 {
-      color: #2e7d32 !important; /* green */
+      color: #2e7d32 !important;
+    }
+
+    /* ----- PADECO NEWS in italic + green ----- */
+    .padeco-italic {
+      font-style: italic !important;
+      color: #2e7d32 !important;
     }
 
     /* animated hero headline */
@@ -126,7 +132,7 @@
   <div id="page-home" class="page active-page">
     <div class="hero">
       <h1>Stories that matter. Perspectives that count.</h1>
-      <p>Welcome to <strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>.</p>
+      <p>Welcome to <strong class="padeco-italic">PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>.</p>
     </div>
 
     <div class="section-title">What PADECO NEWS covers</div>
@@ -192,7 +198,7 @@
       <h2><i class="fas fa-info-circle" style="color:#2e7d32;margin-right:10px;"></i> About PADECO NEWS</h2>
       <div class="about-flex">
         <div class="about-text">
-          <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
+          <p><strong class="padeco-italic">PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
           <p>Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
           <p>Follow Bush Smith on social media for updates, breaking stories, and behind‑the‑scenes insights.</p>
         </div>
@@ -257,7 +263,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 <strong>PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p>
+    <p>© 2025 <strong class="padeco-italic">PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p>
     <p style="margin-top:0.4rem;">
       <a href="mailto:smithbush42@gmail.com">smithbush42@gmail.com</a> ·
       <a href="https://twitter.com/bush_smith83161" target="_blank">@bush_smith83161</a> ·
@@ -277,11 +283,8 @@
     };
 
     function showPage(pageId) {
-      // hide all pages
       Object.values(pages).forEach(p => p.classList.remove('active-page'));
-      // show selected
       if (pages[pageId]) pages[pageId].classList.add('active-page');
-      // update nav active
       navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.dataset.page === pageId) link.classList.add('active');
@@ -293,12 +296,10 @@
         e.preventDefault();
         const pageId = this.dataset.page;
         showPage(pageId);
-        // push state but don't jump
         history.pushState(null, '', '#' + pageId);
       });
     });
 
-    // on load / hash change
     function handleHash() {
       const hash = location.hash.replace('#', '') || 'home';
       if (pages[hash]) showPage(hash);
