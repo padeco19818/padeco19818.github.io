@@ -23,17 +23,33 @@
     .page { display:none; }
     .page.active-page { display:block; }
 
-    /* hero */
+    /* ----- green titles ----- */
+    h1, h2, h3, h4, .section-title,
+    .vision-card h3, .blog-card h3, .project-card h3,
+    .about-wrap h2, .blog-wrap h2, .projects-wrap h2,
+    .articles-section h2, .vision-section h2, .vision-section h3 {
+      color: #2e7d32 !important; /* green */
+    }
+
+    /* animated hero headline */
+    .hero h1 {
+      animation: fadeSlide 1.2s ease-out;
+    }
+    @keyframes fadeSlide {
+      0% { opacity:0; transform:translateY(20px); }
+      100% { opacity:1; transform:translateY(0); }
+    }
+
     .hero { padding:4rem 0 5rem; text-align:center; }
-    .hero h1 { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:600; color:#0b2b44; max-width:800px; margin:0 auto 1rem; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:600; max-width:800px; margin:0 auto 1rem; }
     .hero p { font-size:1.2rem; color:#2c475e; max-width:600px; margin:0 auto 2rem; }
-    .section-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:600; text-align:center; margin:3rem 0 2rem; color:#0a2b3e; }
+    .section-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:600; text-align:center; margin:3rem 0 2rem; }
 
     /* categories cards */
     .cards-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin:2rem 0 3rem; }
     .card { background:white; border-radius:28px; padding:1.8rem; flex:1 1 260px; max-width:300px; box-shadow:0 15px 35px rgba(0,0,0,0.03); border:1px solid #eef2f8; transition:0.3s; }
     .card:hover { transform:translateY(-6px); }
-    .card h3 { font-size:1.4rem; margin-bottom:0.75rem; }
+    .card h3 { font-size:1.4rem; margin-bottom:0.75rem; color:#2e7d32; }
     .card p { color:#3b5e7a; font-size:0.95rem; }
 
     /* articles */
@@ -46,14 +62,14 @@
     .vision-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
     .vision-grid { display:flex; flex-wrap:wrap; gap:2.5rem; justify-content:center; }
     .vision-card { flex:1 1 280px; max-width:500px; text-align:center; padding:1.5rem; }
-    .vision-card .icon { font-size:2.5rem; color:#2a6f8f; margin-bottom:0.8rem; }
-    .vision-card h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:#0b2b44; margin-bottom:1rem; }
+    .vision-card .icon { font-size:2.5rem; color:#2e7d32; margin-bottom:0.8rem; }
+    .vision-card h3 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:1rem; }
     .vision-card p { color:#3b5e7a; font-size:1.05rem; line-height:1.6; }
     .values-list { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:2rem; }
     .value-item { background:#f8fafd; border-radius:24px; padding:1.5rem; flex:1 1 180px; max-width:220px; text-align:center; border:1px solid #eef2f8; transition:0.2s; }
     .value-item:hover { transform:translateY(-4px); }
     .value-item .value-icon { font-size:2rem; color:#1f6392; margin-bottom:0.6rem; }
-    .value-item h4 { font-size:1.1rem; color:#0a2b3e; margin-bottom:0.4rem; }
+    .value-item h4 { font-size:1.1rem; margin-bottom:0.4rem; color:#2e7d32; }
     .value-item p { font-size:0.85rem; color:#517e9b; }
 
     /* About page */
@@ -72,7 +88,7 @@
     .blog-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
     .blog-card { background:#f8fafd; border-radius:24px; padding:1.8rem; flex:1 1 280px; max-width:340px; border:1px solid #eef2f8; transition:0.3s; }
     .blog-card:hover { transform:translateY(-4px); }
-    .blog-card h3 { font-size:1.3rem; margin-bottom:0.5rem; color:#0b2b44; }
+    .blog-card h3 { font-size:1.3rem; margin-bottom:0.5rem; }
     .blog-card .meta { font-size:0.8rem; color:#6a8ea8; margin-bottom:0.8rem; }
     .blog-card p { color:#3b5e7a; font-size:0.95rem; }
 
@@ -82,7 +98,7 @@
     .project-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
     .project-card { background:#f8fafd; border-radius:24px; padding:1.8rem; flex:1 1 280px; max-width:340px; border:1px solid #eef2f8; transition:0.3s; }
     .project-card:hover { transform:translateY(-4px); }
-    .project-card h3 { font-size:1.3rem; margin-bottom:0.5rem; color:#0b2b44; }
+    .project-card h3 { font-size:1.3rem; margin-bottom:0.5rem; }
     .project-card p { color:#3b5e7a; font-size:0.95rem; }
 
     /* footer */
@@ -115,10 +131,10 @@
 
     <div class="section-title">What PADECO NEWS covers</div>
     <div class="cards-grid">
-      <div class="card"><h3><i class="fas fa-landmark" style="color:#2a6f8f;margin-right:8px;"></i> Politics &amp; Policy</h3><p>Analysis, investigations, and reporting on government.</p></div>
-      <div class="card"><h3><i class="fas fa-microchip" style="color:#2a6f8f;margin-right:8px;"></i> Technology &amp; Society</h3><p>AI ethics, privacy, innovation.</p></div>
-      <div class="card"><h3><i class="fas fa-palette" style="color:#2a6f8f;margin-right:8px;"></i> Culture &amp; Identity</h3><p>Essays on art, media, and social forces.</p></div>
-      <div class="card"><h3><i class="fas fa-search" style="color:#2a6f8f;margin-right:8px;"></i> Investigations</h3><p>Deep dives that hold power accountable.</p></div>
+      <div class="card"><h3><i class="fas fa-landmark" style="color:#2e7d32;margin-right:8px;"></i> Politics &amp; Policy</h3><p>Analysis, investigations, and reporting on government.</p></div>
+      <div class="card"><h3><i class="fas fa-microchip" style="color:#2e7d32;margin-right:8px;"></i> Technology &amp; Society</h3><p>AI ethics, privacy, innovation.</p></div>
+      <div class="card"><h3><i class="fas fa-palette" style="color:#2e7d32;margin-right:8px;"></i> Culture &amp; Identity</h3><p>Essays on art, media, and social forces.</p></div>
+      <div class="card"><h3><i class="fas fa-search" style="color:#2e7d32;margin-right:8px;"></i> Investigations</h3><p>Deep dives that hold power accountable.</p></div>
     </div>
 
     <div class="articles-section">
@@ -173,7 +189,7 @@
   <!-- ===== ABOUT PAGE ===== -->
   <div id="page-about" class="page">
     <div class="about-wrap">
-      <h2><i class="fas fa-info-circle" style="color:#2a6f8f;margin-right:10px;"></i> About PADECO NEWS</h2>
+      <h2><i class="fas fa-info-circle" style="color:#2e7d32;margin-right:10px;"></i> About PADECO NEWS</h2>
       <div class="about-flex">
         <div class="about-text">
           <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
@@ -192,7 +208,7 @@
   <!-- ===== BLOG PAGE ===== -->
   <div id="page-blog" class="page">
     <div class="blog-wrap">
-      <h2><i class="fas fa-newspaper" style="color:#2a6f8f;margin-right:10px;"></i> Blog</h2>
+      <h2><i class="fas fa-newspaper" style="color:#2e7d32;margin-right:10px;"></i> Blog</h2>
       <div class="blog-grid">
         <div class="blog-card">
           <h3>The Digital Divide Explained</h3>
@@ -221,7 +237,7 @@
   <!-- ===== PROJECTS PAGE ===== -->
   <div id="page-projects" class="page">
     <div class="projects-wrap">
-      <h2><i class="fas fa-folder-open" style="color:#2a6f8f;margin-right:10px;"></i> Projects</h2>
+      <h2><i class="fas fa-folder-open" style="color:#2e7d32;margin-right:10px;"></i> Projects</h2>
       <div class="project-grid">
         <div class="project-card">
           <h3>Open Source Newsroom</h3>
