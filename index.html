@@ -1,51 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4865776169330826"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4865776169330826" crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact | PADECO NEWS</title>
+  <title>PADECO NEWS | Independent Journalism by Bush Smith</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    /* ----- reset & base ----- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f8fc;
-      color: #1d2b3e;
-      line-height: 1.6;
-      padding: 2rem 1rem;
+      font-family: 'Inter', sans-serif;
+      background: #fafcff;
+      color: #0a1e2f;
+      line-height: 1.5;
+      scroll-behavior: smooth;
     }
     .container {
-      max-width: 720px;
+      max-width: 1280px;
       margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ----- navigation ----- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1f3a5f;
+      transition: color 0.2s;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #2a6f8f;
+      border-bottom: 2px solid #2a6f8f;
+    }
+
+    /* ----- hero ----- */
+    .hero {
+      padding: 4rem 0 5rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #0b2b44;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #2c475e;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ----- sections ----- */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      margin: 3rem 0 2rem;
+      color: #0a2b3e;
+    }
+
+    .cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0 3rem;
+    }
+    .card {
       background: white;
       border-radius: 28px;
-      padding: 2.5rem 2.2rem;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+      padding: 1.8rem;
+      flex: 1 1 260px;
+      max-width: 300px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+      border: 1px solid #eef2f8;
+      transition: all 0.3s;
     }
-    h1 {
-      font-size: 2rem;
-      font-weight: 650;
-      color: #0b2a45;
-      margin-bottom: 0.2rem;
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 40px rgba(0,20,40,0.08);
+      border-color: #dae9f2;
     }
-    .subhead {
-      font-size: 1rem;
-      color: #3f637f;
-      margin-bottom: 1.8rem;
-      border-bottom: 1px solid #e8eef5;
-      padding-bottom: 1rem;
-    }
-    h2 {
+    .card h3 {
       font-size: 1.4rem;
-      font-weight: 600;
-      margin: 1.8rem 0 0.8rem;
-      color: #0b2a45;
+      margin-bottom: 0.75rem;
     }
-    p {
-      margin-bottom: 0.9rem;
-      color: #264a63;
+    .card p { color: #3b5e7a; font-size: 0.95rem; }
+
+    .articles-section {
+      background: white;
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border: 1px solid #e9f0f5;
+    }
+    .article-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid #eef2f8;
+    }
+    .article-item:last-child { border-bottom: none; }
+    .article-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #0b2b44;
+      flex: 1;
+    }
+    .article-title:hover { color: #1f6392; cursor: default; }
+
+    /* about + contact combined */
+    .about-contact-section {
+      background: white;
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border: 1px solid #e9f0f5;
+    }
+    .two-col {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: center;
+    }
+    .col {
+      flex: 1 1 320px;
+      max-width: 500px;
+    }
+    .col h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #0b2b44;
+      margin-bottom: 1rem;
+    }
+    .col p {
+      color: #3b5e7a;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
     }
     .contact-item {
       display: flex;
@@ -62,19 +190,21 @@
       text-align: center;
       color: #2b6a8f;
     }
-    a {
+    .contact-item a, .social-list a {
       color: #1f6392;
       text-decoration: none;
       font-weight: 500;
     }
-    a:hover { text-decoration: underline; }
-    .social {
+    .contact-item a:hover { text-decoration: underline; }
+
+    .social-list {
       display: flex;
       flex-wrap: wrap;
       gap: 0.8rem;
-      margin: 1rem 0;
+      margin-top: 1rem;
+      list-style: none;
     }
-    .social a {
+    .social-list a {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -83,57 +213,167 @@
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
-      text-decoration: none;
-      color: #1f6392;
+      transition: background 0.2s;
     }
-    .social a:hover { background: #dbe6f2; }
-    hr {
-      border: none;
-      border-top: 1px solid #e2eaf2;
-      margin: 2rem 0;
-    }
-    .footer-note {
-      margin-top: 2rem;
-      font-size: 0.85rem;
-      color: #5d7d99;
+    .social-list a:hover { background: #dbe6f2; text-decoration: none; }
+
+    /* ----- footer ----- */
+    footer {
       text-align: center;
+      padding: 2.5rem 0 2rem;
+      border-top: 1px solid #e2ecf5;
+      margin-top: 2rem;
+      color: #4e6e8a;
+      font-size: 0.85rem;
+    }
+
+    /* ----- responsive ----- */
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+      .navbar { flex-direction: column; }
+      .hero h1 { font-size: 2.3rem; }
+      .section-title { font-size: 1.7rem; }
+      .article-item { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>✦ PADECO NEWS</h1>
-  <div class="subhead">Independent journalism by <strong>Bush Smith</strong></div>
 
-  <h2><i class="fas fa-paper-plane" style="color:#2b6a8f; margin-right:8px;"></i> Contact / Send a tip</h2>
-  <p>Have a story idea, a tip, or feedback? Bush Smith reads every message. Sources are protected and anonymity is respected.</p>
+  <div class="container">
 
-  <div class="contact-item">
-    <i class="fas fa-envelope"></i>
-    <span>Email: <a href="mailto:smithbush42@gmail.com">smithbush42@gmail.com</a></span>
-  </div>
-  <div class="contact-item">
-    <i class="fab fa-twitter"></i>
-    <span>Twitter: <a href="https://twitter.com/bush_smith83161" target="_blank">@bush_smith83161</a></span>
-  </div>
-  <div class="contact-item">
-    <i class="fab fa-facebook"></i>
-    <span>Facebook: <a href="https://facebook.com/BushSmith" target="_blank">Bush Smith</a></span>
-  </div>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+      <div class="logo">✦ PADECO NEWS</div>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
 
-  <div class="social">
-    <a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a>
-    <a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a>
-    <a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> Email</a>
-  </div>
+    <!-- ===== HOME / HERO ===== -->
+    <section id="home">
+      <div class="hero">
+        <h1>Stories that matter. Perspectives that count.</h1>
+        <p>Welcome to <strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>. Covering politics, tech, culture, and investigations.</p>
+      </div>
 
-  <hr />
-  <p style="font-size:0.9rem; color:#3e5d78;">
-    <i class="fas fa-shield-alt" style="color:#2b6a8f;"></i>  For secure communication, email is preferred. All tips handled with discretion.
-  </p>
-  <div class="footer-note">
-    &copy; 2025 <strong>PADECO NEWS</strong> · Bush Smith
+      <!-- categories -->
+      <div class="section-title">What PADECO NEWS covers</div>
+      <div class="cards-grid">
+        <div class="card">
+          <h3><i class="fas fa-landmark" style="color:#2a6f8f; margin-right:8px;"></i> Politics &amp; Policy</h3>
+          <p>Analysis, investigations, and reporting on government, elections, and legislation.</p>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-microchip" style="color:#2a6f8f; margin-right:8px;"></i> Technology &amp; Society</h3>
+          <p>How tech shapes our lives — from AI ethics to privacy and digital rights.</p>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-palette" style="color:#2a6f8f; margin-right:8px;"></i> Culture &amp; Identity</h3>
+          <p>Essays on art, identity, media, and the social forces defining our era.</p>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-search" style="color:#2a6f8f; margin-right:8px;"></i> Investigations</h3>
+          <p>Deep dives, data journalism, and longform reporting that holds power accountable.</p>
+        </div>
+      </div>
+
+      <!-- latest articles -->
+      <div class="articles-section">
+        <h2 style="font-family:'Playfair Display',serif; font-size:1.8rem; text-align:center; margin-bottom:2rem;">Latest from PADECO NEWS</h2>
+        <div class="article-item">
+          <span class="article-title">The Digital Divide: What the New Broadband Bill Means for Rural Communities</span>
+        </div>
+        <div class="article-item">
+          <span class="article-title">AI in the Newsroom — How Algorithms Are Changing Journalism</span>
+        </div>
+        <div class="article-item">
+          <span class="article-title">The Revival of Independent Media — A Global Movement</span>
+        </div>
+        <div class="article-item">
+          <span class="article-title">Tracking the Money — Who Really Funds Dark Money PACs?</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT + CONTACT (combined) ===== -->
+    <div class="about-contact-section" id="about-contact">
+      <div class="two-col">
+
+        <!-- ABOUT COLUMN -->
+        <div class="col" id="about">
+          <h2><i class="fas fa-info-circle" style="color:#2b6a8f; margin-right:8px;"></i> About PADECO NEWS</h2>
+          <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions-oriented reporting.</p>
+          <p>Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
+          <p>Follow Bush Smith on social media for updates, breaking stories, and behind-the-scenes insights.</p>
+          <ul class="social-list">
+            <li><a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a></li>
+            <li><a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a></li>
+            <li><a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+          </ul>
+        </div>
+
+        <!-- CONTACT COLUMN -->
+        <div class="col" id="contact">
+          <h2><i class="fas fa-paper-plane" style="color:#2b6a8f; margin-right:8px;"></i> Contact / Send a tip</h2>
+          <p>Have a story idea, a tip, or feedback? Bush Smith reads every message. Sources are protected and anonymity is respected.</p>
+
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>Email: <a href="mailto:smithbush42@gmail.com">smithbush42@gmail.com</a></span>
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-twitter"></i>
+            <span>Twitter: <a href="https://twitter.com/bush_smith83161" target="_blank">@bush_smith83161</a></span>
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-facebook"></i>
+            <span>Facebook: <a href="https://facebook.com/BushSmith" target="_blank">Bush Smith</a></span>
+          </div>
+
+          <p style="margin-top:1.2rem; font-size:0.9rem; color:#3e5d78;">
+            <i class="fas fa-shield-alt" style="color:#2b6a8f;"></i>  For secure communication, email is preferred. All tips handled with discretion.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <p>© 2025 <strong>PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p>
+      <p style="margin-top:0.4rem;">
+        <a href="mailto:smithbush42@gmail.com" style="color:#5982a3; text-decoration:none;">smithbush42@gmail.com</a>
+        &nbsp;·&nbsp;
+        <a href="https://twitter.com/bush_smith83161" target="_blank" style="color:#5982a3; text-decoration:none;">@bush_smith83161</a>
+        &nbsp;·&nbsp;
+        <a href="https://facebook.com/BushSmith" target="_blank" style="color:#5982a3; text-decoration:none;">Bush Smith</a>
+      </p>
+    </footer>
+
   </div>
-</div>
+  <!-- end container -->
+
+  <!-- tiny script for active nav highlighting -->
+  <script>
+    (function() {
+      const currentHash = window.location.hash || '#home';
+      const links = document.querySelectorAll('.nav-links a');
+      links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentHash) {
+          link.classList.add('active');
+        }
+      });
+      // update active on click
+      links.forEach(link => {
+        link.addEventListener('click', function() {
+          links.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
