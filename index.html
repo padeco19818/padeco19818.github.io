@@ -15,7 +15,7 @@
     /* navigation */
     .nav-holder { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; flex-wrap:wrap; gap:1rem; }
     .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; font-style:italic !important; color:#2e7d32 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; }
-    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
     .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; padding-bottom:4px; cursor:pointer; }
     .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
 
@@ -26,8 +26,9 @@
     /* ----- all titles green ----- */
     h1, h2, h3, h4, .section-title,
     .vision-card h3, .blog-card h3, .project-card h3,
-    .about-wrap h2, .blog-wrap h2, .projects-wrap h2,
-    .articles-section h2, .vision-section h2, .vision-section h3 {
+    .about-wrap h2, .blog-wrap h2, .projects-wrap h2, .history-wrap h2,
+    .articles-section h2, .vision-section h2, .vision-section h3,
+    .writenews-wrap h2 {
       color: #2e7d32 !important;
     }
 
@@ -107,11 +108,34 @@
     .project-card h3 { font-size:1.3rem; margin-bottom:0.5rem; }
     .project-card p { color:#3b5e7a; font-size:0.95rem; }
 
+    /* History page */
+    .history-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
+    .history-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
+    .timeline { position:relative; padding-left:2.5rem; border-left:3px solid #2e7d32; margin:2rem 0 1rem; }
+    .timeline-item { margin-bottom:2.5rem; position:relative; }
+    .timeline-item::before { content:''; position:absolute; left:-2.9rem; top:0.3rem; width:16px; height:16px; background:#2e7d32; border-radius:50%; border:3px solid white; box-shadow:0 0 0 3px #2e7d32; }
+    .timeline-year { font-weight:700; font-size:1.3rem; color:#0b2b44; margin-bottom:0.25rem; }
+    .timeline-content { color:#3b5e7a; font-size:1rem; line-height:1.6; }
+    .timeline-content strong { color:#0a1e2f; }
+
+    /* Write News page */
+    .writenews-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
+    .writenews-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
+    .news-form { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
+    .news-form label { font-weight:600; color:#0b2b44; }
+    .news-form input, .news-form textarea, .news-form select { font-family:'Inter',sans-serif; padding:0.9rem 1.2rem; border:1px solid #dce5ed; border-radius:30px; font-size:1rem; background:#fafcff; transition:0.2s; }
+    .news-form input:focus, .news-form textarea:focus, .news-form select:focus { outline:none; border-color:#2e7d32; box-shadow:0 0 0 3px rgba(46,125,50,0.15); }
+    .news-form textarea { min-height:160px; resize:vertical; border-radius:24px; }
+    .news-form .btn-submit { background:#2e7d32; color:white; border:none; padding:1rem 2rem; border-radius:60px; font-weight:600; font-size:1.1rem; cursor:pointer; transition:0.2s; width:fit-content; align-self:center; }
+    .news-form .btn-submit:hover { background:#1f5c23; transform:scale(1.02); }
+    .news-form .btn-submit:active { transform:scale(0.97); }
+    .success-message { text-align:center; padding:1rem; background:#e8f5e9; border-radius:60px; color:#1f5c23; font-weight:500; display:none; }
+
     /* footer */
     footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; margin-top:2rem; color:#4e6e8a; font-size:0.85rem; }
     footer a { color:#5982a3; text-decoration:none; }
 
-    @media (max-width:768px) { .container { padding:0 1.5rem; } .hero h1 { font-size:2.3rem; } }
+    @media (max-width:768px) { .container { padding:0 1.5rem; } .hero h1 { font-size:2.3rem; } .timeline { padding-left:1.8rem; } .timeline-item::before { left:-2.2rem; width:12px; height:12px; } }
   </style>
 </head>
 <body>
@@ -123,8 +147,10 @@
     <ul class="nav-links">
       <li><a class="active" data-page="home">Home</a></li>
       <li><a data-page="about">About</a></li>
+      <li><a data-page="history">History</a></li>
       <li><a data-page="blog">Blog</a></li>
       <li><a data-page="projects">Projects</a></li>
+      <li><a data-page="writenews">Write News</a></li>
     </ul>
   </div>
 
@@ -211,6 +237,47 @@
     </div>
   </div>
 
+  <!-- ===== HISTORY PAGE ===== -->
+  <div id="page-history" class="page">
+    <div class="history-wrap">
+      <h2><i class="fas fa-timeline" style="color:#2e7d32;margin-right:10px;"></i> Our History</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2018</div>
+          <div class="timeline-content"><strong>Foundation of PADECO NEWS</strong> — Bush Smith started the platform as a small Substack newsletter, focusing on local politics and underreported stories. The first post garnered 200 subscribers in the first week.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-content"><strong>First Investigation</strong> — Broke a story on city hall funding irregularities, leading to a public audit. Readership grew to 5,000 monthly visitors.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-content"><strong>Independent Status</strong> — Moved to a self-hosted website, launched the “Transparency Watch” project. Started accepting reader donations to remain ad-free and independent.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2021</div>
+          <div class="timeline-content"><strong>Expansion</strong> — Added dedicated sections for Technology &amp; Society and Culture &amp; Identity. Hired two freelance contributors. Won the “Emerging Independent Media” award.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2022</div>
+          <div class="timeline-content"><strong>Investigative Series</strong> — Published a 6‑part series on dark money in state elections, cited by three major newspapers. Monthly readership crossed 50,000.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2023</div>
+          <div class="timeline-content"><strong>Community Fund</strong> — Launched the Local News Fund to support hyperlocal reporters in underserved areas. PADECO NEWS became a member of the Independent Media Alliance.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-content"><strong>Open Source Newsroom</strong> — Released a free toolkit for independent journalists. Bush Smith was invited to speak at the Global Journalism Conference.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-content"><strong>Continued growth</strong> — PADECO NEWS now serves over 100,000 monthly readers. The team remains small but mighty, committed to truth, transparency, and independence.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== BLOG PAGE ===== -->
   <div id="page-blog" class="page">
     <div class="blog-wrap">
@@ -261,6 +328,34 @@
     </div>
   </div>
 
+  <!-- ===== WRITE NEWS PAGE ===== -->
+  <div id="page-writenews" class="page">
+    <div class="writenews-wrap">
+      <h2><i class="fas fa-pen-fancy" style="color:#2e7d32;margin-right:10px;"></i> Write a News Story</h2>
+      <form id="newsForm" class="news-form">
+        <label for="newsTitle">Headline</label>
+        <input type="text" id="newsTitle" placeholder="e.g. City Council Votes on New Budget" required />
+
+        <label for="newsCategory">Category</label>
+        <select id="newsCategory">
+          <option value="Politics & Policy">Politics & Policy</option>
+          <option value="Technology & Society">Technology & Society</option>
+          <option value="Culture & Identity">Culture & Identity</option>
+          <option value="Investigations">Investigations</option>
+        </select>
+
+        <label for="newsContent">Story content</label>
+        <textarea id="newsContent" placeholder="Write your full article here..."></textarea>
+
+        <label for="newsAuthor">Author</label>
+        <input type="text" id="newsAuthor" placeholder="Bush Smith" value="Bush Smith" />
+
+        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Publish Story</button>
+        <div id="successMessage" class="success-message">✅ Story published! It now appears on the Home page.</div>
+      </form>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <p>© 2025 <strong class="padeco-italic">PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p>
@@ -274,12 +369,15 @@
 
 <script>
   (function() {
+    // ----- navigation -----
     const navLinks = document.querySelectorAll('.nav-links a');
     const pages = {
       home: document.getElementById('page-home'),
       about: document.getElementById('page-about'),
+      history: document.getElementById('page-history'),
       blog: document.getElementById('page-blog'),
-      projects: document.getElementById('page-projects')
+      projects: document.getElementById('page-projects'),
+      writenews: document.getElementById('page-writenews')
     };
 
     function showPage(pageId) {
@@ -306,6 +404,55 @@
     }
     window.addEventListener('hashchange', handleHash);
     handleHash();
+
+    // ----- Write News: add article to homepage -----
+    const form = document.getElementById('newsForm');
+    const successMsg = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById('newsTitle').value.trim();
+      const category = document.getElementById('newsCategory').value;
+      const content = document.getElementById('newsContent').value.trim();
+      const author = document.getElementById('newsAuthor').value.trim() || 'Bush Smith';
+
+      if (!title || !content) {
+        alert('Please fill in headline and story content.');
+        return;
+      }
+
+      // Create new article item
+      const articlesSection = document.querySelector('.articles-section');
+      const articleList = articlesSection.querySelector('.article-item:last-child');
+      const newArticle = document.createElement('div');
+      newArticle.className = 'article-item';
+      newArticle.innerHTML = `<span class="article-title">${title} <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${category} · by ${author}</span></span>`;
+
+      // Insert after the last article item
+      const parent = articlesSection.querySelector('.article-item:last-child').parentNode;
+      parent.insertBefore(newArticle, articleList.nextSibling);
+
+      // Also add to blog page as a new blog card
+      const blogGrid = document.querySelector('.blog-grid');
+      const newCard = document.createElement('div');
+      newCard.className = 'blog-card';
+      const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+      newCard.innerHTML = `
+        <h3>${title}</h3>
+        <div class="meta">${today} · by ${author} · ${category}</div>
+        <p>${content.substring(0, 120)}${content.length > 120 ? '…' : ''}</p>
+      `;
+      blogGrid.appendChild(newCard);
+
+      // Show success message
+      successMsg.style.display = 'block';
+      setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+
+      // Reset form
+      form.reset();
+      document.getElementById('newsAuthor').value = 'Bush Smith';
+    });
   })();
 </script>
 </body>
