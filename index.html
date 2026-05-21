@@ -100,7 +100,7 @@
       background: rgba(42, 111, 143, 0.05);
     }
 
-    /* === HERO (Journalist Brand) === */
+    /* === HERO === */
     .hero {
       padding: 4rem 0 5rem 0;
       text-align: center;
@@ -170,7 +170,7 @@
       background: #f0f6fe;
     }
 
-    /* === CATEGORIES (replaces old cards) === */
+    /* === CATEGORIES === */
     .section-title {
       text-align: center;
       font-family: 'Playfair Display', serif;
@@ -216,7 +216,7 @@
       font-size: 0.95rem;
     }
 
-    /* === LATEST ARTICLES (new section) === */
+    /* === LATEST ARTICLES === */
     .articles-section {
       background: white;
       border-radius: 48px;
@@ -258,7 +258,78 @@
       color: #2c6280;
     }
 
-    /* === ABOUT / STATS (updated for journalism) === */
+    /* === MISSION / VISION / VALUES (replaces old stats) === */
+    .mission-vision-section {
+      background: linear-gradient(145deg, #ffffff, #f8fafd);
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border: 1px solid #e9f0f5;
+    }
+    .mission-vision-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: center;
+    }
+    .mission-vision-card {
+      flex: 1 1 300px;
+      max-width: 500px;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .mission-vision-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #0b2b44;
+      margin-bottom: 1rem;
+    }
+    .mission-vision-card p {
+      color: #3b5e7a;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+    .mission-vision-card .icon {
+      font-size: 2.5rem;
+      color: #2a6f8f;
+      margin-bottom: 0.8rem;
+    }
+    .values-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .value-item {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      flex: 1 1 180px;
+      max-width: 220px;
+      text-align: center;
+      border: 1px solid #eef2f8;
+      transition: transform 0.2s;
+    }
+    .value-item:hover {
+      transform: translateY(-4px);
+    }
+    .value-item .value-icon {
+      font-size: 2rem;
+      color: #1f6392;
+      margin-bottom: 0.6rem;
+    }
+    .value-item h4 {
+      font-size: 1.1rem;
+      color: #0a2b3e;
+      margin-bottom: 0.4rem;
+    }
+    .value-item p {
+      font-size: 0.85rem;
+      color: #517e9b;
+    }
+
+    /* === ABOUT / STATS === */
     .about-stats {
       background: linear-gradient(145deg, #ffffff, #f8fafd);
       border-radius: 48px;
@@ -429,18 +500,18 @@
   <div id="nav-placeholder"></div>
 
   <div class="container">
-    <!-- Hero (Journalist Brand) -->
+    <!-- Hero -->
     <section class="hero">
       <span class="badge"><i class="fas fa-pen-fancy" style="margin-right: 6px;"></i>  Independent Journalism</span>
       <h1>Stories that matter. Perspectives that count.</h1>
       <p>I'm padeco19818 — journalist covering politics, tech, culture, and investigations. Uncovering truth, one story at a time.</p>
       <div class="btn-group">
         <button class="btn-primary" id="exploreBtn">Latest articles <i class="fas fa-arrow-right"></i></button>
-        <button class="btn-secondary" id="contactBtn">Send a tip</button>
+        <button class="btn-secondary" id="contactBtn"><i class="fas fa-envelope"></i> Send a tip</button>
       </div>
     </section>
 
-    <!-- Categories (replaces old cards) -->
+    <!-- Categories -->
     <div class="section-title">What I cover</div>
     <div class="cards-grid">
       <div class="card" data-category="politics">
@@ -492,7 +563,50 @@
       </div>
     </div>
 
-    <!-- Stats (Updated for Journalism) -->
+    <!-- MISSION, VISION, CORE VALUES (New section) -->
+    <div class="mission-vision-section">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; text-align: center; margin-bottom: 2rem;">Our foundation</h2>
+      <div class="mission-vision-grid">
+        <!-- Vision -->
+        <div class="mission-vision-card">
+          <div class="icon"><i class="fas fa-eye"></i></div>
+          <h3>Vision</h3>
+          <p>Independent journalism for an informed, empowered society. A world where truth is accessible to everyone, power is held accountable, and every voice has a platform.</p>
+        </div>
+        <!-- Mission -->
+        <div class="mission-vision-card">
+          <div class="icon"><i class="fas fa-bullseye"></i></div>
+          <h3>Mission</h3>
+          <p>To produce rigorous, fact‑based reporting on politics, technology, culture, and investigations — with transparency, independence, and deep accountability to the public, not to advertisers or political interests.</p>
+        </div>
+      </div>
+      <!-- Core Values -->
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; text-align: center; margin: 2.5rem 0 1.5rem;">Core values</h3>
+      <div class="values-list">
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-check-circle"></i></div>
+          <h4>Accuracy</h4>
+          <p>Every fact is verified. Every source is protected.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-hand-fist"></i></div>
+          <h4>Independence</h4>
+          <p>No sponsors, no political ties. Only the public interest.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-bolt"></i></div>
+          <h4>Impact</h4>
+          <p>Stories that lead to change, awareness, or justice.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-gem"></i></div>
+          <h4>Transparency</h4>
+          <p>We show our methods, correct our mistakes, and earn trust.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
     <div class="about-stats">
       <div style="text-align: center; margin-bottom: 2rem;">
         <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600;">By the numbers</h2>
@@ -569,7 +683,7 @@
                 <li><a href="about.html" id="nav-about">About</a></li>
                 <li><a href="contact.html" id="nav-contact">Contact</a></li>
               </ul>
-              <button class="btn-outline-light" id="contactNavBtn">Send tip</button>
+              <button class="btn-outline-light" id="contactNavBtn"><i class="fas fa-envelope"></i> Send tip</button>
             </nav>
           </div>
         `;
@@ -583,10 +697,15 @@
                 <a href="https://github.com/padeco19818" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <!-- Contact email in footer -->
+                <a href="mailto:smithbush42@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
                 <a href="#" aria-label="RSS"><i class="fas fa-rss"></i></a>
               </div>
               <p>© <span id="year">2025</span> padeco19818 · Independent journalism · Built with transparency</p>
-              <p style="margin-top: 0.5rem;"><i class="fas fa-shield-alt"></i>  Sources protected · Fact‑checked · Reader‑supported</p>
+              <p style="margin-top: 0.5rem;">
+                <i class="fas fa-shield-alt"></i>  Sources protected · Fact‑checked · Reader‑supported
+                · <a href="mailto:smithbush42@gmail.com" style="color: #5982a3; text-decoration: none;">smithbush42@gmail.com</a>
+              </p>
             </footer>
           </div>
         `;
@@ -621,7 +740,12 @@
         const contactNav = document.getElementById('contactNavBtn');
 
         if (exploreBtn) exploreBtn.addEventListener('click', () => showMessage('📰 Scroll down to see the latest articles or visit /articles'));
-        if (contactBtn) contactBtn.addEventListener('click', () => showMessage('📩 Send tips securely — more info on the Contact page'));
+        
+        // "Send a tip" now opens email directly
+        if (contactBtn) contactBtn.addEventListener('click', () => {
+          window.location.href = 'mailto:smithbush42@gmail.com?subject=Tip%20for%20padeco19818&body=';
+        });
+
         if (subscribeBtn) {
           subscribeBtn.addEventListener('click', () => {
             const input = document.getElementById('newsletterInput');
@@ -634,7 +758,9 @@
             }
           });
         }
-        if (contactNav) contactNav.addEventListener('click', () => showMessage('📬 Have a tip? I take confidentiality seriously.'));
+        if (contactNav) contactNav.addEventListener('click', () => {
+          window.location.href = 'mailto:smithbush42@gmail.com?subject=Tip%20for%20padeco19818&body=';
+        });
       }
 
       // === CATEGORY CLICKS ===
@@ -675,7 +801,7 @@
           bindCards();
         }, 300);
 
-        // Stats
+        // Stats animation
         const articlesEl = document.getElementById('articlesCount');
         const interviewsEl = document.getElementById('interviewsCount');
         const readersEl = document.getElementById('readersCount');
