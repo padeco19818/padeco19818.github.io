@@ -16,14 +16,17 @@
     .nav-holder { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; flex-wrap:wrap; gap:1rem; }
     .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; background:linear-gradient(135deg,#1e3c72,#2a5298); -webkit-background-clip:text; background-clip:text; color:transparent; }
     .nav-links { display:flex; gap:2rem; list-style:none; }
-    .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; padding-bottom:4px; }
-    .nav-links a:hover { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
+    .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; padding-bottom:4px; cursor:pointer; }
+    .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
+
+    /* sections */
+    .page { display:none; }
+    .page.active-page { display:block; }
 
     /* hero */
     .hero { padding:4rem 0 5rem; text-align:center; }
     .hero h1 { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:600; color:#0b2b44; max-width:800px; margin:0 auto 1rem; }
     .hero p { font-size:1.2rem; color:#2c475e; max-width:600px; margin:0 auto 2rem; }
-
     .section-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:600; text-align:center; margin:3rem 0 2rem; color:#0a2b3e; }
 
     /* categories cards */
@@ -53,7 +56,7 @@
     .value-item h4 { font-size:1.1rem; color:#0a2b3e; margin-bottom:0.4rem; }
     .value-item p { font-size:0.85rem; color:#517e9b; }
 
-    /* ABOUT section (placed after values) */
+    /* About page */
     .about-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
     .about-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
     .about-flex { display:flex; flex-wrap:wrap; gap:3rem; justify-content:center; align-items:center; }
@@ -63,6 +66,26 @@
     .about-social a { display:inline-flex; align-items:center; gap:8px; background:#eef3f9; padding:0.6rem 1.4rem; border-radius:60px; text-decoration:none; color:#1f6392; font-weight:500; transition:0.2s; }
     .about-social a:hover { background:#dbe6f2; }
 
+    /* Blog page */
+    .blog-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
+    .blog-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
+    .blog-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
+    .blog-card { background:#f8fafd; border-radius:24px; padding:1.8rem; flex:1 1 280px; max-width:340px; border:1px solid #eef2f8; transition:0.3s; }
+    .blog-card:hover { transform:translateY(-4px); }
+    .blog-card h3 { font-size:1.3rem; margin-bottom:0.5rem; color:#0b2b44; }
+    .blog-card .meta { font-size:0.8rem; color:#6a8ea8; margin-bottom:0.8rem; }
+    .blog-card p { color:#3b5e7a; font-size:0.95rem; }
+
+    /* Projects page */
+    .projects-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
+    .projects-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
+    .project-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
+    .project-card { background:#f8fafd; border-radius:24px; padding:1.8rem; flex:1 1 280px; max-width:340px; border:1px solid #eef2f8; transition:0.3s; }
+    .project-card:hover { transform:translateY(-4px); }
+    .project-card h3 { font-size:1.3rem; margin-bottom:0.5rem; color:#0b2b44; }
+    .project-card p { color:#3b5e7a; font-size:0.95rem; }
+
+    /* footer */
     footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; margin-top:2rem; color:#4e6e8a; font-size:0.85rem; }
     footer a { color:#5982a3; text-decoration:none; }
 
@@ -76,13 +99,15 @@
   <div class="nav-holder">
     <div class="logo">✦ PADECO NEWS</div>
     <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a class="active" data-page="home">Home</a></li>
+      <li><a data-page="about">About</a></li>
+      <li><a data-page="blog">Blog</a></li>
+      <li><a data-page="projects">Projects</a></li>
     </ul>
   </div>
 
-  <!-- HERO + CATEGORIES + ARTICLES + VISION/MISSION/VALUES -->
-  <section id="home">
+  <!-- ===== HOME PAGE ===== -->
+  <div id="page-home" class="page active-page">
     <div class="hero">
       <h1>Stories that matter. Perspectives that count.</h1>
       <p>Welcome to <strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>.</p>
@@ -104,7 +129,7 @@
       <div class="article-item"><span class="article-title">Tracking the Money — Who Really Funds Dark Money PACs?</span></div>
     </div>
 
-    <!-- VISION, MISSION, CORE VALUES -->
+    <!-- Vision, Mission, Core Values -->
     <div class="vision-section">
       <h2 style="font-family:'Playfair Display',serif;font-size:2rem;text-align:center;margin-bottom:2rem;">Our foundation</h2>
       <div class="vision-grid">
@@ -143,24 +168,76 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ABOUT SECTION -->
-  <section id="about" class="about-wrap">
-    <h2><i class="fas fa-info-circle" style="color:#2a6f8f;margin-right:10px;"></i> About PADECO NEWS</h2>
-    <div class="about-flex">
-      <div class="about-text">
-        <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
-        <p>Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
-        <p>Follow Bush Smith on social media for updates, breaking stories, and behind‑the‑scenes insights.</p>
-      </div>
-      <div class="about-social">
-        <a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a>
-        <a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a>
-        <a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a>
+  <!-- ===== ABOUT PAGE ===== -->
+  <div id="page-about" class="page">
+    <div class="about-wrap">
+      <h2><i class="fas fa-info-circle" style="color:#2a6f8f;margin-right:10px;"></i> About PADECO NEWS</h2>
+      <div class="about-flex">
+        <div class="about-text">
+          <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
+          <p>Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
+          <p>Follow Bush Smith on social media for updates, breaking stories, and behind‑the‑scenes insights.</p>
+        </div>
+        <div class="about-social">
+          <a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a>
+          <a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a>
+          <a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- ===== BLOG PAGE ===== -->
+  <div id="page-blog" class="page">
+    <div class="blog-wrap">
+      <h2><i class="fas fa-newspaper" style="color:#2a6f8f;margin-right:10px;"></i> Blog</h2>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <h3>The Digital Divide Explained</h3>
+          <div class="meta">April 10, 2025 · 5 min read</div>
+          <p>How the new broadband bill could reshape internet access in rural America and close the connectivity gap.</p>
+        </div>
+        <div class="blog-card">
+          <h3>AI in Journalism</h3>
+          <div class="meta">March 28, 2025 · 7 min read</div>
+          <p>Algorithms are changing newsrooms. A deep look at benefits, risks, and what independent media should watch.</p>
+        </div>
+        <div class="blog-card">
+          <h3>Independent Media Rising</h3>
+          <div class="meta">March 15, 2025 · 6 min read</div>
+          <p>Why more journalists are leaving corporate outlets to start independent platforms — and what it means for democracy.</p>
+        </div>
+        <div class="blog-card">
+          <h3>Tracking Dark Money</h3>
+          <div class="meta">March 2, 2025 · 9 min read</div>
+          <p>A investigative series following the flow of untraceable political donations and their impact on elections.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROJECTS PAGE ===== -->
+  <div id="page-projects" class="page">
+    <div class="projects-wrap">
+      <h2><i class="fas fa-folder-open" style="color:#2a6f8f;margin-right:10px;"></i> Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>Open Source Newsroom</h3>
+          <p>A toolkit for independent journalists to publish, fact-check, and distribute news without corporate infrastructure.</p>
+        </div>
+        <div class="project-card">
+          <h3>Transparency Watch</h3>
+          <p>Database tracking political donations, dark money flows, and lobbying influence — updated monthly.</p>
+        </div>
+        <div class="project-card">
+          <h3>Local News Fund</h3>
+          <p>Grant program supporting hyperlocal independent reporters covering under-served communities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -173,24 +250,46 @@
   </footer>
 </div>
 
-<!-- smooth scroll & active nav -->
 <script>
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function(e){
-      document.querySelectorAll('.nav-links a').forEach(l => l.style.borderBottom='none');
-      this.style.borderBottom='2px solid #2a6f8f';
+  (function() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const pages = {
+      home: document.getElementById('page-home'),
+      about: document.getElementById('page-about'),
+      blog: document.getElementById('page-blog'),
+      projects: document.getElementById('page-projects')
+    };
+
+    function showPage(pageId) {
+      // hide all pages
+      Object.values(pages).forEach(p => p.classList.remove('active-page'));
+      // show selected
+      if (pages[pageId]) pages[pageId].classList.add('active-page');
+      // update nav active
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.page === pageId) link.classList.add('active');
+      });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.dataset.page;
+        showPage(pageId);
+        // push state but don't jump
+        history.pushState(null, '', '#' + pageId);
+      });
     });
-  });
-  // active on load based on hash
-  window.addEventListener('hashchange', setActive);
-  window.addEventListener('load', setActive);
-  function setActive(){
-    const hash = location.hash || '#home';
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.style.borderBottom = 'none';
-      if(link.getAttribute('href') === hash) link.style.borderBottom = '2px solid #2a6f8f';
-    });
-  }
+
+    // on load / hash change
+    function handleHash() {
+      const hash = location.hash.replace('#', '') || 'home';
+      if (pages[hash]) showPage(hash);
+    }
+    window.addEventListener('hashchange', handleHash);
+    handleHash();
+  })();
 </script>
 </body>
 </html>
