@@ -502,6 +502,38 @@
       });
     });
   })();
+</script><script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Define which pages to make editable (by page ID)
+    const editablePageIds = ['page-home', 'page-about', 'page-blog', 'page-projects'];
+
+    // Select all text containers that should be editable (headings, paragraphs, card texts, etc.)
+    // Adjust the selector if you want more/less elements
+    const editableSelectors = 'h1, h2, h3, h4, p, .article-title, .card p, .blog-card p, .project-card p, .meta, .about-text p, .vision-card p, .value-item p, .section-title, .hero p, .blog-card h3, .project-card h3, .card h3, .value-item h4';
+
+    editablePageIds.forEach(pageId => {
+      const page = document.getElementById(pageId);
+      if (!page) return;
+
+      const elements = page.querySelectorAll(editableSelectors);
+      elements.forEach(el => {
+        // Make element contenteditable
+        el.setAttribute('contenteditable', 'true');
+        el.style.cursor = 'text';
+        el.style.outline = 'none'; // remove focus outline (optional)
+
+        // Load saved content if exists
+        const key = 'editable_' + pageId + '_' + el.className + '_' + el.tagName + '_' + (el.innerText.substring(0, 20));
+        const saved = localStorage.getItem(key);
+        if (saved) el.innerHTML = saved;
+
+        // Save on blur
+        el.addEventListener('blur', function () {
+          localStorage.setItem(key, this.innerHTML);
+        });
+      });
+    });
+  });
 </script>
 </body>
 </html>
