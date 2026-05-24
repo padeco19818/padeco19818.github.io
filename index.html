@@ -535,5 +535,42 @@
     });
   });
 </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const editablePageIds = ['page-home', 'page-about', 'page-blog', 'page-projects'];
+    const editableSelectors = 'h1, h2, h3, h4, p, .article-title, .card p, .blog-card p, .project-card p, .meta, .about-text p, .vision-card p, .value-item p, .section-title, .hero p, .blog-card h3, .project-card h3, .card h3, .value-item h4';
+
+    editablePageIds.forEach(pageId => {
+      const page = document.getElementById(pageId);
+      if (!page) return;
+
+      const elements = page.querySelectorAll(editableSelectors);
+      elements.forEach(el => {
+        el.setAttribute('contenteditable', 'true');
+        el.style.cursor = 'text';
+        el.style.outline = 'none';
+
+        const key = 'editable_' + pageId + '_' + el.className + '_' + el.tagName + '_' + (el.innerText.substring(0, 20));
+        const saved = localStorage.getItem(key);
+        if (saved) el.innerHTML = saved;
+      });
+
+      // Add one save button per page
+      const saveBtn = document.createElement('button');
+      saveBtn.textContent = '💾 Save changes on this page';
+      saveBtn.style.cssText = 'display:block; margin:20px auto; padding:10px 24px; background:#2e7d32; color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer; font-size:1rem;';
+      page.appendChild(saveBtn);
+
+      saveBtn.addEventListener('click', function () {
+        elements.forEach(el => {
+          const key = 'editable_' + pageId + '_' + el.className + '_' + el.tagName + '_' + (el.innerText.substring(0, 20));
+          localStorage.setItem(key, el.innerHTML);
+        });
+        saveBtn.textContent = '✅ Saved!';
+        setTimeout(() => { saveBtn.textContent = '💾 Save changes on this page'; }, 2000);
+      });
+    });
+  });
+</script>
 </body>
 </html>
