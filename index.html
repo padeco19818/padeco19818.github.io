@@ -12,14 +12,12 @@
     body { font-family:'Inter',sans-serif; background:#fafcff; color:#0a1e2f; line-height:1.5; }
     .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
 
-    /* navigation */
     .nav-holder { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; flex-wrap:wrap; gap:1rem; }
-    .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; font-style:italic !important; color:#2e7d32 !important; background:none !important; }
+    .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; font-style:italic !important; color:#2e7d32 !important; }
     .nav-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
     .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; padding-bottom:4px; cursor:pointer; }
     .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
 
-    /* SEARCH BAR STYLES */
     .search-container {
       background: white;
       border-radius: 60px;
@@ -28,30 +26,17 @@
       align-items: center;
       gap: 0.5rem;
       border: 1px solid #e0e8f0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .search-container i { color: #2e7d32; font-size: 1.1rem; }
+    .search-container i { color: #2e7d32; }
     .search-container input { border: none; outline: none; font-size: 0.9rem; padding: 0.5rem 0; width: 220px; font-family: 'Inter', sans-serif; background: transparent; }
-    .search-container input::placeholder { color: #8ba0b5; }
-    .search-container button { background: #2e7d32; border: none; color: white; padding: 0.4rem 1rem; border-radius: 40px; cursor: pointer; font-weight: 500; transition: 0.2s; }
+    .search-container button { background: #2e7d32; border: none; color: white; padding: 0.4rem 1rem; border-radius: 40px; cursor: pointer; font-weight: 500; }
     .search-container button:hover { background: #1f5c23; }
-    @media (max-width: 700px) {
-      .nav-holder { flex-direction: column; text-align: center; }
-      .search-container input { width: 160px; }
-    }
+    @media (max-width: 700px) { .nav-holder { flex-direction: column; text-align: center; } .search-container input { width: 160px; } }
 
-    /* sections */
     .page { display:none; }
     .page.active-page { display:block; }
 
-    /* titles */
-    h1, h2, h3, h4, .section-title,
-    .vision-card h3, .blog-card h3, .project-card h3,
-    .about-wrap h2, .blog-wrap h2, .projects-wrap h2, .history-wrap h2,
-    .articles-section h2, .vision-section h2, .vision-section h3,
-    .writenews-wrap h2 {
-      color: #2e7d32 !important;
-    }
+    h1, h2, h3, h4, .section-title { color: #2e7d32 !important; }
     .padeco-italic { font-style: italic !important; color: #2e7d32 !important; }
 
     .hero { padding:4rem 0 5rem; text-align:center; }
@@ -63,59 +48,87 @@
     .card { background:white; border-radius:28px; padding:1.8rem; flex:1 1 260px; max-width:300px; box-shadow:0 15px 35px rgba(0,0,0,0.03); border:1px solid #eef2f8; transition:0.3s; }
     .card:hover { transform:translateY(-6px); }
     .card h3 { font-size:1.4rem; margin-bottom:0.75rem; color:#2e7d32; }
-    .card p { color:#3b5e7a; font-size:0.95rem; }
 
     .articles-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
-    .article-item { display:flex; align-items:center; gap:1.5rem; padding:1.2rem 0; border-bottom:1px solid #eef2f8; flex-wrap:wrap; }
-    .article-item:last-child { border-bottom:none; }
+    .article-item { display:flex; align-items:center; gap:1.5rem; padding:1.2rem 0; border-bottom:1px solid #eef2f8; flex-wrap:wrap; cursor:pointer; transition:0.2s; }
+    .article-item:hover { background:#f9fbfe; margin:0 -8px; padding-left:8px; padding-right:8px; border-radius:20px; }
     .article-title { font-weight:600; font-size:1.1rem; color:#0b2b44; flex:1; min-width:200px; }
     .article-media { max-width:120px; max-height:80px; border-radius:12px; object-fit:cover; flex-shrink:0; }
 
-    /* Editable style: hand cursor + visual hint */
-    [contenteditable="true"] {
-      cursor: pointer;
-      transition: background 0.1s ease;
-      border-radius: 12px;
-      padding: 0 4px;
-      margin: -2px -4px;
-    }
-    [contenteditable="true"]:hover {
-      background: #f0f7ea;
-      box-shadow: 0 0 0 2px #d4e2ca;
-    }
-    [contenteditable="true"]:focus {
-      cursor: text;
-      background: #fffef7;
-      outline: none;
-      box-shadow: 0 0 0 2px #2e7d32;
-    }
-
-    .no-results { text-align: center; padding: 3rem; color: #6a8ea8; font-style: italic; }
-
-    .vision-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
-    .vision-grid { display:flex; flex-wrap:wrap; gap:2.5rem; justify-content:center; }
-    .vision-card { flex:1 1 280px; max-width:500px; text-align:center; padding:1.5rem; }
-    .vision-card .icon { font-size:2.5rem; color:#2e7d32; margin-bottom:0.8rem; }
-    .vision-card h3 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:1rem; }
-    .values-list { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:2rem; }
-    .value-item { background:#f8fafd; border-radius:24px; padding:1.5rem; flex:1 1 180px; max-width:220px; text-align:center; border:1px solid #eef2f8; }
-    .about-wrap, .blog-wrap, .projects-wrap, .history-wrap, .writenews-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
-    .blog-grid, .project-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
-    .blog-card, .project-card { background:#f8fafd; border-radius:24px; padding:1.8rem; flex:1 1 280px; max-width:340px; border:1px solid #eef2f8; transition:0.2s; }
-    .blog-card:hover { transform:translateY(-4px); }
+    .blog-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
+    .blog-card { background:#f8fafd; border-radius:24px; padding:1.8rem; flex:1 1 280px; max-width:340px; border:1px solid #eef2f8; transition:0.2s; cursor:pointer; }
+    .blog-card:hover { transform:translateY(-4px); background:#f4f9fe; }
     .blog-card .meta { font-size:0.8rem; color:#6a8ea8; margin-bottom:0.8rem; }
     .blog-card .blog-media { width:100%; max-height:180px; object-fit:cover; border-radius:16px; margin-bottom:0.8rem; }
-    .history-editor { max-width:800px; margin:0 auto; }
-    .history-editor textarea { width:100%; min-height:350px; padding:1.2rem; border:1px solid #dce5ed; border-radius:28px; font-family:'Inter',sans-serif; }
-    .history-editor .btn-save { background:#2e7d32; color:white; border:none; padding:0.8rem 2rem; border-radius:60px; cursor:pointer; margin-top:1rem; }
+
+    /* MODAL STYLES for full story editing */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: white;
+      max-width: 800px;
+      width: 90%;
+      max-height: 85vh;
+      border-radius: 32px;
+      padding: 2rem;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-content h2 { margin-bottom: 1rem; }
+    .modal-content input, .modal-content textarea, .modal-content select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      margin: 0.5rem 0 1rem;
+      border: 1px solid #dce5ed;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+    }
+    .modal-content textarea { min-height: 200px; resize: vertical; }
+    .modal-content button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+    .modal-content .delete-btn { background: #c62828; }
+    .modal-content .close-btn { background: #6c757d; }
+    .no-results { text-align: center; padding: 3rem; color: #6a8ea8; font-style: italic; }
+
+    .about-wrap, .blog-wrap, .projects-wrap, .history-wrap, .writenews-wrap, .vision-section {
+      background: white;
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border: 1px solid #e9f0f5;
+    }
+    .about-flex { display:flex; flex-wrap:wrap; gap:3rem; justify-content:center; align-items:center; }
+    .about-text { flex:2 1 320px; }
+    .about-social a { display:inline-flex; align-items:center; gap:8px; background:#eef3f9; padding:0.6rem 1.4rem; border-radius:60px; text-decoration:none; color:#1f6392; margin:0.5rem; }
+    .vision-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
+    .vision-card { text-align:center; padding:1.5rem; max-width:400px; }
+    .values-list { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; }
+    .value-item { background:#f8fafd; border-radius:24px; padding:1.5rem; text-align:center; width:180px; }
+    .history-editor textarea { width:100%; min-height:300px; padding:1rem; border-radius:24px; border:1px solid #dce5ed; }
     .news-form { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
-    .news-form input, .news-form textarea, .news-form select { padding:0.9rem 1.2rem; border:1px solid #dce5ed; border-radius:30px; font-family:'Inter',sans-serif; }
-    .news-form .btn-submit { background:#2e7d32; color:white; border:none; padding:1rem 2rem; border-radius:60px; cursor:pointer; width:fit-content; align-self:center; }
-    .success-message { text-align:center; padding:1rem; background:#e8f5e9; border-radius:60px; color:#1f5c23; display:none; margin-top:1rem; }
-    footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; margin-top:2rem; color:#4e6e8a; }
+    .news-form input, .news-form textarea, .news-form select { padding:0.9rem 1.2rem; border-radius:30px; border:1px solid #dce5ed; }
+    .news-form .btn-submit { background:#2e7d32; color:white; padding:1rem 2rem; border-radius:60px; cursor:pointer; width:fit-content; align-self:center; border:none; }
+    .success-message { text-align:center; padding:1rem; background:#e8f5e9; border-radius:60px; display:none; }
+    footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; color:#4e6e8a; }
     @media (max-width:768px) { .container { padding:0 1.5rem; } .hero h1 { font-size:2.3rem; } }
-    .save-page-btn { display:block; margin:20px auto 10px; padding:10px 24px; background:#2e7d32; color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer; font-size:0.9rem; transition:0.2s; }
-    .save-page-btn:hover { background:#1f5c23; transform:scale(1.02); }
   </style>
 </head>
 <body>
@@ -146,10 +159,10 @@
     </div>
     <div class="section-title">What PADECO NEWS covers</div>
     <div class="cards-grid">
-      <div class="card"><h3><i class="fas fa-landmark" style="color:#2e7d32;margin-right:8px;"></i> Politics &amp; Policy</h3><p>Analysis, investigations, and reporting on government.</p></div>
-      <div class="card"><h3><i class="fas fa-microchip" style="color:#2e7d32;margin-right:8px;"></i> Technology &amp; Society</h3><p>AI ethics, privacy, innovation.</p></div>
-      <div class="card"><h3><i class="fas fa-palette" style="color:#2e7d32;margin-right:8px;"></i> Culture &amp; Identity</h3><p>Essays on art, media, and social forces.</p></div>
-      <div class="card"><h3><i class="fas fa-search" style="color:#2e7d32;margin-right:8px;"></i> Investigations</h3><p>Deep dives that hold power accountable.</p></div>
+      <div class="card"><h3><i class="fas fa-landmark"></i> Politics &amp; Policy</h3><p>Analysis, investigations, and reporting on government.</p></div>
+      <div class="card"><h3><i class="fas fa-microchip"></i> Technology &amp; Society</h3><p>AI ethics, privacy, innovation.</p></div>
+      <div class="card"><h3><i class="fas fa-palette"></i> Culture &amp; Identity</h3><p>Essays on art, media, and social forces.</p></div>
+      <div class="card"><h3><i class="fas fa-search"></i> Investigations</h3><p>Deep dives that hold power accountable.</p></div>
     </div>
     <div class="articles-section">
       <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;text-align:center;margin-bottom:2rem;">Latest from PADECO NEWS</h2>
@@ -157,113 +170,44 @@
     </div>
   </div>
 
-  <!-- ABOUT PAGE (editable text) -->
+  <!-- ABOUT, HISTORY, PROJECTS, WRITE NEWS (condensed for brevity) -->
   <div id="page-about" class="page">
-    <div class="about-wrap">
-      <h2><i class="fas fa-info-circle" style="color:#2e7d32;margin-right:10px;"></i> About PADECO NEWS</h2>
-      <div class="about-flex">
-        <div class="about-text">
-          <p><strong class="padeco-italic">PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
-          <p>Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
-          <p>Follow Bush Smith on social media for updates, breaking stories, and behind‑the‑scenes insights.</p>
-        </div>
-        <div class="about-social">
-          <a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a>
-          <a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a>
-          <a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a>
-        </div>
-      </div>
-    </div>
-    <div class="vision-section">
-      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;text-align:center;margin-bottom:2rem;">Our foundation</h2>
-      <div class="vision-grid">
-        <div class="vision-card"><div class="icon"><i class="fas fa-eye"></i></div><h3>Vision</h3><p>Independent journalism for an informed, empowered society. A world where truth is accessible to everyone.</p></div>
-        <div class="vision-card"><div class="icon"><i class="fas fa-bullseye"></i></div><h3>Mission</h3><p>To produce rigorous, fact‑based reporting with transparency, independence, and accountability to the public.</p></div>
-      </div>
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;text-align:center;margin:2.5rem 0 1.5rem;">Core values</h3>
-      <div class="values-list">
-        <div class="value-item"><div class="value-icon"><i class="fas fa-check-circle"></i></div><h4>Accuracy</h4><p>Every fact verified.</p></div>
-        <div class="value-item"><div class="value-icon"><i class="fas fa-hand-fist"></i></div><h4>Independence</h4><p>No sponsors, no political ties.</p></div>
-        <div class="value-item"><div class="value-icon"><i class="fas fa-bolt"></i></div><h4>Impact</h4><p>Stories that lead to change.</p></div>
-        <div class="value-item"><div class="value-icon"><i class="fas fa-gem"></i></div><h4>Transparency</h4><p>We earn trust.</p></div>
-      </div>
+    <div class="about-wrap"><h2>About PADECO NEWS</h2><div class="about-flex"><div class="about-text"><p><strong class="padeco-italic">PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p><p>Follow Bush Smith on social media for updates.</p></div><div class="about-social"><a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a><a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a><a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a></div></div></div>
+    <div class="vision-section"><h2 style="text-align:center;">Our foundation</h2><div class="vision-grid"><div class="vision-card"><div class="icon"><i class="fas fa-eye"></i></div><h3>Vision</h3><p>Independent journalism for an informed society.</p></div><div class="vision-card"><div class="icon"><i class="fas fa-bullseye"></i></div><h3>Mission</h3><p>Rigorous, fact‑based reporting with transparency.</p></div></div></div>
+  </div>
+  <div id="page-history" class="page"><div class="history-wrap"><h2>Our History</h2><div class="history-editor"><textarea id="historyContent">PADECO NEWS was founded in 2018 by Bush Smith. Growing from a newsletter to an independent journalism platform reaching over 100,000 monthly readers.</textarea><button class="btn-save" id="saveHistoryBtn">Save History</button><div id="savedMsg" style="display:none;color:#2e7d32;">Saved</div></div></div></div>
+  <div id="page-projects" class="page"><div class="projects-wrap"><h2>Projects</h2><div class="project-grid"><div class="project-card"><h3>Open Source Newsroom</h3><p>A toolkit for independent journalists.</p></div><div class="project-card"><h3>Transparency Watch</h3><p>Tracking political donations and influence.</p></div></div></div></div>
+  <div id="page-writenews" class="page"><div class="writenews-wrap"><h2>Write a News Story</h2><form id="newsForm" class="news-form"><input type="text" id="newsTitle" placeholder="Headline" required /><select id="newsCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select><textarea id="newsContent" placeholder="Full story content..."></textarea><input type="file" id="newsMedia" accept="image/*,video/*" /><input type="text" id="newsAuthor" value="Bush Smith" /><button type="submit" class="btn-submit">Publish Story</button><div id="successMessage" class="success-message">✅ Published!</div></form></div></div>
+
+  <footer><p>© 2025 <strong class="padeco-italic">PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p></footer>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <h2><i class="fas fa-edit"></i> Edit Full Story</h2>
+    <label>Headline</label><input type="text" id="editTitle" />
+    <label>Category</label><select id="editCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select>
+    <label>Author</label><input type="text" id="editAuthor" />
+    <label>Full Content</label><textarea id="editContent" placeholder="Write the complete article here..."></textarea>
+    <div style="margin-top:1rem;">
+      <button id="saveEditBtn"><i class="fas fa-save"></i> Save Changes</button>
+      <button id="deleteStoryBtn" class="delete-btn"><i class="fas fa-trash"></i> Delete Story</button>
+      <button id="closeModalBtn" class="close-btn"><i class="fas fa-times"></i> Cancel</button>
     </div>
   </div>
-
-  <!-- HISTORY PAGE -->
-  <div id="page-history" class="page">
-    <div class="history-wrap">
-      <h2><i class="fas fa-timeline" style="color:#2e7d32;margin-right:10px;"></i> Our History</h2>
-      <div class="history-editor">
-        <label for="historyContent">Write or edit the history of PADECO NEWS:</label>
-        <textarea id="historyContent">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it quickly grew into an independent journalism platform covering politics, technology, culture, and investigations. By 2025, PADECO NEWS reaches over 100,000 monthly readers and remains committed to independent, fact‑based reporting.</textarea>
-        <button class="btn-save" id="saveHistoryBtn"><i class="fas fa-save"></i> Save History</button>
-        <div id="savedMsg" class="saved-msg" style="color:#2e7d32;margin-top:0.8rem;display:none;">✔ History saved.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOG PAGE -->
-  <div id="page-blog" class="page">
-    <div class="blog-wrap">
-      <h2><i class="fas fa-newspaper" style="color:#2e7d32;margin-right:10px;"></i> Blog</h2>
-      <div id="blogGridContainer" class="blog-grid"></div>
-    </div>
-  </div>
-
-  <!-- PROJECTS PAGE -->
-  <div id="page-projects" class="page">
-    <div class="projects-wrap">
-      <h2><i class="fas fa-folder-open" style="color:#2e7d32;margin-right:10px;"></i> Projects</h2>
-      <div class="project-grid" id="projectsStaticGrid">
-        <!-- static projects but also editable via contenteditable later -->
-        <div class="project-card"><h3>Open Source Newsroom</h3><p>A toolkit for independent journalists to publish, fact-check, and distribute news without corporate infrastructure.</p></div>
-        <div class="project-card"><h3>Transparency Watch</h3><p>Database tracking political donations, dark money flows, and lobbying influence — updated monthly.</p></div>
-        <div class="project-card"><h3>Local News Fund</h3><p>Grant program supporting hyperlocal independent reporters covering under-served communities.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WRITE NEWS PAGE -->
-  <div id="page-writenews" class="page">
-    <div class="writenews-wrap">
-      <h2><i class="fas fa-pen-fancy" style="color:#2e7d32;margin-right:10px;"></i> Write a News Story</h2>
-      <form id="newsForm" class="news-form">
-        <input type="text" id="newsTitle" placeholder="Headline" required />
-        <select id="newsCategory">
-          <option value="Politics & Policy">Politics & Policy</option><option value="Technology & Society">Technology & Society</option>
-          <option value="Culture & Identity">Culture & Identity</option><option value="Investigations">Investigations</option>
-          <option value="Health">Health</option><option value="Sport">Sport</option>
-        </select>
-        <textarea id="newsContent" placeholder="Story content..."></textarea>
-        <input type="file" id="newsMedia" accept="image/*,video/*" />
-        <input type="text" id="newsAuthor" placeholder="Author" value="Bush Smith" />
-        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Publish Story</button>
-        <div id="successMessage" class="success-message">✅ Story published! Now searchable + editable.</div>
-      </form>
-    </div>
-  </div>
-
-  <footer>
-    <p>© 2025 <strong class="padeco-italic">PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p>
-    <p><a href="mailto:smithbush42@gmail.com">smithbush42@gmail.com</a> · <a href="https://twitter.com/bush_smith83161" target="_blank">@bush_smith83161</a></p>
-  </footer>
 </div>
 
 <script>
-  // --------------------------------------------------------------
-  // FULL STORY SYSTEM: SEARCHABLE + EDITABLE (contenteditable on stories)
-  // --------------------------------------------------------------
+  // ==================== FULL STORY SYSTEM WITH MODAL EDITING ====================
   let publishedStories = [];
+  let currentEditIndex = null;
   let currentSearchQuery = "";
 
-  // Seed: including the article from your screenshot (DR Congo Ebola outbreak in space held by AFC/M23)
   const defaultStories = [
-    { title: "DR Congo Ebola outbreak in space held by AFC/M23 · Health", category: "Health", content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in the eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm.", author: "Bush Smith", date: "May 24, 2026", mediaData: null, mediaType: null },
-    { title: "The Digital Divide: What the New Broadband Bill Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
-    { title: "AI in the Newsroom — How Algorithms Are Changing Journalism", category: "Technology & Society", content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds.", author: "Bush Smith", date: "March 28, 2025", mediaData: null, mediaType: null },
-    { title: "The Revival of Independent Media — A Global Movement", category: "Culture & Identity", content: "How independent journalists are reshaping the media landscape across five continents.", author: "Bush Smith", date: "March 15, 2025", mediaData: null, mediaType: null },
-    { title: "Tracking the Money — Who Really Funds Dark Money PACs?", category: "Investigations", content: "A deep dive into political funding and dark money operations that influence elections.", author: "Bush Smith", date: "March 2, 2025", mediaData: null, mediaType: null }
+    { title: "DR Congo Ebola outbreak in space held by AFC/M23 · Health", category: "Health", content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in the eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm. Health workers are struggling to contain the outbreak amid active conflict zones.", author: "Bush Smith", date: "May 24, 2026", mediaData: null, mediaType: null },
+    { title: "The Digital Divide: What the New Broadband Bill Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households. Experts weigh in on infrastructure challenges and funding allocations.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
+    { title: "AI in the Newsroom — How Algorithms Are Changing Journalism", category: "Technology & Society", content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds. This deep dive examines both opportunities and ethical concerns.", author: "Bush Smith", date: "March 28, 2025", mediaData: null, mediaType: null }
   ];
 
   function loadStories() {
@@ -280,13 +224,44 @@
     return publishedStories.filter(s => s.title.toLowerCase().includes(q) || s.content.toLowerCase().includes(q) || s.author.toLowerCase().includes(q) || s.category.toLowerCase().includes(q));
   }
 
-  // Helper: make any story text fields editable (click to edit, hand cursor, saves to localStorage)
-  function attachEditableStoryHandlers(storyId, storyObj, updateCallback) {
-    // We'll store references and attach to dynamically created elements
-    // Instead, after rendering we select editable spans and update localStorage on blur
+  function openEditModal(index) {
+    currentEditIndex = index;
+    const story = publishedStories[index];
+    document.getElementById('editTitle').value = story.title;
+    document.getElementById('editCategory').value = story.category;
+    document.getElementById('editAuthor').value = story.author;
+    document.getElementById('editContent').value = story.content;
+    document.getElementById('editModal').classList.add('active');
   }
 
-  // Render HOME (article list) with editable titles & content snippets
+  function closeModal() { document.getElementById('editModal').classList.remove('active'); currentEditIndex = null; }
+
+  function saveCurrentEdit() {
+    if (currentEditIndex === null) return;
+    const newTitle = document.getElementById('editTitle').value.trim();
+    const newCategory = document.getElementById('editCategory').value;
+    const newAuthor = document.getElementById('editAuthor').value.trim();
+    const newContent = document.getElementById('editContent').value.trim();
+    if (!newTitle || !newContent) { alert("Headline and content cannot be empty."); return; }
+    publishedStories[currentEditIndex].title = newTitle;
+    publishedStories[currentEditIndex].category = newCategory;
+    publishedStories[currentEditIndex].author = newAuthor || "Bush Smith";
+    publishedStories[currentEditIndex].content = newContent;
+    saveStories();
+    renderAllStories();
+    closeModal();
+  }
+
+  function deleteCurrentStory() {
+    if (currentEditIndex === null) return;
+    if (confirm("Are you sure you want to delete this story permanently?")) {
+      publishedStories.splice(currentEditIndex, 1);
+      saveStories();
+      renderAllStories();
+      closeModal();
+    }
+  }
+
   function renderHomePage() {
     const container = document.getElementById('homeArticlesContainer');
     if (!container) return;
@@ -294,6 +269,7 @@
     container.innerHTML = '';
     if (filtered.length === 0) { container.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>No stories match "' + escapeHtml(currentSearchQuery) + '"</p></div>'; return; }
     filtered.forEach((story, idx) => {
+      const globalIndex = publishedStories.findIndex(s => s.title === story.title && s.date === story.date && s.content === story.content);
       const articleDiv = document.createElement('div');
       articleDiv.className = 'article-item';
       let mediaHtml = '';
@@ -301,13 +277,10 @@
         if (story.mediaType.startsWith('image/')) mediaHtml = `<img src="${story.mediaData}" class="article-media" alt="media">`;
         else if (story.mediaType.startsWith('video/')) mediaHtml = `<video src="${story.mediaData}" class="article-media" controls style="max-width:120px;max-height:80px;"></video>`;
       }
-      // make title editable: data-story-index for saving
-      const titleId = `home_title_${idx}`;
-      const metaSpan = `<span class="article-title"><span contenteditable="true" class="editable-story-title" data-story-index="${idx}" data-field="title" style="cursor:pointer; display:inline-block; min-width:180px;">${escapeHtml(story.title)}</span> <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${story.category} · by <span contenteditable="true" class="editable-story-author" data-story-index="${idx}" data-field="author" style="cursor:pointer;">${escapeHtml(story.author)}</span> · ${story.date}</span></span>`;
-      articleDiv.innerHTML = `${mediaHtml}${metaSpan}`;
+      articleDiv.innerHTML = `${mediaHtml}<span class="article-title">📄 ${escapeHtml(story.title)} <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${story.category} · by ${escapeHtml(story.author)} · ${story.date}</span></span> <i class="fas fa-pen" style="color:#2e7d32; opacity:0.6; font-size:0.9rem;"></i>`;
+      articleDiv.addEventListener('click', (e) => { if(e.target.closest('.article-item')) openEditModal(globalIndex); });
       container.appendChild(articleDiv);
     });
-    attachInlineEditableEvents();
   }
 
   function renderBlogPage() {
@@ -317,6 +290,7 @@
     container.innerHTML = '';
     if (filtered.length === 0) { container.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>No blog posts match "' + escapeHtml(currentSearchQuery) + '"</p></div>'; return; }
     filtered.slice().reverse().forEach((story, idx) => {
+      const globalIndex = publishedStories.findIndex(s => s.title === story.title && s.date === story.date && s.content === story.content);
       const card = document.createElement('div');
       card.className = 'blog-card';
       let mediaHtml = '';
@@ -324,39 +298,10 @@
         if (story.mediaType.startsWith('image/')) mediaHtml = `<img src="${story.mediaData}" class="blog-media" alt="media">`;
         else if (story.mediaType.startsWith('video/')) mediaHtml = `<video src="${story.mediaData}" class="blog-media" controls style="max-height:180px;"></video>`;
       }
-      const shortContent = story.content.length > 120 ? story.content.substring(0,120)+'…' : story.content;
-      // make title, author, and content snippet editable
-      const globalStoryIndex = publishedStories.findIndex(s => s.title === story.title && s.date === story.date && s.content === story.content);
-      const realIdx = globalStoryIndex !== -1 ? globalStoryIndex : idx;
-      card.innerHTML = `${mediaHtml}<h3><span contenteditable="true" class="editable-story-title" data-story-index="${realIdx}" data-field="title" style="cursor:pointer;">${escapeHtml(story.title)}</span></h3>
-                        <div class="meta">${story.date} · by <span contenteditable="true" class="editable-story-author" data-story-index="${realIdx}" data-field="author" style="cursor:pointer;">${escapeHtml(story.author)}</span> · ${story.category}</div>
-                        <p><span contenteditable="true" class="editable-story-content" data-story-index="${realIdx}" data-field="content" style="cursor:pointer; display:block;">${escapeHtml(shortContent)}</span></p>`;
+      const preview = story.content.length > 100 ? story.content.substring(0, 100) + '…' : story.content;
+      card.innerHTML = `${mediaHtml}<h3>📌 ${escapeHtml(story.title)}</h3><div class="meta">${story.date} · by ${escapeHtml(story.author)} · ${story.category}</div><p>${escapeHtml(preview)}</p><i class="fas fa-edit" style="color:#2e7d32; margin-top:0.5rem; display:inline-block; font-size:0.8rem;"> click to edit full story</i>`;
+      card.addEventListener('click', () => openEditModal(globalIndex));
       container.appendChild(card);
-    });
-    attachInlineEditableEvents();
-  }
-
-  // universal editable handler for inline fields (title, author, content excerpt)
-  function attachInlineEditableEvents() {
-    document.querySelectorAll('.editable-story-title, .editable-story-author, .editable-story-content').forEach(el => {
-      if (el.getAttribute('data-listener')) return;
-      el.setAttribute('data-listener', 'true');
-      el.addEventListener('blur', function(e) {
-        const idx = parseInt(this.getAttribute('data-story-index'));
-        const field = this.getAttribute('data-field');
-        if (isNaN(idx) || idx < 0 || idx >= publishedStories.length) return;
-        const newValue = this.innerText.trim();
-        if (!newValue) return;
-        if (field === 'title') publishedStories[idx].title = newValue;
-        else if (field === 'author') publishedStories[idx].author = newValue;
-        else if (field === 'content') {
-          // For blog content we update the full content, but keep excerpt display
-          publishedStories[idx].content = newValue;
-        }
-        saveStories();
-        // re-render to keep consistency but keep focus lightweight
-        renderAllStories();
-      });
     });
   }
 
@@ -371,43 +316,30 @@
     renderAllStories();
   }
 
-  // Search logic + reset
   function performSearch() { currentSearchQuery = document.getElementById('searchInput').value; renderAllStories(); }
   function clearSearch() { document.getElementById('searchInput').value = ''; currentSearchQuery = ''; renderAllStories(); }
 
-  // Navigation + search reset when leaving home/blog?
+  // Navigation
   const navLinks = document.querySelectorAll('.nav-links a');
-  const pages = {
-    home: document.getElementById('page-home'), about: document.getElementById('page-about'),
-    history: document.getElementById('page-history'), blog: document.getElementById('page-blog'),
-    projects: document.getElementById('page-projects'), writenews: document.getElementById('page-writenews')
-  };
+  const pages = { home: document.getElementById('page-home'), about: document.getElementById('page-about'), history: document.getElementById('page-history'), blog: document.getElementById('page-blog'), projects: document.getElementById('page-projects'), writenews: document.getElementById('page-writenews') };
   function showPage(pageId) {
     Object.values(pages).forEach(p => p.classList.remove('active-page'));
     if(pages[pageId]) pages[pageId].classList.add('active-page');
     navLinks.forEach(link => { link.classList.remove('active'); if(link.dataset.page === pageId) link.classList.add('active'); });
     if (pageId !== 'home' && pageId !== 'blog') clearSearch();
+    if (pageId === 'blog' && !document.getElementById('blogGridContainer')) { const blogWrap = document.querySelector('#page-blog .blog-wrap'); if(blogWrap && !document.getElementById('blogGridContainer')) { const grid = document.createElement('div'); grid.id = 'blogGridContainer'; grid.className = 'blog-grid'; blogWrap.appendChild(grid); } renderBlogPage(); }
+    if (pageId === 'home') renderHomePage();
   }
   navLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); history.pushState(null, '', '#'+link.dataset.page); }));
   window.addEventListener('hashchange', () => { const hash = location.hash.replace('#','') || 'home'; if(pages[hash]) showPage(hash); });
-  if(location.hash) { const hash = location.hash.replace('#',''); if(pages[hash]) showPage(hash); }
-  else showPage('home');
+  if(location.hash) showPage(location.hash.replace('#','')); else showPage('home');
 
-  // History editor
-  const historyArea = document.getElementById('historyContent');
-  const savedHistory = localStorage.getItem('padeco_history');
-  if(savedHistory) historyArea.value = savedHistory;
-  document.getElementById('saveHistoryBtn').addEventListener('click', () => {
-    localStorage.setItem('padeco_history', historyArea.value);
-    const msg = document.getElementById('savedMsg');
-    msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 2000);
-  });
+  // History save
+  document.getElementById('saveHistoryBtn')?.addEventListener('click', () => { localStorage.setItem('padeco_history', document.getElementById('historyContent').value); const msg = document.getElementById('savedMsg'); msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 2000); });
+  const savedHistory = localStorage.getItem('padeco_history'); if(savedHistory && document.getElementById('historyContent')) document.getElementById('historyContent').value = savedHistory;
 
   // News submission
-  const form = document.getElementById('newsForm');
-  const successMsgDiv = document.getElementById('successMessage');
-  form.addEventListener('submit', (e) => {
+  document.getElementById('newsForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const title = document.getElementById('newsTitle').value.trim();
     const category = document.getElementById('newsCategory').value;
@@ -415,60 +347,21 @@
     const author = document.getElementById('newsAuthor').value.trim() || 'Bush Smith';
     const file = document.getElementById('newsMedia').files[0];
     if(!title || !content) { alert('Headline and content required.'); return; }
-    const process = (mediaData, mediaType) => {
-      addNewStory(title, category, content, author, mediaData, mediaType);
-      successMsgDiv.style.display = 'block';
-      setTimeout(() => successMsgDiv.style.display = 'none', 4000);
-      form.reset();
-      document.getElementById('newsAuthor').value = 'Bush Smith';
-      renderAllStories();
-    };
-    if(file) { const reader = new FileReader(); reader.onload = ev => process(ev.target.result, file.type); reader.readAsDataURL(file); }
-    else process(null, null);
+    const process = (mediaData, mediaType) => { addNewStory(title, category, content, author, mediaData, mediaType); const msg = document.getElementById('successMessage'); msg.style.display = 'block'; setTimeout(() => msg.style.display = 'none', 3000); document.getElementById('newsForm').reset(); document.getElementById('newsAuthor').value = 'Bush Smith'; };
+    if(file) { const reader = new FileReader(); reader.onload = ev => process(ev.target.result, file.type); reader.readAsDataURL(file); } else process(null, null);
   });
 
-  document.getElementById('searchBtn').addEventListener('click', performSearch);
-  document.getElementById('searchInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') performSearch(); });
+  document.getElementById('searchBtn')?.addEventListener('click', performSearch);
+  document.getElementById('searchInput')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') performSearch(); });
 
-  // ========== MAKE STATIC PAGES FULLY EDITABLE (hand cursor, not cursor text) ==========
-  function makeContentEditableWithHand(selector, containerId) {
-    const container = document.getElementById(containerId);
-    if(!container) return;
-    const elements = container.querySelectorAll(selector);
-    elements.forEach(el => {
-      el.setAttribute('contenteditable', 'true');
-      el.style.cursor = 'pointer';
-      el.addEventListener('blur', () => {
-        // save all changes under a generic key
-        const pageKey = `editable_${containerId}_${el.className || el.tagName}_${el.innerText.slice(0,30)}`;
-        localStorage.setItem(pageKey, el.innerHTML);
-      });
-      const saved = localStorage.getItem(`editable_${containerId}_${el.className || el.tagName}_${el.innerText.slice(0,30)}`);
-      if(saved) el.innerHTML = saved;
-    });
-  }
+  // Modal event binding
+  document.getElementById('saveEditBtn')?.addEventListener('click', saveCurrentEdit);
+  document.getElementById('deleteStoryBtn')?.addEventListener('click', deleteCurrentStory);
+  document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => { if(e.target === document.getElementById('editModal')) closeModal(); });
 
-  // Apply to all main content areas
-  window.addEventListener('DOMContentLoaded', () => {
-    // Editable for about, projects, hero texts, cards, etc.
-    makeContentEditableWithHand('h1, h2, h3, h4, p, .card p, .vision-card p, .value-item p, .hero p, .about-text p, .project-card p, .project-card h3', 'page-about');
-    makeContentEditableWithHand('.project-card p, .project-card h3', 'page-projects');
-    makeContentEditableWithHand('.hero h1, .hero p, .section-title, .cards-grid .card p, .cards-grid .card h3', 'page-home');
-    makeContentEditableWithHand('.blog-wrap h2, .projects-wrap h2, .about-wrap h2', 'page-about');
-    // also make blog static header editable, but dynamic stories already editable via separate system
-    // Add save buttons for convenience on about & projects
-    ['page-about', 'page-projects', 'page-home'].forEach(pid => {
-      const pg = document.getElementById(pid);
-      if(pg && !pg.querySelector('.save-page-btn')) {
-        const btn = document.createElement('button');
-        btn.innerText = '✎ Save Page Edits';
-        btn.className = 'save-page-btn';
-        btn.addEventListener('click', () => { alert('All text edits on this page are automatically saved!'); });
-        pg.appendChild(btn);
-      }
-    });
-  });
-
+  // Initialize blog container if missing
+  if(!document.getElementById('blogGridContainer')) { const blogWrap = document.querySelector('#page-blog .blog-wrap'); if(blogWrap) { const grid = document.createElement('div'); grid.id = 'blogGridContainer'; grid.className = 'blog-grid'; blogWrap.appendChild(grid); } }
   loadStories();
 </script>
 </body>
