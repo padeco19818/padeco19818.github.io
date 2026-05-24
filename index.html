@@ -19,6 +19,51 @@
     .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; padding-bottom:4px; cursor:pointer; }
     .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
 
+    /* SEARCH BAR STYLES */
+    .search-container {
+      background: white;
+      border-radius: 60px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid #e0e8f0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .search-container i {
+      color: #2e7d32;
+      font-size: 1.1rem;
+    }
+    .search-container input {
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      padding: 0.5rem 0;
+      width: 200px;
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+    }
+    .search-container input::placeholder {
+      color: #8ba0b5;
+    }
+    .search-container button {
+      background: #2e7d32;
+      border: none;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .search-container button:hover {
+      background: #1f5c23;
+    }
+    @media (max-width: 700px) {
+      .nav-holder { flex-direction: column; text-align: center; }
+      .search-container input { width: 160px; }
+    }
+
     /* sections */
     .page { display:none; }
     .page.active-page { display:block; }
@@ -71,6 +116,14 @@
     .article-title { font-weight:600; font-size:1.1rem; color:#0b2b44; flex:1; min-width:200px; }
     .article-media { max-width:120px; max-height:80px; border-radius:12px; object-fit:cover; flex-shrink:0; }
 
+    /* NO RESULTS MESSAGE */
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: #6a8ea8;
+      font-style: italic;
+    }
+
     /* Vision, Mission, Values – now in About page */
     .vision-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
     .vision-grid { display:flex; flex-wrap:wrap; gap:2.5rem; justify-content:center; }
@@ -85,7 +138,7 @@
     .value-item h4 { font-size:1.1rem; margin-bottom:0.4rem; color:#2e7d32; }
     .value-item p { font-size:0.85rem; color:#517e9b; }
 
-    /* About page – contains vision/mission/values moved from home */
+    /* About page */
     .about-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
     .about-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
     .about-flex { display:flex; flex-wrap:wrap; gap:3rem; justify-content:center; align-items:center; }
@@ -115,16 +168,15 @@
     .project-card h3 { font-size:1.3rem; margin-bottom:0.5rem; }
     .project-card p { color:#3b5e7a; font-size:0.95rem; }
 
-    /* History page – editable */
+    /* History page */
     .history-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
     .history-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
     .history-editor { max-width:800px; margin:0 auto; }
     .history-editor label { font-weight:600; color:#0b2b44; display:block; margin-bottom:0.5rem; }
-    .history-editor textarea { font-family:'Inter',sans-serif; width:100%; min-height:350px; padding:1.2rem; border:1px solid #dce5ed; border-radius:28px; font-size:1rem; line-height:1.7; background:#fafcff; resize:vertical; transition:0.2s; }
+    .history-editor textarea { font-family:'Inter',sans-serif; width:100%; min-height:350px; padding:1.2rem; border:1px solid #dce5ed; border-radius:28px; font-size:1rem; line-height:1.7; background:#fafcff; resize:vertical; }
     .history-editor textarea:focus { outline:none; border-color:#2e7d32; box-shadow:0 0 0 3px rgba(46,125,50,0.15); }
-    .history-editor .btn-save { background:#2e7d32; color:white; border:none; padding:0.8rem 2rem; border-radius:60px; font-weight:600; font-size:1rem; cursor:pointer; transition:0.2s; margin-top:1rem; display:inline-flex; align-items:center; gap:8px; }
-    .history-editor .btn-save:hover { background:#1f5c23; transform:scale(1.02); }
-    .history-editor .btn-save:active { transform:scale(0.97); }
+    .history-editor .btn-save { background:#2e7d32; color:white; border:none; padding:0.8rem 2rem; border-radius:60px; font-weight:600; font-size:1rem; cursor:pointer; margin-top:1rem; display:inline-flex; align-items:center; gap:8px; }
+    .history-editor .btn-save:hover { background:#1f5c23; }
     .history-editor .saved-msg { color:#2e7d32; font-weight:500; margin-top:0.8rem; display:none; }
 
     /* Write News page */
@@ -132,13 +184,12 @@
     .writenews-wrap h2 { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin-bottom:2rem; }
     .news-form { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
     .news-form label { font-weight:600; color:#0b2b44; }
-    .news-form input, .news-form textarea, .news-form select { font-family:'Inter',sans-serif; padding:0.9rem 1.2rem; border:1px solid #dce5ed; border-radius:30px; font-size:1rem; background:#fafcff; transition:0.2s; }
+    .news-form input, .news-form textarea, .news-form select { font-family:'Inter',sans-serif; padding:0.9rem 1.2rem; border:1px solid #dce5ed; border-radius:30px; font-size:1rem; background:#fafcff; }
     .news-form input:focus, .news-form textarea:focus, .news-form select:focus { outline:none; border-color:#2e7d32; box-shadow:0 0 0 3px rgba(46,125,50,0.15); }
     .news-form textarea { min-height:160px; resize:vertical; border-radius:24px; }
     .news-form input[type="file"] { padding:0.6rem; background:white; }
-    .news-form .btn-submit { background:#2e7d32; color:white; border:none; padding:1rem 2rem; border-radius:60px; font-weight:600; font-size:1.1rem; cursor:pointer; transition:0.2s; width:fit-content; align-self:center; }
-    .news-form .btn-submit:hover { background:#1f5c23; transform:scale(1.02); }
-    .news-form .btn-submit:active { transform:scale(0.97); }
+    .news-form .btn-submit { background:#2e7d32; color:white; border:none; padding:1rem 2rem; border-radius:60px; font-weight:600; font-size:1.1rem; cursor:pointer; width:fit-content; align-self:center; }
+    .news-form .btn-submit:hover { background:#1f5c23; }
     .success-message { text-align:center; padding:1rem; background:#e8f5e9; border-radius:60px; color:#1f5c23; font-weight:500; display:none; }
 
     /* footer */
@@ -151,9 +202,14 @@
 <body>
 <div class="container">
 
-  <!-- navigation -->
+  <!-- navigation WITH SEARCH BAR -->
   <div class="nav-holder">
     <div class="logo">✦ PADECO NEWS</div>
+    <div class="search-container">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search stories..." autocomplete="off">
+      <button id="searchBtn"><i class="fas fa-arrow-right"></i></button>
+    </div>
     <ul class="nav-links">
       <li><a class="active" data-page="home">Home</a></li>
       <li><a data-page="about">About</a></li>
@@ -164,7 +220,7 @@
     </ul>
   </div>
 
-  <!-- ===== HOME PAGE ===== (only hero + categories + latest articles) -->
+  <!-- ===== HOME PAGE ===== -->
   <div id="page-home" class="page active-page">
     <div class="hero">
       <h1>Stories that matter. Perspectives that count.</h1>
@@ -181,15 +237,11 @@
 
     <div class="articles-section">
       <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;text-align:center;margin-bottom:2rem;">Latest from PADECO NEWS</h2>
-      <div class="article-item"><span class="article-title">The Digital Divide: What the New Broadband Bill Means</span></div>
-      <div class="article-item"><span class="article-title">AI in the Newsroom — How Algorithms Are Changing Journalism</span></div>
-      <div class="article-item"><span class="article-title">The Revival of Independent Media — A Global Movement</span></div>
-      <div class="article-item"><span class="article-title">Tracking the Money — Who Really Funds Dark Money PACs?</span></div>
+      <div id="homeArticlesContainer"></div>
     </div>
-    <!-- Vision, Mission, Values removed from home page -->
   </div>
 
-  <!-- ===== ABOUT PAGE ===== (now includes vision/mission/values) -->
+  <!-- ===== ABOUT PAGE ===== -->
   <div id="page-about" class="page">
     <div class="about-wrap">
       <h2><i class="fas fa-info-circle" style="color:#2e7d32;margin-right:10px;"></i> About PADECO NEWS</h2>
@@ -206,57 +258,31 @@
         </div>
       </div>
     </div>
-
-    <!-- Vision, Mission, Values moved here from home -->
     <div class="vision-section">
       <h2 style="font-family:'Playfair Display',serif;font-size:2rem;text-align:center;margin-bottom:2rem;">Our foundation</h2>
       <div class="vision-grid">
-        <div class="vision-card">
-          <div class="icon"><i class="fas fa-eye"></i></div>
-          <h3>Vision</h3>
-          <p>Independent journalism for an informed, empowered society. A world where truth is accessible to everyone, power is held accountable, and every voice has a platform.</p>
-        </div>
-        <div class="vision-card">
-          <div class="icon"><i class="fas fa-bullseye"></i></div>
-          <h3>Mission</h3>
-          <p>To produce rigorous, fact‑based reporting on politics, technology, culture, and investigations — with transparency, independence, and deep accountability to the public, not to advertisers or political interests.</p>
-        </div>
+        <div class="vision-card"><div class="icon"><i class="fas fa-eye"></i></div><h3>Vision</h3><p>Independent journalism for an informed, empowered society. A world where truth is accessible to everyone.</p></div>
+        <div class="vision-card"><div class="icon"><i class="fas fa-bullseye"></i></div><h3>Mission</h3><p>To produce rigorous, fact‑based reporting with transparency, independence, and accountability to the public.</p></div>
       </div>
       <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;text-align:center;margin:2.5rem 0 1.5rem;">Core values</h3>
       <div class="values-list">
-        <div class="value-item">
-          <div class="value-icon"><i class="fas fa-check-circle"></i></div>
-          <h4>Accuracy</h4>
-          <p>Every fact is verified. Every source is protected.</p>
-        </div>
-        <div class="value-item">
-          <div class="value-icon"><i class="fas fa-hand-fist"></i></div>
-          <h4>Independence</h4>
-          <p>No sponsors, no political ties. Only the public interest.</p>
-        </div>
-        <div class="value-item">
-          <div class="value-icon"><i class="fas fa-bolt"></i></div>
-          <h4>Impact</h4>
-          <p>Stories that lead to change, awareness, or justice.</p>
-        </div>
-        <div class="value-item">
-          <div class="value-icon"><i class="fas fa-gem"></i></div>
-          <h4>Transparency</h4>
-          <p>We show our methods, correct mistakes, and earn trust.</p>
-        </div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-check-circle"></i></div><h4>Accuracy</h4><p>Every fact verified.</p></div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-hand-fist"></i></div><h4>Independence</h4><p>No sponsors, no political ties.</p></div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-bolt"></i></div><h4>Impact</h4><p>Stories that lead to change.</p></div>
+        <div class="value-item"><div class="value-icon"><i class="fas fa-gem"></i></div><h4>Transparency</h4><p>We earn trust.</p></div>
       </div>
     </div>
   </div>
 
-  <!-- ===== HISTORY PAGE – editable ===== -->
+  <!-- ===== HISTORY PAGE ===== -->
   <div id="page-history" class="page">
     <div class="history-wrap">
       <h2><i class="fas fa-timeline" style="color:#2e7d32;margin-right:10px;"></i> Our History</h2>
       <div class="history-editor">
         <label for="historyContent">Write or edit the history of PADECO NEWS:</label>
-        <textarea id="historyContent" placeholder="Write your history here…">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it quickly grew into an independent journalism platform covering politics, technology, culture, and investigations. In 2020, the site moved to a self-hosted domain and launched the Transparency Watch project. By 2025, PADECO NEWS reaches over 100,000 monthly readers and remains committed to independent, fact‑based reporting.</textarea>
+        <textarea id="historyContent">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it quickly grew into an independent journalism platform covering politics, technology, culture, and investigations. By 2025, PADECO NEWS reaches over 100,000 monthly readers and remains committed to independent, fact‑based reporting.</textarea>
         <button class="btn-save" id="saveHistoryBtn"><i class="fas fa-save"></i> Save History</button>
-        <div id="savedMsg" class="saved-msg">✔ History saved (stored in your browser).</div>
+        <div id="savedMsg" class="saved-msg">✔ History saved.</div>
       </div>
     </div>
   </div>
@@ -265,28 +291,7 @@
   <div id="page-blog" class="page">
     <div class="blog-wrap">
       <h2><i class="fas fa-newspaper" style="color:#2e7d32;margin-right:10px;"></i> Blog</h2>
-      <div class="blog-grid">
-        <div class="blog-card">
-          <h3>The Digital Divide Explained</h3>
-          <div class="meta">April 10, 2025 · 5 min read</div>
-          <p>How the new broadband bill could reshape internet access in rural America and close the connectivity gap.</p>
-        </div>
-        <div class="blog-card">
-          <h3>AI in Journalism</h3>
-          <div class="meta">March 28, 2025 · 7 min read</div>
-          <p>Algorithms are changing newsrooms. A deep look at benefits, risks, and what independent media should watch.</p>
-        </div>
-        <div class="blog-card">
-          <h3>Independent Media Rising</h3>
-          <div class="meta">March 15, 2025 · 6 min read</div>
-          <p>Why more journalists are leaving corporate outlets to start independent platforms — and what it means for democracy.</p>
-        </div>
-        <div class="blog-card">
-          <h3>Tracking Dark Money</h3>
-          <div class="meta">March 2, 2025 · 9 min read</div>
-          <p>A investigative series following the flow of untraceable political donations and their impact on elections.</p>
-        </div>
-      </div>
+      <div id="blogGridContainer" class="blog-grid"></div>
     </div>
   </div>
 
@@ -295,18 +300,9 @@
     <div class="projects-wrap">
       <h2><i class="fas fa-folder-open" style="color:#2e7d32;margin-right:10px;"></i> Projects</h2>
       <div class="project-grid">
-        <div class="project-card">
-          <h3>Open Source Newsroom</h3>
-          <p>A toolkit for independent journalists to publish, fact-check, and distribute news without corporate infrastructure.</p>
-        </div>
-        <div class="project-card">
-          <h3>Transparency Watch</h3>
-          <p>Database tracking political donations, dark money flows, and lobbying influence — updated monthly.</p>
-        </div>
-        <div class="project-card">
-          <h3>Local News Fund</h3>
-          <p>Grant program supporting hyperlocal independent reporters covering under-served communities.</p>
-        </div>
+        <div class="project-card"><h3>Open Source Newsroom</h3><p>A toolkit for independent journalists to publish, fact-check, and distribute news without corporate infrastructure.</p></div>
+        <div class="project-card"><h3>Transparency Watch</h3><p>Database tracking political donations, dark money flows, and lobbying influence — updated monthly.</p></div>
+        <div class="project-card"><h3>Local News Fund</h3><p>Grant program supporting hyperlocal independent reporters covering under-served communities.</p></div>
       </div>
     </div>
   </div>
@@ -318,34 +314,24 @@
       <form id="newsForm" class="news-form">
         <label for="newsTitle">Headline</label>
         <input type="text" id="newsTitle" placeholder="e.g. City Council Votes on New Budget" required />
-
         <label for="newsCategory">Category</label>
         <select id="newsCategory">
-          <option value="Politics & Policy">Politics & Policy</option>
-          <option value="Technology & Society">Technology & Society</option>
-          <option value="Culture & Identity">Culture & Identity</option>
-          <option value="Investigations">Investigations</option>
-          <option value="Health">Health</option>
-          <option value="Sport">Sport</option>
-          <option value="Entertainment">Entertainment</option>
+          <option value="Politics & Policy">Politics & Policy</option><option value="Technology & Society">Technology & Society</option>
+          <option value="Culture & Identity">Culture & Identity</option><option value="Investigations">Investigations</option>
+          <option value="Health">Health</option><option value="Sport">Sport</option><option value="Entertainment">Entertainment</option>
         </select>
-
         <label for="newsContent">Story content</label>
         <textarea id="newsContent" placeholder="Write your full article here..."></textarea>
-
         <label for="newsMedia">Upload image or video (optional)</label>
         <input type="file" id="newsMedia" accept="image/*,video/*" />
-
         <label for="newsAuthor">Author</label>
         <input type="text" id="newsAuthor" placeholder="Bush Smith" value="Bush Smith" />
-
         <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Publish Story</button>
-        <div id="successMessage" class="success-message">✅ Story published! It now appears on the Home page.</div>
+        <div id="successMessage" class="success-message">✅ Story published! It now appears on the Home page and Blog.</div>
       </form>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2025 <strong class="padeco-italic">PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong></p>
     <p style="margin-top:0.4rem;">
@@ -357,210 +343,227 @@
 </div>
 
 <script>
-  (function() {
-    // ----- navigation -----
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const pages = {
-      home: document.getElementById('page-home'),
-      about: document.getElementById('page-about'),
-      history: document.getElementById('page-history'),
-      blog: document.getElementById('page-blog'),
-      projects: document.getElementById('page-projects'),
-      writenews: document.getElementById('page-writenews')
-    };
-
-    function showPage(pageId) {
-      Object.values(pages).forEach(p => p.classList.remove('active-page'));
-      if (pages[pageId]) pages[pageId].classList.add('active-page');
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.dataset.page === pageId) link.classList.add('active');
-      });
+  // ==================== PERSISTENT STORAGE + SEARCH FUNCTIONALITY ====================
+  
+  let publishedStories = [];
+  let currentSearchQuery = "";
+  
+  const defaultStories = [
+    { title: "The Digital Divide: What the New Broadband Bill Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
+    { title: "AI in the Newsroom — How Algorithms Are Changing Journalism", category: "Technology & Society", content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds.", author: "Bush Smith", date: "March 28, 2025", mediaData: null, mediaType: null },
+    { title: "The Revival of Independent Media — A Global Movement", category: "Culture & Identity", content: "How independent journalists are reshaping the media landscape across five continents.", author: "Bush Smith", date: "March 15, 2025", mediaData: null, mediaType: null },
+    { title: "Tracking the Money — Who Really Funds Dark Money PACs?", category: "Investigations", content: "A deep dive into political funding and dark money operations that influence elections.", author: "Bush Smith", date: "March 2, 2025", mediaData: null, mediaType: null }
+  ];
+  
+  function loadStoriesFromStorage() {
+    const saved = localStorage.getItem('padeco_news_stories');
+    if (saved) {
+      publishedStories = JSON.parse(saved);
+    } else {
+      publishedStories = [...defaultStories];
+      saveStoriesToStorage();
     }
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const pageId = this.dataset.page;
-        showPage(pageId);
-        history.pushState(null, '', '#' + pageId);
-      });
-    });
-
-    function handleHash() {
-      const hash = location.hash.replace('#', '') || 'home';
-      if (pages[hash]) showPage(hash);
+    renderAllStories();
+  }
+  
+  function saveStoriesToStorage() {
+    localStorage.setItem('padeco_news_stories', JSON.stringify(publishedStories));
+  }
+  
+  // SEARCH FUNCTION - searches title, content, author, category
+  function searchStories(query) {
+    if (!query.trim()) return publishedStories;
+    const lowerQuery = query.toLowerCase();
+    return publishedStories.filter(story => 
+      story.title.toLowerCase().includes(lowerQuery) ||
+      story.content.toLowerCase().includes(lowerQuery) ||
+      story.author.toLowerCase().includes(lowerQuery) ||
+      story.category.toLowerCase().includes(lowerQuery)
+    );
+  }
+  
+  function renderHomePageStories() {
+    const homeContainer = document.getElementById('homeArticlesContainer');
+    if (!homeContainer) return;
+    
+    const storiesToShow = searchStories(currentSearchQuery);
+    homeContainer.innerHTML = '';
+    
+    if (storiesToShow.length === 0) {
+      homeContainer.innerHTML = '<div class="no-results"><i class="fas fa-search" style="font-size:2rem;opacity:0.5;"></i><p>No stories found matching "' + escapeHtml(currentSearchQuery) + '"</p></div>';
+      return;
     }
-    window.addEventListener('hashchange', handleHash);
-    handleHash();
-
-    // ----- editable history (localStorage) -----
-    const historyTextarea = document.getElementById('historyContent');
-    const saveBtn = document.getElementById('saveHistoryBtn');
-    const savedMsg = document.getElementById('savedMsg');
-
-    const saved = localStorage.getItem('padeco_history');
-    if (saved) historyTextarea.value = saved;
-
-    saveBtn.addEventListener('click', function() {
-      localStorage.setItem('padeco_history', historyTextarea.value);
-      savedMsg.style.display = 'block';
-      setTimeout(() => { savedMsg.style.display = 'none'; }, 2500);
-    });
-
-    // ----- Write News: add article with media to home page and blog -----
-    const form = document.getElementById('newsForm');
-    const successMsg = document.getElementById('successMessage');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const title = document.getElementById('newsTitle').value.trim();
-      const category = document.getElementById('newsCategory').value;
-      const content = document.getElementById('newsContent').value.trim();
-      const author = document.getElementById('newsAuthor').value.trim() || 'Bush Smith';
-      const fileInput = document.getElementById('newsMedia');
-      const file = fileInput.files[0];
-
-      if (!title || !content) {
-        alert('Please fill in headline and story content.');
-        return;
-      }
-
-      // Function to create media element from file
-      function createMediaElement(file) {
-        return new Promise((resolve) => {
-          if (!file) { resolve(''); return; }
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const dataUrl = e.target.result;
-            if (file.type.startsWith('image/')) {
-              resolve(`<img src="${dataUrl}" class="article-media" alt="media" style="max-width:120px;max-height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;">`);
-            } else if (file.type.startsWith('video/')) {
-              resolve(`<video src="${dataUrl}" class="article-media" controls style="max-width:120px;max-height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;"></video>`);
-            } else {
-              resolve('');
-            }
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-
-      createMediaElement(file).then(mediaHtml => {
-        // Create new article item on home page
-        const articlesSection = document.querySelector('.articles-section');
-        const parent = articlesSection.querySelector('.article-item:last-child').parentNode;
-        const newArticle = document.createElement('div');
-        newArticle.className = 'article-item';
-        newArticle.innerHTML = `
-          ${mediaHtml ? mediaHtml : ''}
-          <span class="article-title">${title} <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${category} · by ${author}</span></span>
-        `;
-        parent.insertBefore(newArticle, parent.lastElementChild.nextSibling);
-
-        // Add to blog page with media
-        const blogGrid = document.querySelector('.blog-grid');
-        const newCard = document.createElement('div');
-        newCard.className = 'blog-card';
-        const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
-
-        if (file) {
-          const reader2 = new FileReader();
-          reader2.onload = function(e2) {
-            const dataUrl2 = e2.target.result;
-            let mediaTag = '';
-            if (file.type.startsWith('image/')) {
-              mediaTag = `<img src="${dataUrl2}" class="blog-media" alt="media">`;
-            } else if (file.type.startsWith('video/')) {
-              mediaTag = `<video src="${dataUrl2}" class="blog-media" controls style="max-height:180px;"></video>`;
-            }
-            newCard.innerHTML = `
-              ${mediaTag}
-              <h3>${title}</h3>
-              <div class="meta">${today} · by ${author} · ${category}</div>
-              <p>${content.substring(0, 120)}${content.length > 120 ? '…' : ''}</p>
-            `;
-            blogGrid.appendChild(newCard);
-          };
-          reader2.readAsDataURL(file);
-        } else {
-          newCard.innerHTML = `
-            <h3>${title}</h3>
-            <div class="meta">${today} · by ${author} · ${category}</div>
-            <p>${content.substring(0, 120)}${content.length > 120 ? '…' : ''}</p>
-          `;
-          blogGrid.appendChild(newCard);
+    
+    storiesToShow.forEach(story => {
+      const articleDiv = document.createElement('div');
+      articleDiv.className = 'article-item';
+      let mediaHtml = '';
+      if (story.mediaData && story.mediaType) {
+        if (story.mediaType.startsWith('image/')) {
+          mediaHtml = `<img src="${story.mediaData}" class="article-media" alt="media">`;
+        } else if (story.mediaType.startsWith('video/')) {
+          mediaHtml = `<video src="${story.mediaData}" class="article-media" controls style="max-width:120px;max-height:80px;border-radius:12px;"></video>`;
         }
-
-        // Show success
-        successMsg.style.display = 'block';
-        setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
-
-        // Reset form
-        form.reset();
-        document.getElementById('newsAuthor').value = 'Bush Smith';
-      });
+      }
+      articleDiv.innerHTML = `${mediaHtml}<span class="article-title">${escapeHtml(story.title)} <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${story.category} · by ${escapeHtml(story.author)} · ${story.date}</span></span>`;
+      homeContainer.appendChild(articleDiv);
     });
-  })();
-</script><script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Define which pages to make editable (by page ID)
-    const editablePageIds = ['page-home', 'page-about', 'page-blog', 'page-projects'];
-
-    // Select all text containers that should be editable (headings, paragraphs, card texts, etc.)
-    // Adjust the selector if you want more/less elements
-    const editableSelectors = 'h1, h2, h3, h4, p, .article-title, .card p, .blog-card p, .project-card p, .meta, .about-text p, .vision-card p, .value-item p, .section-title, .hero p, .blog-card h3, .project-card h3, .card h3, .value-item h4';
-
-    editablePageIds.forEach(pageId => {
-      const page = document.getElementById(pageId);
-      if (!page) return;
-
-      const elements = page.querySelectorAll(editableSelectors);
-      elements.forEach(el => {
-        // Make element contenteditable
-        el.setAttribute('contenteditable', 'true');
-        el.style.cursor = 'text';
-        el.style.outline = 'none'; // remove focus outline (optional)
-
-        // Load saved content if exists
-        const key = 'editable_' + pageId + '_' + el.className + '_' + el.tagName + '_' + (el.innerText.substring(0, 20));
-        const saved = localStorage.getItem(key);
-        if (saved) el.innerHTML = saved;
-
-        // Save on blur
-        el.addEventListener('blur', function () {
-          localStorage.setItem(key, this.innerHTML);
-        });
-      });
+  }
+  
+  function renderBlogPageStories() {
+    const blogContainer = document.getElementById('blogGridContainer');
+    if (!blogContainer) return;
+    
+    const storiesToShow = searchStories(currentSearchQuery);
+    blogContainer.innerHTML = '';
+    
+    if (storiesToShow.length === 0) {
+      blogContainer.innerHTML = '<div class="no-results" style="width:100%;"><i class="fas fa-search" style="font-size:2rem;opacity:0.5;"></i><p>No blog posts found matching "' + escapeHtml(currentSearchQuery) + '"</p></div>';
+      return;
+    }
+    
+    storiesToShow.slice().reverse().forEach(story => {
+      const card = document.createElement('div');
+      card.className = 'blog-card';
+      let mediaHtml = '';
+      if (story.mediaData && story.mediaType) {
+        if (story.mediaType.startsWith('image/')) {
+          mediaHtml = `<img src="${story.mediaData}" class="blog-media" alt="media">`;
+        } else if (story.mediaType.startsWith('video/')) {
+          mediaHtml = `<video src="${story.mediaData}" class="blog-media" controls style="max-height:180px;"></video>`;
+        }
+      }
+      const shortContent = story.content.length > 120 ? story.content.substring(0, 120) + '…' : story.content;
+      card.innerHTML = `${mediaHtml}<h3>${escapeHtml(story.title)}</h3><div class="meta">${story.date} · by ${escapeHtml(story.author)} · ${story.category}</div><p>${escapeHtml(shortContent)}</p>`;
+      blogContainer.appendChild(card);
+    });
+  }
+  
+  function renderAllStories() {
+    renderHomePageStories();
+    renderBlogPageStories();
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  function addNewStory(title, category, content, author, mediaData, mediaType) {
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    publishedStories.unshift({ title, category, content, author, date: today, mediaData: mediaData || null, mediaType: mediaType || null });
+    saveStoriesToStorage();
+    renderAllStories();
+  }
+  
+  function performSearch() {
+    const searchInput = document.getElementById('searchInput');
+    currentSearchQuery = searchInput.value;
+    renderAllStories();
+  }
+  
+  function clearSearchAndReset() {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = '';
+    currentSearchQuery = '';
+    renderAllStories();
+  }
+  
+  // Navigation
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const pages = {
+    home: document.getElementById('page-home'), about: document.getElementById('page-about'),
+    history: document.getElementById('page-history'), blog: document.getElementById('page-blog'),
+    projects: document.getElementById('page-projects'), writenews: document.getElementById('page-writenews')
+  };
+  
+  function showPage(pageId) {
+    Object.values(pages).forEach(p => p.classList.remove('active-page'));
+    if (pages[pageId]) pages[pageId].classList.add('active-page');
+    navLinks.forEach(link => { link.classList.remove('active'); if (link.dataset.page === pageId) link.classList.add('active'); });
+    if (pageId !== 'home' && pageId !== 'blog') clearSearchAndReset();
+  }
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      showPage(this.dataset.page);
+      history.pushState(null, '', '#' + this.dataset.page);
     });
   });
-</script>
-  <script>
+  
+  function handleHash() { const hash = location.hash.replace('#', '') || 'home'; if (pages[hash]) showPage(hash); }
+  window.addEventListener('hashchange', handleHash);
+  handleHash();
+  
+  // History editor
+  const historyTextarea = document.getElementById('historyContent');
+  const savedHistory = localStorage.getItem('padeco_history');
+  if (savedHistory) historyTextarea.value = savedHistory;
+  document.getElementById('saveHistoryBtn').addEventListener('click', function() {
+    localStorage.setItem('padeco_history', historyTextarea.value);
+    const msg = document.getElementById('savedMsg');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 2500);
+  });
+  
+  // News form submission
+  const form = document.getElementById('newsForm');
+  const successMsg = document.getElementById('successMessage');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const title = document.getElementById('newsTitle').value.trim();
+    const category = document.getElementById('newsCategory').value;
+    const content = document.getElementById('newsContent').value.trim();
+    const author = document.getElementById('newsAuthor').value.trim() || 'Bush Smith';
+    const file = document.getElementById('newsMedia').files[0];
+    if (!title || !content) { alert('Please fill in headline and story content.'); return; }
+    function processAndSave(mediaData, mediaType) {
+      addNewStory(title, category, content, author, mediaData, mediaType);
+      successMsg.style.display = 'block';
+      setTimeout(() => successMsg.style.display = 'none', 4000);
+      form.reset();
+      document.getElementById('newsAuthor').value = 'Bush Smith';
+    }
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) { processAndSave(e.target.result, file.type); };
+      reader.readAsDataURL(file);
+    } else { processAndSave(null, null); }
+  });
+  
+  // Search event listeners
+  document.getElementById('searchBtn').addEventListener('click', performSearch);
+  document.getElementById('searchInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') performSearch(); });
+  
+  // Initialize
+  loadStoriesFromStorage();
+  
+  // Editable content feature
   document.addEventListener('DOMContentLoaded', function () {
     const editablePageIds = ['page-home', 'page-about', 'page-blog', 'page-projects'];
     const editableSelectors = 'h1, h2, h3, h4, p, .article-title, .card p, .blog-card p, .project-card p, .meta, .about-text p, .vision-card p, .value-item p, .section-title, .hero p, .blog-card h3, .project-card h3, .card h3, .value-item h4';
-
     editablePageIds.forEach(pageId => {
       const page = document.getElementById(pageId);
       if (!page) return;
-
       const elements = page.querySelectorAll(editableSelectors);
       elements.forEach(el => {
         el.setAttribute('contenteditable', 'true');
         el.style.cursor = 'text';
         el.style.outline = 'none';
-
         const key = 'editable_' + pageId + '_' + el.className + '_' + el.tagName + '_' + (el.innerText.substring(0, 20));
         const saved = localStorage.getItem(key);
         if (saved) el.innerHTML = saved;
       });
-
-      // Add one save button per page
       const saveBtn = document.createElement('button');
       saveBtn.textContent = '💾 Save changes on this page';
       saveBtn.style.cssText = 'display:block; margin:20px auto; padding:10px 24px; background:#2e7d32; color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer; font-size:1rem;';
       page.appendChild(saveBtn);
-
       saveBtn.addEventListener('click', function () {
         elements.forEach(el => {
           const key = 'editable_' + pageId + '_' + el.className + '_' + el.tagName + '_' + (el.innerText.substring(0, 20));
