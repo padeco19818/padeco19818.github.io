@@ -459,6 +459,48 @@
         parent.insertBefore(newArticle, parent.lastElementChild.nextSibling);
         (function() {
     let stories = JSON.parse(localStorage.getItem('stories')) || [];
+          function loadStories() {
+        stories.forEach(story => {
+            // Create article item on home page
+            const articlesSection = document.querySelector('.articles-section');
+            const newArticle = document.createElement('div');
+            newArticle.className = 'article-item';
+            let mediaHtml = '';
+            if (story.media) {
+                if (story.media.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                    mediaHtml = `<img src="${story.media}" class="article-media" alt="media">`;
+                } else {
+                    mediaHtml = `<video src="${story.media}" class="article-media" controls></video>`;
+                }
+            }
+            newArticle.innerHTML = `
+                ${mediaHtml}
+                <span class="article-title">${story.title} <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${story.category} · by ${story.author}</span></span>
+            `;
+            articlesSection.appendChild(newArticle);
+
+            // Create blog card
+            const blogGrid = document.querySelector('.blog-grid');
+            const newCard = document.createElement('div');
+            newCard.className = 'blog-card';
+            const date = new Date(story.date).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+            let blogMedia = '';
+            if (story.media) {
+                if (story.media.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                    blogMedia = `<img src="${story.media}" class="blog-media" alt="media">`;
+                } else {
+                    blogMedia = `<video src="${story.media}" class="blog-media" controls></video>`;
+                }
+            }
+            newCard.innerHTML = `
+                ${blogMedia}
+                <h3>${story.title}</h3>
+                <div class="meta">${date} · by ${story.author} · ${story.category}</div>
+                <p>${story.content.substring(0, 120)}${story.content.length > 120 ? '…' : ''}</p>
+            `;
+            blogGrid.appendChild(newCard);
+        });
+    }
 
         // Add to blog page with media
         const blogGrid = document.querySelector('.blog-grid');
@@ -493,7 +535,24 @@
           `;
           blogGrid.appendChild(newCard);
         }
+// Save to stories array
+        stories.push({
+            title: title,
+            category: category,
+            content: content,
+            author: author,
+            media: file ? URL.createObjectURL(file) : null,
+            date: new Date().toISOString()
+        });
+        localStorage.setItem('stories', JSON.stringify(stories));
 
+        // Show success
+        successMsg.style.display = 'block';
+        setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+
+        // Reset form
+        form.reset();
+        document.getElementById('newsAuthor').value = 'Bush Smith';
         // Show success
         successMsg.style.display = 'block';
         setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
