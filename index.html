@@ -457,6 +457,8 @@
           <span class="article-title">${title} <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${category} · by ${author}</span></span>
         `;
         parent.insertBefore(newArticle, parent.lastElementChild.nextSibling);
+        (function() {
+    let stories = JSON.parse(localStorage.getItem('stories')) || [];
 
         // Add to blog page with media
         const blogGrid = document.querySelector('.blog-grid');
@@ -495,6 +497,7 @@
         // Show success
         successMsg.style.display = 'block';
         setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+        localStorage.setItem('stories', JSON.stringify(stories));
 
         // Reset form
         form.reset();
