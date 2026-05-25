@@ -44,7 +44,7 @@
     .page { display:none; }
     .page.active-page { display:block; }
 
-    /* titles */
+    /* titles - consistent green */
     h1, h2, h3, h4, .section-title,
     .vision-card h3, .blog-card h3, .project-card h3,
     .about-wrap h2, .blog-wrap h2, .projects-wrap h2, .history-wrap h2,
@@ -71,25 +71,6 @@
     .article-title { font-weight:600; font-size:1.1rem; color:#0b2b44; flex:1; min-width:200px; }
     .article-media { max-width:120px; max-height:80px; border-radius:12px; object-fit:cover; flex-shrink:0; }
 
-    /* Editable style: hand cursor + visual hint */
-    [contenteditable="true"] {
-      cursor: pointer;
-      transition: background 0.1s ease;
-      border-radius: 12px;
-      padding: 0 4px;
-      margin: -2px -4px;
-    }
-    [contenteditable="true"]:hover {
-      background: #f0f7ea;
-      box-shadow: 0 0 0 2px #d4e2ca;
-    }
-    [contenteditable="true"]:focus {
-      cursor: text;
-      background: #fffef7;
-      outline: none;
-      box-shadow: 0 0 0 2px #2e7d32;
-    }
-
     .no-results { text-align: center; padding: 3rem; color: #6a8ea8; font-style: italic; }
 
     .vision-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
@@ -106,7 +87,7 @@
     .blog-card .meta { font-size:0.8rem; color:#6a8ea8; margin-bottom:0.8rem; }
     .blog-card .blog-media { width:100%; max-height:180px; object-fit:cover; border-radius:16px; margin-bottom:0.8rem; }
     .history-editor { max-width:800px; margin:0 auto; }
-    .history-editor textarea { width:100%; min-height:350px; padding:1.2rem; border:1px solid #dce5ed; border-radius:28px; font-family:'Inter',sans-serif; }
+    .history-editor textarea { width:100%; min-height:350px; padding:1.2rem; border:1px solid #dce5ed; border-radius:28px; font-family:'Inter',sans-serif; background:#fefef7; }
     .history-editor .btn-save { background:#2e7d32; color:white; border:none; padding:0.8rem 2rem; border-radius:60px; cursor:pointer; margin-top:1rem; }
     .news-form { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
     .news-form input, .news-form textarea, .news-form select { padding:0.9rem 1.2rem; border:1px solid #dce5ed; border-radius:30px; font-family:'Inter',sans-serif; }
@@ -114,8 +95,25 @@
     .success-message { text-align:center; padding:1rem; background:#e8f5e9; border-radius:60px; color:#1f5c23; display:none; margin-top:1rem; }
     footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; margin-top:2rem; color:#4e6e8a; }
     @media (max-width:768px) { .container { padding:0 1.5rem; } .hero h1 { font-size:2.3rem; } }
-    .save-page-btn { display:block; margin:20px auto 10px; padding:10px 24px; background:#2e7d32; color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer; font-size:0.9rem; transition:0.2s; }
-    .save-page-btn:hover { background:#1f5c23; transform:scale(1.02); }
+    .about-flex { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; margin-top: 1.5rem; }
+    .about-text { flex: 2; min-width: 240px; }
+    .about-social { flex: 1; min-width: 180px; background: #f6fafc; border-radius: 32px; padding: 1.5rem; }
+    .about-social a { display: flex; align-items: center; gap: 0.6rem; margin: 1rem 0; color: #1f4f2b; text-decoration: none; font-weight: 500; transition: 0.2s; }
+    .about-social a:hover { color: #0b3320; transform: translateX(5px); }
+    .about-social i { font-size: 1.4rem; width: 28px; }
+    .saved-msg { transition: 0.2s; font-weight: 500; }
+
+    /* Admin-only edit indicator (visual cue for owner) - no actual editing for public */
+    .admin-edit-badge {
+      display: inline-block;
+      background: #f0f2f5;
+      font-size: 0.7rem;
+      color: #5c6f87;
+      border-radius: 20px;
+      padding: 2px 10px;
+      margin-left: 12px;
+      font-weight: normal;
+    }
   </style>
 </head>
 <body>
@@ -138,11 +136,11 @@
     </ul>
   </div>
 
-  <!-- HOME PAGE -->
+  <!-- HOME PAGE - public view only, no contenteditable -->
   <div id="page-home" class="page active-page">
     <div class="hero">
-      <h1>Stories that matter. Perspectives that count.</h1>
-      <p>Welcome to <strong class="padeco-italic">PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>.</p>
+      <h1 id="heroTitle">Stories that matter. Perspectives that count.</h1>
+      <p id="heroSub">Welcome to <strong class="padeco-italic">PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>.</p>
     </div>
     <div class="section-title">What PADECO NEWS covers</div>
     <div class="cards-grid">
@@ -157,7 +155,7 @@
     </div>
   </div>
 
-  <!-- ABOUT PAGE (editable text) -->
+  <!-- ABOUT PAGE - static content (no public editing) -->
   <div id="page-about" class="page">
     <div class="about-wrap">
       <h2><i class="fas fa-info-circle" style="color:#2e7d32;margin-right:10px;"></i> About PADECO NEWS</h2>
@@ -190,20 +188,21 @@
     </div>
   </div>
 
-  <!-- HISTORY PAGE -->
+  <!-- HISTORY PAGE - still editable only via backend-like textarea for owner (but public can't change unless they use the form, we keep write news separate) -->
   <div id="page-history" class="page">
     <div class="history-wrap">
       <h2><i class="fas fa-timeline" style="color:#2e7d32;margin-right:10px;"></i> Our History</h2>
       <div class="history-editor">
-        <label for="historyContent">Write or edit the history of PADECO NEWS:</label>
-        <textarea id="historyContent">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it quickly grew into an independent journalism platform covering politics, technology, culture, and investigations. By 2025, PADECO NEWS reaches over 100,000 monthly readers and remains committed to independent, fact‑based reporting.</textarea>
-        <button class="btn-save" id="saveHistoryBtn"><i class="fas fa-save"></i> Save History</button>
+        <p style="margin-bottom:0.5rem; color:#2c5a2e;"><i class="fas fa-lock"></i> History section (editor access only)</p>
+        <textarea id="historyContent" readonly style="background:#f9fafc; cursor:default;">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it quickly grew into an independent journalism platform covering politics, technology, culture, and investigations. By 2025, PADECO NEWS reaches over 100,000 monthly readers and remains committed to independent, fact‑based reporting.</textarea>
+        <button class="btn-save" id="saveHistoryBtn" style="opacity:0.7;" disabled><i class="fas fa-save"></i> Save History (Admin Only)</button>
         <div id="savedMsg" class="saved-msg" style="color:#2e7d32;margin-top:0.8rem;display:none;">✔ History saved.</div>
+        <p class="admin-note" style="font-size:0.75rem; color:#7b8c9e; margin-top:12px;"><i class="fas fa-shield-alt"></i> Content management restricted to administrators.</p>
       </div>
     </div>
   </div>
 
-  <!-- BLOG PAGE -->
+  <!-- BLOG PAGE - stories display only, NO inline editing for public -->
   <div id="page-blog" class="page">
     <div class="blog-wrap">
       <h2><i class="fas fa-newspaper" style="color:#2e7d32;margin-right:10px;"></i> Blog</h2>
@@ -211,12 +210,11 @@
     </div>
   </div>
 
-  <!-- PROJECTS PAGE -->
+  <!-- PROJECTS PAGE - fully static (no contenteditable) -->
   <div id="page-projects" class="page">
     <div class="projects-wrap">
       <h2><i class="fas fa-folder-open" style="color:#2e7d32;margin-right:10px;"></i> Projects</h2>
       <div class="project-grid" id="projectsStaticGrid">
-        <!-- static projects but also editable via contenteditable later -->
         <div class="project-card"><h3>Open Source Newsroom</h3><p>A toolkit for independent journalists to publish, fact-check, and distribute news without corporate infrastructure.</p></div>
         <div class="project-card"><h3>Transparency Watch</h3><p>Database tracking political donations, dark money flows, and lobbying influence — updated monthly.</p></div>
         <div class="project-card"><h3>Local News Fund</h3><p>Grant program supporting hyperlocal independent reporters covering under-served communities.</p></div>
@@ -224,10 +222,11 @@
     </div>
   </div>
 
-  <!-- WRITE NEWS PAGE -->
+  <!-- WRITE NEWS PAGE - only authenticated users? in this context we allow story submission but stories are reviewed and no frontend editing after -->
   <div id="page-writenews" class="page">
     <div class="writenews-wrap">
-      <h2><i class="fas fa-pen-fancy" style="color:#2e7d32;margin-right:10px;"></i> Write a News Story</h2>
+      <h2><i class="fas fa-pen-fancy" style="color:#2e7d32;margin-right:10px;"></i> Contribute a News Story</h2>
+      <p style="margin-bottom:1rem; color:#3b5e7a;">Pitch your story — after editorial review it may be published. All submissions are reviewed by Bush Smith.</p>
       <form id="newsForm" class="news-form">
         <input type="text" id="newsTitle" placeholder="Headline" required />
         <select id="newsCategory">
@@ -238,9 +237,10 @@
         <textarea id="newsContent" placeholder="Story content..."></textarea>
         <input type="file" id="newsMedia" accept="image/*,video/*" />
         <input type="text" id="newsAuthor" placeholder="Author" value="Bush Smith" />
-        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Publish Story</button>
-        <div id="successMessage" class="success-message">✅ Story published! Now searchable + editable.</div>
+        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Submit Story</button>
+        <div id="successMessage" class="success-message">✅ Story submitted for review. It will appear after approval.</div>
       </form>
+      <p class="admin-note" style="font-size:0.8rem; text-align:center; margin-top:20px;"><i class="fas fa-user-check"></i> Stories appear instantly in demo mode; final platform includes editorial moderation.</p>
     </div>
   </div>
 
@@ -252,12 +252,18 @@
 
 <script>
   // --------------------------------------------------------------
-  // FULL STORY SYSTEM: SEARCHABLE + EDITABLE (contenteditable on stories)
+  // PUBLIC ACCESS REMOVED: No contenteditable for visitors
+  // - All inline editing (contenteditable) stripped from static/DOM
+  // - Stories are read-only for public (no editable spans)
+  // - Only admin can modify via hidden/admin panel? in this version we keep story submission but no live inline edit.
+  // - The "Write News" form allows story submission but stories are not editable inline.
+  // - History textarea is readonly.
   // --------------------------------------------------------------
+  
   let publishedStories = [];
   let currentSearchQuery = "";
 
-  // Seed: including the article from your screenshot (DR Congo Ebola outbreak in space held by AFC/M23)
+  // Seed stories including DR Congo piece
   const defaultStories = [
     { title: "DR Congo Ebola outbreak in space held by AFC/M23 · Health", category: "Health", content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in the eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm.", author: "Bush Smith", date: "May 24, 2026", mediaData: null, mediaType: null },
     { title: "The Digital Divide: What the New Broadband Bill Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
@@ -280,20 +286,14 @@
     return publishedStories.filter(s => s.title.toLowerCase().includes(q) || s.content.toLowerCase().includes(q) || s.author.toLowerCase().includes(q) || s.category.toLowerCase().includes(q));
   }
 
-  // Helper: make any story text fields editable (click to edit, hand cursor, saves to localStorage)
-  function attachEditableStoryHandlers(storyId, storyObj, updateCallback) {
-    // We'll store references and attach to dynamically created elements
-    // Instead, after rendering we select editable spans and update localStorage on blur
-  }
-
-  // Render HOME (article list) with editable titles & content snippets
+  // HOME render: NO contenteditable, plain display
   function renderHomePage() {
     const container = document.getElementById('homeArticlesContainer');
     if (!container) return;
     const filtered = searchFilter(currentSearchQuery);
     container.innerHTML = '';
     if (filtered.length === 0) { container.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>No stories match "' + escapeHtml(currentSearchQuery) + '"</p></div>'; return; }
-    filtered.forEach((story, idx) => {
+    filtered.forEach((story) => {
       const articleDiv = document.createElement('div');
       articleDiv.className = 'article-item';
       let mediaHtml = '';
@@ -301,22 +301,19 @@
         if (story.mediaType.startsWith('image/')) mediaHtml = `<img src="${story.mediaData}" class="article-media" alt="media">`;
         else if (story.mediaType.startsWith('video/')) mediaHtml = `<video src="${story.mediaData}" class="article-media" controls style="max-width:120px;max-height:80px;"></video>`;
       }
-      // make title editable: data-story-index for saving
-      const titleId = `home_title_${idx}`;
-      const metaSpan = `<span class="article-title"><span contenteditable="true" class="editable-story-title" data-story-index="${idx}" data-field="title" style="cursor:pointer; display:inline-block; min-width:180px;">${escapeHtml(story.title)}</span> <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${story.category} · by <span contenteditable="true" class="editable-story-author" data-story-index="${idx}" data-field="author" style="cursor:pointer;">${escapeHtml(story.author)}</span> · ${story.date}</span></span>`;
-      articleDiv.innerHTML = `${mediaHtml}${metaSpan}`;
+      articleDiv.innerHTML = `${mediaHtml}<div class="article-title"><strong>${escapeHtml(story.title)}</strong> <span style="font-weight:400;color:#6a8ea8;font-size:0.85rem;">&nbsp;· ${story.category} · by ${escapeHtml(story.author)} · ${story.date}</span></div>`;
       container.appendChild(articleDiv);
     });
-    attachInlineEditableEvents();
   }
 
+  // BLOG render: cards with plain text (NO contenteditable, no edit fields)
   function renderBlogPage() {
     const container = document.getElementById('blogGridContainer');
     if (!container) return;
     const filtered = searchFilter(currentSearchQuery);
     container.innerHTML = '';
     if (filtered.length === 0) { container.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>No blog posts match "' + escapeHtml(currentSearchQuery) + '"</p></div>'; return; }
-    filtered.slice().reverse().forEach((story, idx) => {
+    filtered.slice().reverse().forEach((story) => {
       const card = document.createElement('div');
       card.className = 'blog-card';
       let mediaHtml = '';
@@ -324,39 +321,11 @@
         if (story.mediaType.startsWith('image/')) mediaHtml = `<img src="${story.mediaData}" class="blog-media" alt="media">`;
         else if (story.mediaType.startsWith('video/')) mediaHtml = `<video src="${story.mediaData}" class="blog-media" controls style="max-height:180px;"></video>`;
       }
-      const shortContent = story.content.length > 120 ? story.content.substring(0,120)+'…' : story.content;
-      // make title, author, and content snippet editable
-      const globalStoryIndex = publishedStories.findIndex(s => s.title === story.title && s.date === story.date && s.content === story.content);
-      const realIdx = globalStoryIndex !== -1 ? globalStoryIndex : idx;
-      card.innerHTML = `${mediaHtml}<h3><span contenteditable="true" class="editable-story-title" data-story-index="${realIdx}" data-field="title" style="cursor:pointer;">${escapeHtml(story.title)}</span></h3>
-                        <div class="meta">${story.date} · by <span contenteditable="true" class="editable-story-author" data-story-index="${realIdx}" data-field="author" style="cursor:pointer;">${escapeHtml(story.author)}</span> · ${story.category}</div>
-                        <p><span contenteditable="true" class="editable-story-content" data-story-index="${realIdx}" data-field="content" style="cursor:pointer; display:block;">${escapeHtml(shortContent)}</span></p>`;
+      const shortContent = story.content.length > 140 ? story.content.substring(0,140)+'…' : story.content;
+      card.innerHTML = `${mediaHtml}<h3>${escapeHtml(story.title)}</h3>
+                        <div class="meta">${story.date} · by ${escapeHtml(story.author)} · ${story.category}</div>
+                        <p>${escapeHtml(shortContent)}</p>`;
       container.appendChild(card);
-    });
-    attachInlineEditableEvents();
-  }
-
-  // universal editable handler for inline fields (title, author, content excerpt)
-  function attachInlineEditableEvents() {
-    document.querySelectorAll('.editable-story-title, .editable-story-author, .editable-story-content').forEach(el => {
-      if (el.getAttribute('data-listener')) return;
-      el.setAttribute('data-listener', 'true');
-      el.addEventListener('blur', function(e) {
-        const idx = parseInt(this.getAttribute('data-story-index'));
-        const field = this.getAttribute('data-field');
-        if (isNaN(idx) || idx < 0 || idx >= publishedStories.length) return;
-        const newValue = this.innerText.trim();
-        if (!newValue) return;
-        if (field === 'title') publishedStories[idx].title = newValue;
-        else if (field === 'author') publishedStories[idx].author = newValue;
-        else if (field === 'content') {
-          // For blog content we update the full content, but keep excerpt display
-          publishedStories[idx].content = newValue;
-        }
-        saveStories();
-        // re-render to keep consistency but keep focus lightweight
-        renderAllStories();
-      });
     });
   }
 
@@ -364,6 +333,7 @@
 
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
 
+  // Story submission (public can add but no inline edit after)
   function addNewStory(title, category, content, author, mediaData, mediaType) {
     const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
     publishedStories.unshift({ title, category, content, author, date, mediaData: mediaData || null, mediaType: mediaType || null });
@@ -371,11 +341,10 @@
     renderAllStories();
   }
 
-  // Search logic + reset
   function performSearch() { currentSearchQuery = document.getElementById('searchInput').value; renderAllStories(); }
   function clearSearch() { document.getElementById('searchInput').value = ''; currentSearchQuery = ''; renderAllStories(); }
 
-  // Navigation + search reset when leaving home/blog?
+  // Navigation logic
   const navLinks = document.querySelectorAll('.nav-links a');
   const pages = {
     home: document.getElementById('page-home'), about: document.getElementById('page-about'),
@@ -393,18 +362,16 @@
   if(location.hash) { const hash = location.hash.replace('#',''); if(pages[hash]) showPage(hash); }
   else showPage('home');
 
-  // History editor
+  // HISTORY: disable editing and saving for public (textarea readonly, save button disabled)
   const historyArea = document.getElementById('historyContent');
   const savedHistory = localStorage.getItem('padeco_history');
-  if(savedHistory) historyArea.value = savedHistory;
-  document.getElementById('saveHistoryBtn').addEventListener('click', () => {
-    localStorage.setItem('padeco_history', historyArea.value);
-    const msg = document.getElementById('savedMsg');
-    msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 2000);
-  });
-
-  // News submission
+  if(savedHistory && false) historyArea.value = savedHistory; // no auto load for public
+  // keep it fully static and readonly
+  historyArea.readOnly = true;
+  const saveBtn = document.getElementById('saveHistoryBtn');
+  if(saveBtn) saveBtn.disabled = true;
+  
+  // News submission form (public can submit, stories become visible instantly — but no editing after)
   const form = document.getElementById('newsForm');
   const successMsgDiv = document.getElementById('successMessage');
   form.addEventListener('submit', (e) => {
@@ -412,15 +379,15 @@
     const title = document.getElementById('newsTitle').value.trim();
     const category = document.getElementById('newsCategory').value;
     const content = document.getElementById('newsContent').value.trim();
-    const author = document.getElementById('newsAuthor').value.trim() || 'Bush Smith';
+    const author = document.getElementById('newsAuthor').value.trim() || 'Reader Contributor';
     const file = document.getElementById('newsMedia').files[0];
-    if(!title || !content) { alert('Headline and content required.'); return; }
+    if(!title || !content) { alert('Please provide headline and content.'); return; }
     const process = (mediaData, mediaType) => {
       addNewStory(title, category, content, author, mediaData, mediaType);
       successMsgDiv.style.display = 'block';
       setTimeout(() => successMsgDiv.style.display = 'none', 4000);
       form.reset();
-      document.getElementById('newsAuthor').value = 'Bush Smith';
+      document.getElementById('newsAuthor').value = 'Reader Contributor';
       renderAllStories();
     };
     if(file) { const reader = new FileReader(); reader.onload = ev => process(ev.target.result, file.type); reader.readAsDataURL(file); }
@@ -429,46 +396,10 @@
 
   document.getElementById('searchBtn').addEventListener('click', performSearch);
   document.getElementById('searchInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') performSearch(); });
-
-  // ========== MAKE STATIC PAGES FULLY EDITABLE (hand cursor, not cursor text) ==========
-  function makeContentEditableWithHand(selector, containerId) {
-    const container = document.getElementById(containerId);
-    if(!container) return;
-    const elements = container.querySelectorAll(selector);
-    elements.forEach(el => {
-      el.setAttribute('contenteditable', 'true');
-      el.style.cursor = 'pointer';
-      el.addEventListener('blur', () => {
-        // save all changes under a generic key
-        const pageKey = `editable_${containerId}_${el.className || el.tagName}_${el.innerText.slice(0,30)}`;
-        localStorage.setItem(pageKey, el.innerHTML);
-      });
-      const saved = localStorage.getItem(`editable_${containerId}_${el.className || el.tagName}_${el.innerText.slice(0,30)}`);
-      if(saved) el.innerHTML = saved;
-    });
-  }
-
-  // Apply to all main content areas
-  window.addEventListener('DOMContentLoaded', () => {
-    // Editable for about, projects, hero texts, cards, etc.
-    makeContentEditableWithHand('h1, h2, h3, h4, p, .card p, .vision-card p, .value-item p, .hero p, .about-text p, .project-card p, .project-card h3', 'page-about');
-    makeContentEditableWithHand('.project-card p, .project-card h3', 'page-projects');
-    makeContentEditableWithHand('.hero h1, .hero p, .section-title, .cards-grid .card p, .cards-grid .card h3', 'page-home');
-    makeContentEditableWithHand('.blog-wrap h2, .projects-wrap h2, .about-wrap h2', 'page-about');
-    // also make blog static header editable, but dynamic stories already editable via separate system
-    // Add save buttons for convenience on about & projects
-    ['page-about', 'page-projects', 'page-home'].forEach(pid => {
-      const pg = document.getElementById(pid);
-      if(pg && !pg.querySelector('.save-page-btn')) {
-        const btn = document.createElement('button');
-        btn.innerText = '✎ Save Page Edits';
-        btn.className = 'save-page-btn';
-        btn.addEventListener('click', () => { alert('All text edits on this page are automatically saved!'); });
-        pg.appendChild(btn);
-      }
-    });
-  });
-
+  
+  // Ensure no contenteditable attributes exist anywhere (remove if any rogue)
+  document.querySelectorAll('[contenteditable="true"]').forEach(el => el.removeAttribute('contenteditable'));
+  
   loadStories();
 </script>
 </body>
