@@ -62,22 +62,125 @@
     .no-results { text-align:center; padding:3rem; color:#6a8ea8; }
     .history-editor textarea { width:100%; min-height:250px; padding:1rem; border-radius:28px; background:#f9fafc; }
     
-    /* Comment Section Styles */
-    .comments-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 2px solid #eef2f8; }
-    .comments-title { font-size: 1.3rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; color: #2e7d32; }
-    .comment-form { background: #f8fafd; border-radius: 32px; padding: 1.5rem; margin-bottom: 1.5rem; }
-    .comment-form input, .comment-form textarea { width: 100%; padding: 0.8rem 1rem; margin-bottom: 1rem; border: 1px solid #dce5ed; border-radius: 24px; font-family: 'Inter', sans-serif; }
-    .comment-form textarea { resize: vertical; min-height: 80px; }
-    .comments-list { max-height: 400px; overflow-y: auto; }
-    .comment-item { background: #fefefe; border-radius: 24px; padding: 1rem 1.2rem; margin-bottom: 1rem; border: 1px solid #eef2f8; transition: 0.2s; }
-    .comment-item:hover { background: #fafcff; }
-    .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
-    .comment-author { font-weight: 700; color: #2e7d32; display: flex; align-items: center; gap: 0.4rem; }
-    .comment-date { font-size: 0.7rem; color: #8ba0b5; }
-    .comment-text { color: #2c475e; line-height: 1.5; margin-top: 0.3rem; }
-    .delete-comment { background: none; border: none; color: #c62828; cursor: pointer; font-size: 0.8rem; padding: 0.2rem 0.5rem; border-radius: 20px; transition: 0.2s; }
-    .delete-comment:hover { background: #ffebee; transform: scale(1.05); }
-    .empty-comments { text-align: center; padding: 2rem; color: #8ba0b5; font-style: italic; }
+    /* ========== COMMENT SECTION - PROMINENT & CLEAR ========== */
+    .comments-section {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: #f8fafd;
+      border-radius: 32px;
+      border-top: 3px solid #2e7d32;
+    }
+    .comments-title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #2e7d32;
+      font-weight: 700;
+      border-bottom: 2px solid #e0e8f0;
+      padding-bottom: 0.8rem;
+    }
+    .comment-form {
+      background: white;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid #e0e8f0;
+    }
+    .comment-form input, .comment-form textarea {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      border: 1px solid #dce5ed;
+      border-radius: 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+    .comment-form input:focus, .comment-form textarea:focus {
+      outline: none;
+      border-color: #2e7d32;
+      box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+    }
+    .comment-form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .comments-list {
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .comment-item {
+      background: white;
+      border-radius: 24px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #eef2f8;
+      transition: 0.2s;
+    }
+    .comment-item:hover {
+      background: #fefef7;
+      transform: translateX(3px);
+    }
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.7rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .comment-author {
+      font-weight: 700;
+      color: #2e7d32;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    .comment-date {
+      font-size: 0.7rem;
+      color: #8ba0b5;
+    }
+    .comment-text {
+      color: #2c475e;
+      line-height: 1.6;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+    .delete-comment {
+      background: none;
+      border: none;
+      color: #c62828;
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      transition: 0.2s;
+    }
+    .delete-comment:hover {
+      background: #ffebee;
+      transform: scale(1.05);
+    }
+    .empty-comments {
+      text-align: center;
+      padding: 2.5rem;
+      color: #8ba0b5;
+      font-style: italic;
+      background: white;
+      border-radius: 24px;
+    }
+    .comment-badge {
+      background: #2e7d32;
+      color: white;
+      border-radius: 30px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      margin-left: 0.5rem;
+    }
     
     /* Modal Styles */
     .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000; justify-content:center; align-items:center; overflow-y:auto; padding:2rem; }
@@ -92,13 +195,13 @@
     /* Story Reader */
     .story-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:10001; justify-content:center; align-items:center; backdrop-filter:blur(10px); overflow-y:auto; padding:2rem; }
     .story-modal.active { display:flex; }
-    .story-full { padding:2rem 3rem 3rem; }
+    .story-full { padding:2rem 3rem 1rem 3rem; }
     .story-full h2 { font-size:2.4rem; font-family:'Playfair Display',serif; margin-bottom:1rem; }
     .story-full .story-meta { display:flex; gap:1.5rem; margin:1rem 0 1.5rem; color:#5a7d9a; border-bottom:2px solid #eef2f8; padding-bottom:1rem; flex-wrap:wrap; }
     .story-full .story-media-full { margin:1rem 0 2rem; text-align:center; background:#f8fafc; border-radius:32px; padding:1rem; }
     .story-full img, .story-full video { max-width:100%; border-radius:28px; max-height:500px; }
     .story-full .story-body { font-size:1.1rem; line-height:1.7; }
-    @media (max-width:700px) { .story-full { padding:1.5rem; } .story-full h2 { font-size:1.8rem; } }
+    @media (max-width:700px) { .story-full { padding:1.5rem; } .story-full h2 { font-size:1.8rem; } .comments-section { padding:1rem; } }
   </style>
 </head>
 <body>
@@ -119,7 +222,7 @@
 
   <!-- HOME PAGE -->
   <div id="page-home" class="page active-page">
-    <div class="hero"><h1>Stories that matter. Perspectives that count.</h1><p><strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>. 📝 Leave comments on any story!</p></div>
+    <div class="hero"><h1>Stories that matter. Perspectives that count.</h1><p><strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>. <span style="background:#2e7d32; color:white; padding:0.2rem 0.8rem; border-radius:30px; font-size:0.9rem;"><i class="fas fa-comment-dots"></i> Leave comments on any story</span></p></div>
     <div class="section-title">What PADECO NEWS covers</div>
     <div class="cards-grid">
       <div class="card"><h3><i class="fas fa-landmark"></i> Politics &amp; Policy</h3><p>Analysis, investigations, and reporting on government.</p></div>
@@ -130,24 +233,23 @@
     <div class="articles-section"><h2 style="font-family:'Playfair Display';font-size:1.8rem;text-align:center;margin-bottom:2rem;">Latest from PADECO NEWS</h2><div id="homeArticlesContainer"></div></div>
   </div>
 
-  <!-- ABOUT PAGE - COMPLETE -->
+  <!-- ABOUT PAGE -->
   <div id="page-about" class="page">
     <div class="about-wrap">
       <h2><i class="fas fa-info-circle"></i> About PADECO NEWS</h2>
       <div id="aboutContent" class="about-flex">
         <div class="about-text">
           <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
-          <p style="margin-top:0.8rem;">Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
+          <p style="margin-top:0.8rem;">Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest.</p>
           <p style="margin-top:0.8rem;">Follow Bush Smith on social media for updates, breaking stories, and behind‑the‑scenes insights.</p>
         </div>
         <div class="about-social">
-          <a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a>
           <a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a>
           <a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a>
         </div>
       </div>
     </div>
-    <div class="vision-section" id="visionSection">
+    <div class="vision-section">
       <h2 style="font-family:'Playfair Display';font-size:2rem;text-align:center;margin-bottom:2rem;">Our foundation</h2>
       <div class="vision-grid" id="visionGrid">
         <div class="vision-card"><div class="icon"><i class="fas fa-eye"></i></div><h3>Vision</h3><p>Independent journalism for an informed, empowered society. A world where truth is accessible to everyone.</p></div>
@@ -173,44 +275,49 @@
 
   <!-- PROJECTS PAGE -->
   <div id="page-projects" class="page">
-    <div class="projects-wrap"><h2><i class="fas fa-folder-open"></i> Projects</h2><div class="blog-grid"><div class="blog-card"><h3>🗞️ Open Source Newsroom</h3><p>Toolkit for independent journalists to publish without corporate gatekeepers.</p></div><div class="blog-card"><h3>💰 Transparency Watch</h3><p>Database tracking political donations and dark money influence.</p></div><div class="blog-card"><h3>🌱 Local News Fund</h3><p>Grant program supporting hyperlocal independent reporters.</p></div></div></div>
+    <div class="projects-wrap"><h2><i class="fas fa-folder-open"></i> Projects</h2><div class="blog-grid"><div class="blog-card"><h3>🗞️ Open Source Newsroom</h3><p>Toolkit for independent journalists.</p></div><div class="blog-card"><h3>💰 Transparency Watch</h3><p>Tracking political donations.</p></div><div class="blog-card"><h3>🌱 Local News Fund</h3><p>Grant program for hyperlocal reporters.</p></div></div></div>
   </div>
 
-  <!-- WRITE NEWS PAGE - ADMIN ONLY (hidden by default) -->
+  <!-- WRITE NEWS PAGE - ADMIN ONLY -->
   <div id="page-writenews" class="page">
     <div class="writenews-wrap"><h2><i class="fas fa-pen-fancy"></i> Admin: Publish News Story</h2><p style="margin-bottom:1rem; color:#c62828;"><i class="fas fa-lock"></i> This page is only visible to administrators.</p>
       <form id="newsForm" class="news-form"><input type="text" id="newsTitle" placeholder="Headline" required><select id="newsCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select><textarea id="newsContent" placeholder="Full story content..." rows="6" required></textarea><input type="file" id="newsMedia" accept="image/*,video/*"><input type="text" id="newsAuthor" placeholder="Author" value="Bush Smith"><button type="submit" class="btn-submit"><i class="fas fa-upload"></i> Publish Story</button><div id="successMessage" class="success-message">✅ Story published!</div></form>
     </div>
   </div>
 
-  <footer><p>© 2026 <strong>PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong> · Readers can leave comments on every story</p></footer>
+  <footer><p>© 2026 <strong>PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong> · 📝 Readers can leave comments below every story</p></footer>
 </div>
 
 <!-- Admin Login Modal -->
 <div id="adminModal" class="modal"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-lock"></i> Admin Login</h2><span class="modal-close" id="closeAdminModal">&times;</span></div><form id="adminLoginForm"><input type="password" id="adminPassword" placeholder="Enter admin password" style="width:100%; padding:1rem; border-radius:30px; border:1px solid #ddd; margin-bottom:1rem;"><button type="submit" class="btn-submit" style="width:100%;">Login</button></form><p style="margin-top:1rem; font-size:0.8rem; color:#666;">Demo password: <strong>admin123</strong></p></div></div>
 
 <!-- Admin Dashboard Modal -->
-<div id="dashboardModal" class="modal"><div class="modal-content" style="max-width:900px;"><div class="modal-header"><h2><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2><span class="modal-close" id="closeDashboardModal">&times;</span></div><div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;"><button id="editAboutBtn" class="btn-submit"><i class="fas fa-edit"></i> Edit About Page</button><button id="editVisionBtn" class="btn-submit"><i class="fas fa-eye"></i> Edit Vision/Mission</button><button id="editValuesBtn" class="btn-submit"><i class="fas fa-gem"></i> Edit Core Values</button><button id="editHistoryBtn" class="btn-submit"><i class="fas fa-history"></i> Edit History</button><button id="manageStoriesBtn" class="btn-submit"><i class="fas fa-newspaper"></i> Manage Stories</button><button id="manageCommentsBtn" class="btn-submit"><i class="fas fa-comments"></i> Manage All Comments</button><button id="logoutAdminBtn" class="btn-submit btn-danger" style="background:#c62828;"><i class="fas fa-sign-out-alt"></i> Logout</button></div><div id="adminDashboardContent"><p>Click any button above to edit content. All changes are saved automatically.</p><hr style="margin:1rem 0;"><h3>Features:</h3><ul style="margin-left:1.5rem;"><li>Readers can now leave comments on any story</li><li>Comments can be deleted by admin</li><li>Write News page is now admin-only</li></ul></div></div></div>
+<div id="dashboardModal" class="modal"><div class="modal-content" style="max-width:900px;"><div class="modal-header"><h2><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2><span class="modal-close" id="closeDashboardModal">&times;</span></div><div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;"><button id="editAboutBtn" class="btn-submit"><i class="fas fa-edit"></i> Edit About Page</button><button id="editVisionBtn" class="btn-submit"><i class="fas fa-eye"></i> Edit Vision/Mission</button><button id="editValuesBtn" class="btn-submit"><i class="fas fa-gem"></i> Edit Core Values</button><button id="editHistoryBtn" class="btn-submit"><i class="fas fa-history"></i> Edit History</button><button id="manageStoriesBtn" class="btn-submit"><i class="fas fa-newspaper"></i> Manage Stories</button><button id="manageCommentsBtn" class="btn-submit"><i class="fas fa-comments"></i> Manage All Comments</button><button id="logoutAdminBtn" class="btn-submit btn-danger" style="background:#c62828;"><i class="fas fa-sign-out-alt"></i> Logout</button></div><div id="adminDashboardContent"><p>Click any button above to edit content. All changes are saved automatically.</p><hr style="margin:1rem 0;"><h3><i class="fas fa-comment-dots"></i> Comment System Active:</h3><ul style="margin-left:1.5rem;"><li>Readers can leave comments on any story</li><li>Comments appear immediately below the story</li><li>Admin can delete inappropriate comments</li><li>Write News page is now admin-only</li></ul></div></div></div>
 
 <!-- Edit Story Modal -->
 <div id="editStoryModal" class="modal"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-edit"></i> Edit Story</h2><span class="modal-close" id="closeEditStoryModal">&times;</span></div><form id="editStoryForm"><input type="text" id="editStoryTitle" placeholder="Title" required><select id="editStoryCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select><textarea id="editStoryContent" rows="8" placeholder="Story content..."></textarea><input type="text" id="editStoryAuthor" placeholder="Author"><input type="hidden" id="editStoryIndex"><div style="display:flex; gap:1rem; margin-top:1rem;"><button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save Changes</button><button type="button" id="deleteStoryBtn" class="btn-submit btn-danger"><i class="fas fa-trash"></i> Delete Story</button></div></form></div></div>
 
-<!-- Story Reader Modal with Comments -->
-<div id="storyReaderModal" class="story-modal"><div class="modal-content" style="max-width:1100px;"><div class="modal-close" id="closeReaderModal" style="position:sticky; top:20px; right:25px; float:right; font-size:2rem; cursor:pointer; background:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;">&times;</div><div id="storyFullContent" class="story-full"></div><div id="commentsContainer" class="comments-section" style="padding:0 3rem 3rem 3rem;"></div></div></div>
+<!-- Story Reader Modal with COMMENTS SECTION at the bottom -->
+<div id="storyReaderModal" class="story-modal">
+  <div class="modal-content" style="max-width:1100px;">
+    <div class="modal-close" id="closeReaderModal" style="position:sticky; top:20px; right:25px; float:right; font-size:2rem; cursor:pointer; background:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; z-index:10;">&times;</div>
+    <div id="storyFullContent" class="story-full"></div>
+    <div id="commentsSectionContainer" class="comments-section" style="margin:0 2rem 2rem 2rem;"></div>
+  </div>
+</div>
 
 <script>
   // ==============================================================
-  // COMPLETE PADECO NEWS with:
-  // - Admin-only Write News page
-  // - Comment system on every story
-  // - Full admin editing capabilities
-  // Password: admin123
+  // COMPLETE PADECO NEWS with PROMINENT COMMENT SECTION
+  // Comments appear BELOW every story when opened
+  // Admin password: admin123
   // ==============================================================
   
   let publishedStories = [];
   let currentSearchQuery = "";
   let isAdmin = false;
   let currentStoryComments = {};
+  let currentOpenStoryId = null;
   
   // Load comments from localStorage
   function loadComments() {
@@ -227,7 +334,7 @@
     const comment = {
       id: Date.now(),
       author: author.substring(0, 50),
-      text: text.substring(0, 500),
+      text: text.substring(0, 1000),
       date: new Date().toLocaleString()
     };
     if (!currentStoryComments[storyId]) currentStoryComments[storyId] = [];
@@ -243,30 +350,44 @@
     }
   }
   
-  function renderComments(storyId) {
-    const container = document.getElementById('commentsContainer');
+  // Render comments section - PROMINENT and CLEAR
+  function renderCommentsSection(storyId) {
+    const container = document.getElementById('commentsSectionContainer');
     if (!container) return;
     const comments = currentStoryComments[storyId] || [];
+    const commentCount = comments.length;
+    
     let commentsHtml = `
-      <div class="comments-title"><i class="fas fa-comments"></i> Reader Comments (${comments.length})</div>
+      <div class="comments-title">
+        <i class="fas fa-comments" style="font-size:1.8rem;"></i> 
+        Reader Comments 
+        <span class="comment-badge">${commentCount}</span>
+      </div>
       <div class="comment-form">
-        <input type="text" id="commentAuthorInput" placeholder="Your name (optional)" maxlength="50">
-        <textarea id="commentTextInput" placeholder="Share your thoughts on this story..." rows="3"></textarea>
-        <button class="btn-submit" id="submitCommentBtn" style="padding:0.6rem 1.5rem;"><i class="fas fa-paper-plane"></i> Post Comment</button>
+        <h4 style="margin-bottom:0.8rem; color:#2e7d32;"><i class="fas fa-pen"></i> Leave your thoughts</h4>
+        <input type="text" id="commentAuthorInput" placeholder="Your name (optional)" maxlength="50" style="margin-bottom:0.8rem;">
+        <textarea id="commentTextInput" placeholder="Share your perspective on this story... (be respectful)" rows="3"></textarea>
+        <button class="btn-submit" id="submitCommentBtn" style="padding:0.7rem 1.5rem; margin-top:0.5rem;">
+          <i class="fas fa-paper-plane"></i> Post Comment
+        </button>
       </div>
       <div class="comments-list" id="commentsList">
     `;
-    if (comments.length === 0) {
-      commentsHtml += `<div class="empty-comments"><i class="fas fa-comment-dots"></i> No comments yet. Be the first to share your thoughts!</div>`;
+    
+    if (commentCount === 0) {
+      commentsHtml += `<div class="empty-comments"><i class="fas fa-comment-dots" style="font-size:2rem; opacity:0.5; margin-bottom:0.5rem; display:block;"></i> No comments yet. Be the first to share your thoughts on this story!</div>`;
     } else {
       comments.forEach(comment => {
         commentsHtml += `
           <div class="comment-item">
             <div class="comment-header">
-              <div class="comment-author"><i class="fas fa-user-circle"></i> ${escapeHtml(comment.author)}</div>
-              <div style="display:flex; align-items:center; gap:0.5rem;">
+              <div class="comment-author">
+                <i class="fas fa-user-circle" style="font-size:1.2rem;"></i> 
+                ${escapeHtml(comment.author)}
+              </div>
+              <div style="display:flex; align-items:center; gap:0.8rem;">
                 <span class="comment-date"><i class="far fa-clock"></i> ${comment.date}</span>
-                ${isAdmin ? `<button class="delete-comment" onclick="window.deleteCommentAndRefresh('${storyId}', ${comment.id})"><i class="fas fa-trash-alt"></i> Delete</button>` : ''}
+                ${isAdmin ? `<button class="delete-comment" onclick="window.deleteCommentFromView('${storyId}', ${comment.id})"><i class="fas fa-trash-alt"></i> Delete</button>` : ''}
               </div>
             </div>
             <div class="comment-text">${escapeHtml(comment.text).replace(/\n/g, '<br>')}</div>
@@ -283,29 +404,31 @@
       submitBtn.onclick = () => {
         const author = document.getElementById('commentAuthorInput').value;
         const text = document.getElementById('commentTextInput').value;
-        if (addComment(storyId, author, text)) {
+        if (text.trim()) {
+          addComment(storyId, author, text);
           document.getElementById('commentTextInput').value = '';
-          renderComments(storyId);
+          document.getElementById('commentAuthorInput').value = '';
+          renderCommentsSection(storyId);
         } else {
-          alert('Please enter a comment.');
+          alert('Please enter a comment before posting.');
         }
       };
     }
   }
   
-  window.deleteCommentAndRefresh = function(storyId, commentId) {
-    if (confirm('Delete this comment?')) {
+  window.deleteCommentFromView = function(storyId, commentId) {
+    if (confirm('Delete this comment permanently?')) {
       deleteComment(storyId, commentId);
-      renderComments(storyId);
+      renderCommentsSection(storyId);
     }
   };
   
-  // Default stories
+  // Default stories with unique IDs
   const defaultStories = [
-    { id: Date.now() + 1, title: "DR Congo Ebola Crisis Escalates Amid AFC/M23 Blockades", category: "Health", content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm. Humanitarian corridors are urgently needed. Local health workers face extreme risks, and the international community calls for immediate ceasefire to allow vaccination campaigns. Over 200 suspected cases have emerged in the last month alone, with mortality rates climbing due to lack of treatment access.", author: "Bush Smith", date: "May 24, 2026", mediaData: null, mediaType: null },
-    { id: Date.now() + 2, title: "The Digital Divide: What the New Broadband Bill Really Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households and includes historic funding for tribal lands. Experts say that without last-mile infrastructure, the gap might persist. The legislation creates a digital equity fund that could transform education and telehealth.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
-    { id: Date.now() + 3, title: "AI in the Newsroom — How Algorithms Are Changing Journalism", category: "Technology & Society", content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds. Concerns about bias and transparency loom. Yet many editors argue that AI can help reporters focus on deeper investigative work.", author: "Bush Smith", date: "March 28, 2025", mediaData: null, mediaType: null },
-    { id: Date.now() + 4, title: "The Revival of Independent Media — A Global Movement", category: "Culture & Identity", content: "How independent journalists are reshaping the media landscape across five continents. From newsletters to podcasts, the shift is undeniable. The article highlights new business models based on reader revenue and community support.", author: "Bush Smith", date: "March 15, 2025", mediaData: null, mediaType: null }
+    { id: 1001, title: "DR Congo Ebola Crisis Escalates Amid AFC/M23 Blockades", category: "Health", content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm. Humanitarian corridors are urgently needed. Local health workers face extreme risks, and the international community calls for immediate ceasefire to allow vaccination campaigns. Over 200 suspected cases have emerged in the last month alone, with mortality rates climbing due to lack of treatment access. Independent journalists on the ground report that armed groups are using health access as a bargaining chip, leaving vulnerable populations trapped. The UN Security Council is set to hold an emergency session later this week.", author: "Bush Smith", date: "May 24, 2026", mediaData: null, mediaType: null },
+    { id: 1002, title: "The Digital Divide: What the New Broadband Bill Really Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households and includes historic funding for tribal lands. Experts say that without last-mile infrastructure, the gap might persist. The legislation creates a digital equity fund that could transform education and telehealth. We interviewed three rural mayors and two telecom policy experts to break down the real-world impact. The bill allocates $42 billion for infrastructure deployment, but oversight remains a concern.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
+    { id: 1003, title: "AI in the Newsroom — How Algorithms Are Changing Journalism", category: "Technology & Society", content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds. Concerns about bias and transparency loom. Yet many editors argue that AI can help reporters focus on deeper investigative work. This piece interviews three tech ethicists about the future of automated journalism. We also tested four AI-assisted reporting tools to see how they handle sensitive political topics. The results were mixed: while efficiency improved, nuance often suffered.", author: "Bush Smith", date: "March 28, 2025", mediaData: null, mediaType: null },
+    { id: 1004, title: "The Revival of Independent Media — A Global Movement", category: "Culture & Identity", content: "How independent journalists are reshaping the media landscape across five continents. From newsletters to podcasts, the shift is undeniable. The article highlights new business models based on reader revenue and community support, marking a renaissance in public-interest reporting. We spoke with founders from Brazil, Kenya, Indonesia, and Eastern Europe about how they're fighting disinformation. The common theme: trust is the new currency.", author: "Bush Smith", date: "March 15, 2025", mediaData: null, mediaType: null }
   ];
   
   function loadStories() {
@@ -346,18 +469,35 @@
   function openStoryReader(story) {
     const modal = document.getElementById('storyReaderModal');
     const container = document.getElementById('storyFullContent');
+    currentOpenStoryId = story.id.toString();
     let mediaHtml = '';
     if (story.mediaData && story.mediaType) {
       if (story.mediaType.startsWith('image/')) mediaHtml = `<div class="story-media-full"><img src="${story.mediaData}" alt="Story image"></div>`;
       else if (story.mediaType.startsWith('video/')) mediaHtml = `<div class="story-media-full"><video src="${story.mediaData}" controls></video></div>`;
     }
-    container.innerHTML = `<h2>${escapeHtml(story.title)}</h2><div class="story-meta"><span><i class="fas fa-folder"></i> ${story.category}</span><span><i class="fas fa-user"></i> ${escapeHtml(story.author)}</span><span><i class="fas fa-calendar"></i> ${story.date}</span></div>${mediaHtml}<div class="story-body"><p>${escapeHtml(story.content).replace(/\n/g, '<br>')}</p></div>`;
+    container.innerHTML = `
+      <h2>${escapeHtml(story.title)}</h2>
+      <div class="story-meta">
+        <span><i class="fas fa-folder"></i> ${story.category}</span>
+        <span><i class="fas fa-user"></i> ${escapeHtml(story.author)}</span>
+        <span><i class="fas fa-calendar"></i> ${story.date}</span>
+      </div>
+      ${mediaHtml}
+      <div class="story-body"><p>${escapeHtml(story.content).replace(/\n/g, '<br>')}</p></div>
+    `;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    renderComments(story.id.toString());
+    renderCommentsSection(currentOpenStoryId);
   }
   
-  function closeStoryReader() { const modal = document.getElementById('storyReaderModal'); if(modal) { modal.classList.remove('active'); document.body.style.overflow = ''; } }
+  function closeStoryReader() { 
+    const modal = document.getElementById('storyReaderModal'); 
+    if(modal) { 
+      modal.classList.remove('active'); 
+      document.body.style.overflow = ''; 
+      currentOpenStoryId = null;
+    } 
+  }
   
   function renderHomePage() {
     const container = document.getElementById('homeArticlesContainer');
@@ -440,13 +580,18 @@
       document.getElementById('adminDashboardContent').innerHTML = '<h3>Manage Comments</h3><p>No comments yet.</p><button class="btn-submit" onclick="location.reload()">Refresh</button>';
       return;
     }
-    let commentsHtml = '<h3>All Comments</h3><div style="max-height:400px; overflow-y:auto;">';
+    let commentsHtml = '<h3>All Comments (<span id="commentCount">'+allComments.length+'</span>)</h3><div style="max-height:400px; overflow-y:auto;">';
     allComments.forEach(comment => {
-      commentsHtml += `<div class="comment-item" style="margin-bottom:0.5rem;"><div><strong>${escapeHtml(comment.author)}</strong> <small>${comment.date}</small></div><div>${escapeHtml(comment.text).substring(0,100)}...</div><button onclick="window.deleteCommentAndRefresh('${comment.storyId}', ${comment.id}); setTimeout(()=>manageComments(),200);" style="background:#c62828; color:white; border:none; padding:0.2rem 0.8rem; border-radius:20px; margin-top:0.5rem; cursor:pointer;">Delete</button></div>`;
+      commentsHtml += `<div class="comment-item" style="margin-bottom:0.5rem;"><div><strong>${escapeHtml(comment.author)}</strong> <small>${comment.date}</small></div><div>${escapeHtml(comment.text).substring(0,100)}...</div><button onclick="window.deleteCommentAndRefresh('${comment.storyId}', ${comment.id});" style="background:#c62828; color:white; border:none; padding:0.2rem 0.8rem; border-radius:20px; margin-top:0.5rem; cursor:pointer;">Delete</button></div>`;
     });
     commentsHtml += '</div><button class="btn-submit" style="margin-top:1rem;" onclick="location.reload()">Refresh</button>';
     document.getElementById('adminDashboardContent').innerHTML = commentsHtml;
   }
+  
+  window.deleteCommentAndRefresh = function(storyId, commentId) {
+    deleteComment(storyId, commentId);
+    manageComments();
+  };
   
   window.editStoryByIndex = function(idx) {
     const story = publishedStories[idx];
@@ -501,6 +646,7 @@
       showDashboard(); 
       document.getElementById('writeNewsNav').style.display = 'list-item';
       alert('Welcome Admin! You can now write news and manage comments.'); 
+      if (currentOpenStoryId) renderCommentsSection(currentOpenStoryId);
     } else { alert('Wrong password! Use: admin123'); }
   });
   
@@ -510,7 +656,7 @@
   document.getElementById('editHistoryBtn')?.addEventListener('click', editHistoryPage);
   document.getElementById('manageStoriesBtn')?.addEventListener('click', manageStories);
   document.getElementById('manageCommentsBtn')?.addEventListener('click', manageComments);
-  document.getElementById('logoutAdminBtn')?.addEventListener('click', () => { isAdmin = false; closeDashboard(); document.getElementById('writeNewsNav').style.display = 'none'; alert('Logged out'); });
+  document.getElementById('logoutAdminBtn')?.addEventListener('click', () => { isAdmin = false; closeDashboard(); document.getElementById('writeNewsNav').style.display = 'none'; alert('Logged out'); if (currentOpenStoryId) renderCommentsSection(currentOpenStoryId); });
   
   document.getElementById('adminLoginBtn')?.addEventListener('click', showAdminLogin);
   document.getElementById('closeAdminModal')?.addEventListener('click', closeAdminLogin);
