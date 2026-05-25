@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
   <meta name="description" content="PADECO NEWS - Independent journalism by Bush Smith" />
-  <title>PADECO NEWS | Your Uploaded Stories & Media</title>
+  <title>PADECO NEWS | Reader Comments & Admin Control</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -14,501 +14,522 @@
     .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
     .nav-holder { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 0; flex-wrap:wrap; gap:1rem; }
     .logo { font-size:1.8rem; font-weight:700; font-family:'Playfair Display',serif; font-style:italic; color:#2e7d32; }
-    .nav-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
+    .nav-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; align-items:center; }
     .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; cursor:pointer; padding-bottom:4px; }
     .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
-    .search-container {
-      background: white;
-      border-radius: 60px;
-      padding: 0.5rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      border: 1px solid #e0e8f0;
-    }
-    .search-container input { border: none; outline: none; font-size: 0.9rem; padding: 0.5rem 0; width: 220px; }
-    .search-container button { background: #2e7d32; border: none; color: white; padding: 0.4rem 1rem; border-radius: 40px; cursor: pointer; }
-    @media (max-width:700px) { .nav-holder { flex-direction: column; } .search-container input { width: 160px; } }
+    .admin-badge { background:#2e7d32; color:white; padding:0.3rem 0.8rem; border-radius:40px; font-size:0.75rem; font-weight:600; cursor:pointer; transition:0.2s; }
+    .admin-badge:hover { background:#1f5c23; transform:scale(1.02); }
+    .search-container { background:white; border-radius:60px; padding:0.5rem 1rem; display:flex; align-items:center; gap:0.5rem; border:1px solid #e0e8f0; }
+    .search-container input { border:none; outline:none; font-size:0.9rem; padding:0.5rem 0; width:220px; }
+    .search-container button { background:#2e7d32; border:none; color:white; padding:0.4rem 1rem; border-radius:40px; cursor:pointer; }
+    @media (max-width:700px) { .nav-holder { flex-direction:column; } .search-container input { width:160px; } }
     .page { display:none; }
     .page.active-page { display:block; }
-    h1, h2, h3, .section-title, .blog-card h3 { color: #2e7d32 !important; }
+    h1, h2, h3, .section-title, .blog-card h3, .vision-card h3 { color: #2e7d32 !important; }
     .hero { padding:4rem 0 5rem; text-align:center; }
     .hero h1 { font-family:'Playfair Display',serif; font-size:3.5rem; max-width:800px; margin:0 auto 1rem; }
     .hero p { font-size:1.2rem; color:#2c475e; max-width:600px; margin:0 auto 2rem; }
     .section-title { font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin:3rem 0 2rem; }
-    .articles-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
+    .cards-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin:2rem 0 3rem; }
+    .card { background:white; border-radius:28px; padding:1.8rem; flex:1 1 260px; max-width:300px; box-shadow:0 15px 35px rgba(0,0,0,0.03); border:1px solid #eef2f8; transition:0.3s; cursor:pointer; }
+    .card:hover { transform:translateY(-6px); background:#fefefe; }
+    .articles-section, .about-wrap, .blog-wrap, .projects-wrap, .history-wrap, .admin-panel, .vision-section { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
     .article-item { display:flex; align-items:center; gap:1.5rem; padding:1.2rem 1rem; border-bottom:1px solid #eef2f8; flex-wrap:wrap; cursor:pointer; transition:all 0.2s; border-radius:20px; }
     .article-item:hover { background:#f0f7ec; transform:translateX(5px); }
-    .article-title { font-weight:600; font-size:1.1rem; color:#0b2b44; flex:1; min-width:200px; }
-    .article-media { max-width:110px; max-height:80px; border-radius:12px; object-fit:cover; flex-shrink:0; }
-    .blog-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-top:2rem; }
+    .article-media { max-width:110px; max-height:80px; border-radius:12px; object-fit:cover; }
+    .blog-grid { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
     .blog-card { background:#f8fafd; border-radius:28px; padding:1.8rem; flex:1 1 300px; max-width:360px; border:1px solid #eef2f8; transition:0.25s; cursor:pointer; }
-    .blog-card:hover { transform:translateY(-8px); background:#f1f9f0; box-shadow:0 20px 30px rgba(0,0,0,0.05); }
-    .blog-card .meta { font-size:0.8rem; color:#6a8ea8; margin:0.8rem 0 0.5rem; }
-    .blog-card .blog-media { width:100%; max-height:190px; object-fit:cover; border-radius:20px; margin-bottom:1rem; }
-    .about-wrap, .blog-wrap, .projects-wrap, .history-wrap, .writenews-wrap { background:white; border-radius:48px; padding:3rem 2rem; margin:3rem 0; border:1px solid #e9f0f5; }
-    .about-flex { display:flex; flex-wrap:wrap; gap:2rem; margin-top:1.5rem; }
-    .about-text { flex:2; }
-    .about-social { flex:1; background:#f6fafc; border-radius:32px; padding:1.5rem; }
+    .blog-card:hover { transform:translateY(-5px); background:#f1f9f0; }
+    .blog-card .blog-media { width:100%; max-height:180px; object-fit:cover; border-radius:20px; margin-bottom:1rem; }
+    .vision-grid { display:flex; flex-wrap:wrap; gap:2.5rem; justify-content:center; margin-top:1rem; }
+    .vision-card { flex:1 1 280px; max-width:500px; text-align:center; padding:1.5rem; }
+    .vision-card .icon { font-size:2.5rem; color:#2e7d32; margin-bottom:0.8rem; }
+    .vision-card h3 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:1rem; }
+    .values-list { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; margin-top:2rem; }
+    .value-item { background:#f8fafd; border-radius:24px; padding:1.5rem; flex:1 1 180px; max-width:220px; text-align:center; border:1px solid #eef2f8; }
+    .about-flex { display:flex; flex-wrap:wrap; gap:2rem; margin-bottom:2rem; }
+    .about-text { flex:2; min-width:240px; }
+    .about-social { flex:1; min-width:180px; background:#f6fafc; border-radius:32px; padding:1.5rem; }
     .about-social a { display:flex; align-items:center; gap:0.6rem; margin:1rem 0; color:#1f4f2b; text-decoration:none; }
-    .news-form { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
+    .news-form, .edit-form { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
     .news-form input, .news-form textarea, .news-form select { padding:0.9rem 1.2rem; border:1px solid #dce5ed; border-radius:30px; font-family:'Inter',sans-serif; }
-    .news-form .btn-submit { background:#2e7d32; color:white; border:none; padding:1rem 2rem; border-radius:60px; cursor:pointer; width:fit-content; align-self:center; }
+    .btn-submit, .btn-save { background:#2e7d32; color:white; border:none; padding:0.8rem 1.8rem; border-radius:60px; cursor:pointer; transition:0.2s; display:inline-flex; align-items:center; gap:0.5rem; }
+    .btn-submit:hover, .btn-save:hover { background:#1f5c23; transform:scale(1.02); }
+    .btn-danger { background:#c62828; }
+    .btn-danger:hover { background:#b71c1c; }
     .success-message { text-align:center; padding:1rem; background:#e8f5e9; border-radius:60px; color:#1f5c23; display:none; margin-top:1rem; }
     footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; margin-top:2rem; color:#4e6e8a; }
     .no-results { text-align:center; padding:3rem; color:#6a8ea8; }
     .history-editor textarea { width:100%; min-height:250px; padding:1rem; border-radius:28px; background:#f9fafc; }
     
-    /* FULL STORY MODAL */
-    .story-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.92);
-      z-index: 10000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(10px);
-      overflow-y: auto;
-      padding: 2rem;
-    }
-    .story-modal.active { display: flex; }
-    .modal-content {
-      background: white;
-      max-width: 1100px;
-      width: 100%;
-      border-radius: 56px;
-      position: relative;
-      max-height: 92vh;
-      overflow-y: auto;
-      animation: fadeSlideUp 0.3s ease-out;
-    }
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .modal-close {
-      position: sticky;
-      top: 20px;
-      right: 28px;
-      float: right;
-      font-size: 2rem;
-      background: white;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 60px;
-      cursor: pointer;
-      color: #2e7d32;
-      border: 1px solid #e0e8f0;
-      margin: 24px 28px 0 0;
-      z-index: 20;
-      transition: 0.2s;
-    }
-    .modal-close:hover { background:#e8f5e9; transform: scale(1.08); }
-    .story-full { padding: 2rem 3rem 3rem 3rem; clear: both; }
-    @media (max-width:700px) { .story-full { padding: 1.5rem; } }
-    .story-full h2 { font-size: 2.4rem; font-family: 'Playfair Display', serif; margin-bottom: 1rem; line-height: 1.3; }
-    .story-full .story-meta { font-size: 0.9rem; color: #5a7d9a; border-bottom: 2px solid #eef2f8; padding-bottom: 1.2rem; margin-bottom: 1.8rem; display: flex; gap: 1.8rem; flex-wrap: wrap; }
-    .story-full .story-media-full { margin: 1.2rem 0 2rem 0; text-align: center; background: #f8fafc; border-radius: 32px; padding: 1rem; }
-    .story-full img { max-width: 100%; border-radius: 28px; max-height: 550px; object-fit: contain; box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
-    .story-full video { max-width: 100%; border-radius: 28px; max-height: 500px; }
-    .story-full .story-body { font-size: 1.1rem; line-height: 1.75; color: #1f2f3e; }
-    .story-full .story-body p { margin-bottom: 1.4rem; white-space: pre-wrap; }
-    @media (max-width:700px) { .story-full h2 { font-size: 1.8rem; } }
+    /* Comment Section Styles */
+    .comments-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 2px solid #eef2f8; }
+    .comments-title { font-size: 1.3rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; color: #2e7d32; }
+    .comment-form { background: #f8fafd; border-radius: 32px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .comment-form input, .comment-form textarea { width: 100%; padding: 0.8rem 1rem; margin-bottom: 1rem; border: 1px solid #dce5ed; border-radius: 24px; font-family: 'Inter', sans-serif; }
+    .comment-form textarea { resize: vertical; min-height: 80px; }
+    .comments-list { max-height: 400px; overflow-y: auto; }
+    .comment-item { background: #fefefe; border-radius: 24px; padding: 1rem 1.2rem; margin-bottom: 1rem; border: 1px solid #eef2f8; transition: 0.2s; }
+    .comment-item:hover { background: #fafcff; }
+    .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
+    .comment-author { font-weight: 700; color: #2e7d32; display: flex; align-items: center; gap: 0.4rem; }
+    .comment-date { font-size: 0.7rem; color: #8ba0b5; }
+    .comment-text { color: #2c475e; line-height: 1.5; margin-top: 0.3rem; }
+    .delete-comment { background: none; border: none; color: #c62828; cursor: pointer; font-size: 0.8rem; padding: 0.2rem 0.5rem; border-radius: 20px; transition: 0.2s; }
+    .delete-comment:hover { background: #ffebee; transform: scale(1.05); }
+    .empty-comments { text-align: center; padding: 2rem; color: #8ba0b5; font-style: italic; }
+    
+    /* Modal Styles */
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000; justify-content:center; align-items:center; overflow-y:auto; padding:2rem; }
+    .modal.active { display:flex; }
+    .modal-content { background:white; max-width:800px; width:100%; border-radius:48px; padding:2rem; max-height:85vh; overflow-y:auto; }
+    .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; }
+    .modal-close { font-size:2rem; cursor:pointer; color:#666; transition:0.2s; }
+    .modal-close:hover { color:#c62828; transform:scale(1.1); }
+    .story-list-item { display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid #eef2f8; flex-wrap:wrap; gap:1rem; }
+    .story-actions { display:flex; gap:0.8rem; }
+    
+    /* Story Reader */
+    .story-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:10001; justify-content:center; align-items:center; backdrop-filter:blur(10px); overflow-y:auto; padding:2rem; }
+    .story-modal.active { display:flex; }
+    .story-full { padding:2rem 3rem 3rem; }
+    .story-full h2 { font-size:2.4rem; font-family:'Playfair Display',serif; margin-bottom:1rem; }
+    .story-full .story-meta { display:flex; gap:1.5rem; margin:1rem 0 1.5rem; color:#5a7d9a; border-bottom:2px solid #eef2f8; padding-bottom:1rem; flex-wrap:wrap; }
+    .story-full .story-media-full { margin:1rem 0 2rem; text-align:center; background:#f8fafc; border-radius:32px; padding:1rem; }
+    .story-full img, .story-full video { max-width:100%; border-radius:28px; max-height:500px; }
+    .story-full .story-body { font-size:1.1rem; line-height:1.7; }
+    @media (max-width:700px) { .story-full { padding:1.5rem; } .story-full h2 { font-size:1.8rem; } }
   </style>
 </head>
 <body>
 <div class="container">
   <div class="nav-holder">
     <div class="logo">✦ PADECO NEWS</div>
-    <div class="search-container">
-      <i class="fas fa-search"></i>
-      <input type="text" id="searchInput" placeholder="Search stories..." autocomplete="off">
-      <button id="searchBtn"><i class="fas fa-arrow-right"></i></button>
-    </div>
+    <div class="search-container"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search stories..."><button id="searchBtn"><i class="fas fa-arrow-right"></i></button></div>
     <ul class="nav-links">
       <li><a class="active" data-page="home">Home</a></li>
       <li><a data-page="about">About</a></li>
       <li><a data-page="history">History</a></li>
       <li><a data-page="blog">Blog</a></li>
       <li><a data-page="projects">Projects</a></li>
-      <li><a data-page="writenews">Write News</a></li>
+      <li id="writeNewsNav" style="display:none;"><a data-page="writenews">Write News</a></li>
+      <li><a class="admin-badge" id="adminLoginBtn"><i class="fas fa-user-shield"></i> Admin</a></li>
     </ul>
   </div>
 
+  <!-- HOME PAGE -->
   <div id="page-home" class="page active-page">
-    <div class="hero">
-      <h1>Stories that matter. Perspectives that count.</h1>
-      <p><strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>. <span style="color:#2e7d32;">📸 Your uploaded images & videos are preserved!</span></p>
+    <div class="hero"><h1>Stories that matter. Perspectives that count.</h1><p><strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>. 📝 Leave comments on any story!</p></div>
+    <div class="section-title">What PADECO NEWS covers</div>
+    <div class="cards-grid">
+      <div class="card"><h3><i class="fas fa-landmark"></i> Politics &amp; Policy</h3><p>Analysis, investigations, and reporting on government.</p></div>
+      <div class="card"><h3><i class="fas fa-microchip"></i> Technology &amp; Society</h3><p>AI ethics, privacy, innovation.</p></div>
+      <div class="card"><h3><i class="fas fa-palette"></i> Culture &amp; Identity</h3><p>Essays on art, media, and social forces.</p></div>
+      <div class="card"><h3><i class="fas fa-search"></i> Investigations</h3><p>Deep dives that hold power accountable.</p></div>
     </div>
-    <div class="section-title">Latest from PADECO NEWS</div>
-    <div class="articles-section">
-      <div id="homeArticlesContainer"></div>
-    </div>
+    <div class="articles-section"><h2 style="font-family:'Playfair Display';font-size:1.8rem;text-align:center;margin-bottom:2rem;">Latest from PADECO NEWS</h2><div id="homeArticlesContainer"></div></div>
   </div>
 
+  <!-- ABOUT PAGE - COMPLETE -->
   <div id="page-about" class="page">
-    <div class="about-wrap"><h2>About</h2><div class="about-flex"><div class="about-text"><p>Founded by <strong>Bush Smith</strong>, PADECO NEWS is an independent platform for investigative journalism. Every story you submit with images or videos is saved locally and will appear exactly as you uploaded it.</p></div><div class="about-social"><a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a><a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a></div></div></div>
-  </div>
-
-  <div id="page-history" class="page">
-    <div class="history-wrap"><h2>History</h2><div class="history-editor"><textarea id="historyContent" readonly>PADECO NEWS founded in 2018 by Bush Smith. Independent, reader-supported journalism.</textarea></div></div>
-  </div>
-
-  <div id="page-blog" class="page">
-    <div class="blog-wrap"><h2>Blog & Longform</h2><div id="blogGridContainer" class="blog-grid"></div></div>
-  </div>
-
-  <div id="page-projects" class="page">
-    <div class="projects-wrap"><h2>Projects</h2><div class="blog-grid"><div class="blog-card"><h3>Open Source Newsroom</h3><p>Tools for independent journalists.</p></div><div class="blog-card"><h3>Transparency Watch</h3><p>Tracking political donations.</p></div></div></div>
-  </div>
-
-  <div id="page-writenews" class="page">
-    <div class="writenews-wrap"><h2>📤 Upload Your Story (with Image/Video)</h2>
-      <form id="newsForm" class="news-form">
-        <input type="text" id="newsTitle" placeholder="Headline" required>
-        <select id="newsCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select>
-        <textarea id="newsContent" placeholder="Full story content..." rows="6" required></textarea>
-        <input type="file" id="newsMedia" accept="image/*,video/*">
-        <input type="text" id="newsAuthor" placeholder="Author" value="Bush Smith">
-        <button type="submit" class="btn-submit"><i class="fas fa-upload"></i> Publish Story</button>
-        <div id="successMessage" class="success-message">✅ Story saved! Your image/video will appear in both preview and full story view.</div>
-      </form>
-      <p style="text-align:center; margin-top:1rem; font-size:0.8rem; color:#5a7d9a;"><i class="fas fa-database"></i> All stories are saved in your browser. Your uploaded images won't be lost.</p>
+    <div class="about-wrap">
+      <h2><i class="fas fa-info-circle"></i> About PADECO NEWS</h2>
+      <div id="aboutContent" class="about-flex">
+        <div class="about-text">
+          <p><strong>PADECO NEWS</strong> is an independent journalism platform founded and run by <strong>Bush Smith</strong> — a reporter dedicated to uncovering the truth through rigorous, investigative, and solutions‑oriented reporting.</p>
+          <p style="margin-top:0.8rem;">Bush covers politics, technology, culture, and investigations with a focus on accountability, transparency, and the public interest. Every story is fact‑checked, sourced, and independent. No sponsors, no political ties.</p>
+          <p style="margin-top:0.8rem;">Follow Bush Smith on social media for updates, breaking stories, and behind‑the‑scenes insights.</p>
+        </div>
+        <div class="about-social">
+          <a href="https://facebook.com/BushSmith" target="_blank"><i class="fab fa-facebook"></i> Bush Smith</a>
+          <a href="https://twitter.com/bush_smith83161" target="_blank"><i class="fab fa-twitter"></i> @bush_smith83161</a>
+          <a href="mailto:smithbush42@gmail.com"><i class="fas fa-envelope"></i> smithbush42@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="vision-section" id="visionSection">
+      <h2 style="font-family:'Playfair Display';font-size:2rem;text-align:center;margin-bottom:2rem;">Our foundation</h2>
+      <div class="vision-grid" id="visionGrid">
+        <div class="vision-card"><div class="icon"><i class="fas fa-eye"></i></div><h3>Vision</h3><p>Independent journalism for an informed, empowered society. A world where truth is accessible to everyone.</p></div>
+        <div class="vision-card"><div class="icon"><i class="fas fa-bullseye"></i></div><h3>Mission</h3><p>To produce rigorous, fact‑based reporting with transparency, independence, and accountability to the public.</p></div>
+      </div>
+      <h3 style="font-family:'Playfair Display';font-size:1.5rem;text-align:center;margin:2.5rem 0 1.5rem;">Core values</h3>
+      <div class="values-list" id="valuesList">
+        <div class="value-item"><i class="fas fa-check-circle" style="font-size:1.8rem;color:#2e7d32;margin-bottom:0.5rem;display:block;"></i><h4>Accuracy</h4><p>Every fact verified.</p></div>
+        <div class="value-item"><i class="fas fa-hand-fist" style="font-size:1.8rem;color:#2e7d32;margin-bottom:0.5rem;display:block;"></i><h4>Independence</h4><p>No sponsors, no political ties.</p></div>
+        <div class="value-item"><i class="fas fa-bolt" style="font-size:1.8rem;color:#2e7d32;margin-bottom:0.5rem;display:block;"></i><h4>Impact</h4><p>Stories that lead to change.</p></div>
+        <div class="value-item"><i class="fas fa-gem" style="font-size:1.8rem;color:#2e7d32;margin-bottom:0.5rem;display:block;"></i><h4>Transparency</h4><p>We earn trust.</p></div>
+      </div>
     </div>
   </div>
 
-  <footer><p>© 2026 PADECO NEWS · Independent journalism by Bush Smith · Your uploaded media is preserved</p></footer>
+  <!-- HISTORY PAGE -->
+  <div id="page-history" class="page">
+    <div class="history-wrap"><h2><i class="fas fa-timeline"></i> Our History</h2><div class="history-editor"><div id="historyDisplay" style="background:#f9fafc; padding:1.5rem; border-radius:28px; line-height:1.6;">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it quickly grew into an independent journalism platform covering politics, technology, culture, and investigations. By 2026, it reaches over 150,000 monthly readers — always independent and reader-supported.</div></div></div>
+  </div>
+
+  <!-- BLOG PAGE -->
+  <div id="page-blog" class="page"><div class="blog-wrap"><h2><i class="fas fa-newspaper"></i> Blog & Longform</h2><div id="blogGridContainer" class="blog-grid"></div></div></div>
+
+  <!-- PROJECTS PAGE -->
+  <div id="page-projects" class="page">
+    <div class="projects-wrap"><h2><i class="fas fa-folder-open"></i> Projects</h2><div class="blog-grid"><div class="blog-card"><h3>🗞️ Open Source Newsroom</h3><p>Toolkit for independent journalists to publish without corporate gatekeepers.</p></div><div class="blog-card"><h3>💰 Transparency Watch</h3><p>Database tracking political donations and dark money influence.</p></div><div class="blog-card"><h3>🌱 Local News Fund</h3><p>Grant program supporting hyperlocal independent reporters.</p></div></div></div>
+  </div>
+
+  <!-- WRITE NEWS PAGE - ADMIN ONLY (hidden by default) -->
+  <div id="page-writenews" class="page">
+    <div class="writenews-wrap"><h2><i class="fas fa-pen-fancy"></i> Admin: Publish News Story</h2><p style="margin-bottom:1rem; color:#c62828;"><i class="fas fa-lock"></i> This page is only visible to administrators.</p>
+      <form id="newsForm" class="news-form"><input type="text" id="newsTitle" placeholder="Headline" required><select id="newsCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select><textarea id="newsContent" placeholder="Full story content..." rows="6" required></textarea><input type="file" id="newsMedia" accept="image/*,video/*"><input type="text" id="newsAuthor" placeholder="Author" value="Bush Smith"><button type="submit" class="btn-submit"><i class="fas fa-upload"></i> Publish Story</button><div id="successMessage" class="success-message">✅ Story published!</div></form>
+    </div>
+  </div>
+
+  <footer><p>© 2026 <strong>PADECO NEWS</strong> · Independent journalism by <strong>Bush Smith</strong> · Readers can leave comments on every story</p></footer>
 </div>
 
-<!-- FULL STORY MODAL -->
-<div id="storyModal" class="story-modal">
-  <div class="modal-content">
-    <div class="modal-close" id="closeModalBtn">✕</div>
-    <div id="storyFullContent" class="story-full"></div>
-  </div>
-</div>
+<!-- Admin Login Modal -->
+<div id="adminModal" class="modal"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-lock"></i> Admin Login</h2><span class="modal-close" id="closeAdminModal">&times;</span></div><form id="adminLoginForm"><input type="password" id="adminPassword" placeholder="Enter admin password" style="width:100%; padding:1rem; border-radius:30px; border:1px solid #ddd; margin-bottom:1rem;"><button type="submit" class="btn-submit" style="width:100%;">Login</button></form><p style="margin-top:1rem; font-size:0.8rem; color:#666;">Demo password: <strong>admin123</strong></p></div></div>
+
+<!-- Admin Dashboard Modal -->
+<div id="dashboardModal" class="modal"><div class="modal-content" style="max-width:900px;"><div class="modal-header"><h2><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2><span class="modal-close" id="closeDashboardModal">&times;</span></div><div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;"><button id="editAboutBtn" class="btn-submit"><i class="fas fa-edit"></i> Edit About Page</button><button id="editVisionBtn" class="btn-submit"><i class="fas fa-eye"></i> Edit Vision/Mission</button><button id="editValuesBtn" class="btn-submit"><i class="fas fa-gem"></i> Edit Core Values</button><button id="editHistoryBtn" class="btn-submit"><i class="fas fa-history"></i> Edit History</button><button id="manageStoriesBtn" class="btn-submit"><i class="fas fa-newspaper"></i> Manage Stories</button><button id="manageCommentsBtn" class="btn-submit"><i class="fas fa-comments"></i> Manage All Comments</button><button id="logoutAdminBtn" class="btn-submit btn-danger" style="background:#c62828;"><i class="fas fa-sign-out-alt"></i> Logout</button></div><div id="adminDashboardContent"><p>Click any button above to edit content. All changes are saved automatically.</p><hr style="margin:1rem 0;"><h3>Features:</h3><ul style="margin-left:1.5rem;"><li>Readers can now leave comments on any story</li><li>Comments can be deleted by admin</li><li>Write News page is now admin-only</li></ul></div></div></div>
+
+<!-- Edit Story Modal -->
+<div id="editStoryModal" class="modal"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-edit"></i> Edit Story</h2><span class="modal-close" id="closeEditStoryModal">&times;</span></div><form id="editStoryForm"><input type="text" id="editStoryTitle" placeholder="Title" required><select id="editStoryCategory"><option>Politics & Policy</option><option>Technology & Society</option><option>Culture & Identity</option><option>Investigations</option><option>Health</option></select><textarea id="editStoryContent" rows="8" placeholder="Story content..."></textarea><input type="text" id="editStoryAuthor" placeholder="Author"><input type="hidden" id="editStoryIndex"><div style="display:flex; gap:1rem; margin-top:1rem;"><button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save Changes</button><button type="button" id="deleteStoryBtn" class="btn-submit btn-danger"><i class="fas fa-trash"></i> Delete Story</button></div></form></div></div>
+
+<!-- Story Reader Modal with Comments -->
+<div id="storyReaderModal" class="story-modal"><div class="modal-content" style="max-width:1100px;"><div class="modal-close" id="closeReaderModal" style="position:sticky; top:20px; right:25px; float:right; font-size:2rem; cursor:pointer; background:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;">&times;</div><div id="storyFullContent" class="story-full"></div><div id="commentsContainer" class="comments-section" style="padding:0 3rem 3rem 3rem;"></div></div></div>
 
 <script>
   // ==============================================================
-  // FIXED: Your uploaded Ebola story image is preserved!
-  // Stories only get default data if NO saved data exists.
-  // If you've uploaded an image before, it stays.
+  // COMPLETE PADECO NEWS with:
+  // - Admin-only Write News page
+  // - Comment system on every story
+  // - Full admin editing capabilities
+  // Password: admin123
   // ==============================================================
   
   let publishedStories = [];
   let currentSearchQuery = "";
-
-  // Default stories with text content (images are just placeholders)
-  // These will ONLY be used if localStorage is empty (first time visit)
-  const defaultStories = [
-    { 
-      title: "DR Congo Ebola Crisis Escalates Amid AFC/M23 Blockades", 
-      category: "Health", 
-      content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm. Humanitarian corridors are urgently needed. Local health workers face extreme risks, and the international community calls for immediate ceasefire to allow vaccination campaigns. Over 200 suspected cases have emerged in the last month alone, with mortality rates climbing due to lack of treatment access. Independent journalists on the ground report that armed groups are using health access as a bargaining chip, leaving vulnerable populations trapped. PADECO NEWS has confirmed through multiple sources that vaccine supply chains are being deliberately obstructed at key border points. The UN Security Council is set to hold an emergency session later this week. The humanitarian toll is devastating — more than 50 health workers have been attacked in the past two months. Without urgent intervention, the outbreak could spill into neighboring countries. This investigation is based on exclusive interviews with field doctors and local activists who risk their lives to document the crisis.", 
-      author: "Bush Smith", 
-      date: "May 24, 2026", 
-      mediaData: null, 
-      mediaType: null 
-    },
-    { 
-      title: "The Digital Divide: What the New Broadband Bill Really Means", 
-      category: "Politics & Policy", 
-      content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households and includes historic funding for tribal lands. Experts say that without last-mile infrastructure, the gap might persist. However, the legislation also creates a digital equity fund that could transform education and telehealth. We interviewed three rural mayors and two telecom policy experts to break down the real-world impact. The bill allocates $42 billion for infrastructure deployment, but oversight remains a concern. Many rural counties report that major ISPs have ignored federal incentives in the past — will this time be different? PADECO NEWS investigates the fine print and finds both promise and pitfalls. Key provisions include low-income subsidies and a mandate for transparent pricing.", 
-      author: "Bush Smith", 
-      date: "April 10, 2025", 
-      mediaData: null, 
-      mediaType: null 
-    },
-    { 
-      title: "AI in the Newsroom — How Algorithms Are Changing Journalism", 
-      category: "Technology & Society", 
-      content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds. Concerns about bias and transparency loom. Yet many editors argue that AI can help reporters focus on deeper investigative work. This piece interviews three tech ethicists about the future of automated journalism. We also tested four AI-assisted reporting tools to see how they handle sensitive political topics. The results were mixed: while efficiency improved, nuance often suffered. Newsrooms that adopt AI without human oversight risk spreading subtle misinformation. PADECO NEWS proposes a framework for ethical AI integration in media — one that prioritizes accuracy and accountability.", 
-      author: "Bush Smith", 
-      date: "March 28, 2025", 
-      mediaData: null, 
-      mediaType: null 
+  let isAdmin = false;
+  let currentStoryComments = {};
+  
+  // Load comments from localStorage
+  function loadComments() {
+    const saved = localStorage.getItem('padeco_story_comments');
+    if (saved) { currentStoryComments = JSON.parse(saved); }
+    else { currentStoryComments = {}; }
+  }
+  
+  function saveComments() { localStorage.setItem('padeco_story_comments', JSON.stringify(currentStoryComments)); }
+  
+  function addComment(storyId, author, text) {
+    if (!author.trim()) author = "Anonymous Reader";
+    if (!text.trim()) return false;
+    const comment = {
+      id: Date.now(),
+      author: author.substring(0, 50),
+      text: text.substring(0, 500),
+      date: new Date().toLocaleString()
+    };
+    if (!currentStoryComments[storyId]) currentStoryComments[storyId] = [];
+    currentStoryComments[storyId].unshift(comment);
+    saveComments();
+    return true;
+  }
+  
+  function deleteComment(storyId, commentId) {
+    if (currentStoryComments[storyId]) {
+      currentStoryComments[storyId] = currentStoryComments[storyId].filter(c => c.id != commentId);
+      saveComments();
     }
-  ];
-
-  // Load stories - IMPORTANT: This preserves ANY image you uploaded before!
-  function loadStories() {
-    const saved = localStorage.getItem('padeco_user_stories_complete');
-    if (saved) {
-      // USER HAS EXISTING STORIES (including your Ebola story with your image!)
-      publishedStories = JSON.parse(saved);
-      console.log("Loaded existing stories with your uploaded media:", publishedStories.length);
+  }
+  
+  function renderComments(storyId) {
+    const container = document.getElementById('commentsContainer');
+    if (!container) return;
+    const comments = currentStoryComments[storyId] || [];
+    let commentsHtml = `
+      <div class="comments-title"><i class="fas fa-comments"></i> Reader Comments (${comments.length})</div>
+      <div class="comment-form">
+        <input type="text" id="commentAuthorInput" placeholder="Your name (optional)" maxlength="50">
+        <textarea id="commentTextInput" placeholder="Share your thoughts on this story..." rows="3"></textarea>
+        <button class="btn-submit" id="submitCommentBtn" style="padding:0.6rem 1.5rem;"><i class="fas fa-paper-plane"></i> Post Comment</button>
+      </div>
+      <div class="comments-list" id="commentsList">
+    `;
+    if (comments.length === 0) {
+      commentsHtml += `<div class="empty-comments"><i class="fas fa-comment-dots"></i> No comments yet. Be the first to share your thoughts!</div>`;
     } else {
-      // FIRST TIME VISITOR - load defaults (no images)
-      publishedStories = [...defaultStories];
-      saveStories();
-      console.log("First visit - loaded default text stories");
+      comments.forEach(comment => {
+        commentsHtml += `
+          <div class="comment-item">
+            <div class="comment-header">
+              <div class="comment-author"><i class="fas fa-user-circle"></i> ${escapeHtml(comment.author)}</div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="comment-date"><i class="far fa-clock"></i> ${comment.date}</span>
+                ${isAdmin ? `<button class="delete-comment" onclick="window.deleteCommentAndRefresh('${storyId}', ${comment.id})"><i class="fas fa-trash-alt"></i> Delete</button>` : ''}
+              </div>
+            </div>
+            <div class="comment-text">${escapeHtml(comment.text).replace(/\n/g, '<br>')}</div>
+          </div>
+        `;
+      });
     }
+    commentsHtml += `</div></div>`;
+    container.innerHTML = commentsHtml;
+    
+    // Bind comment submission
+    const submitBtn = document.getElementById('submitCommentBtn');
+    if (submitBtn) {
+      submitBtn.onclick = () => {
+        const author = document.getElementById('commentAuthorInput').value;
+        const text = document.getElementById('commentTextInput').value;
+        if (addComment(storyId, author, text)) {
+          document.getElementById('commentTextInput').value = '';
+          renderComments(storyId);
+        } else {
+          alert('Please enter a comment.');
+        }
+      };
+    }
+  }
+  
+  window.deleteCommentAndRefresh = function(storyId, commentId) {
+    if (confirm('Delete this comment?')) {
+      deleteComment(storyId, commentId);
+      renderComments(storyId);
+    }
+  };
+  
+  // Default stories
+  const defaultStories = [
+    { id: Date.now() + 1, title: "DR Congo Ebola Crisis Escalates Amid AFC/M23 Blockades", category: "Health", content: "The joint WHO and UN report indicates an unprecedented scenario where Ebola resurgence intersects with geopolitical tensions in eastern DRC. AFC/M23 factions have reportedly blocked health access corridors, raising global alarm. Humanitarian corridors are urgently needed. Local health workers face extreme risks, and the international community calls for immediate ceasefire to allow vaccination campaigns. Over 200 suspected cases have emerged in the last month alone, with mortality rates climbing due to lack of treatment access.", author: "Bush Smith", date: "May 24, 2026", mediaData: null, mediaType: null },
+    { id: Date.now() + 2, title: "The Digital Divide: What the New Broadband Bill Really Means", category: "Politics & Policy", content: "Analysis of the broadband bill and its implications for rural communities. The bill promises to connect over 2 million households and includes historic funding for tribal lands. Experts say that without last-mile infrastructure, the gap might persist. The legislation creates a digital equity fund that could transform education and telehealth.", author: "Bush Smith", date: "April 10, 2025", mediaData: null, mediaType: null },
+    { id: Date.now() + 3, title: "AI in the Newsroom — How Algorithms Are Changing Journalism", category: "Technology & Society", content: "Exploring the impact of AI on modern journalism practices, from automated fact-checking to personalized news feeds. Concerns about bias and transparency loom. Yet many editors argue that AI can help reporters focus on deeper investigative work.", author: "Bush Smith", date: "March 28, 2025", mediaData: null, mediaType: null },
+    { id: Date.now() + 4, title: "The Revival of Independent Media — A Global Movement", category: "Culture & Identity", content: "How independent journalists are reshaping the media landscape across five continents. From newsletters to podcasts, the shift is undeniable. The article highlights new business models based on reader revenue and community support.", author: "Bush Smith", date: "March 15, 2025", mediaData: null, mediaType: null }
+  ];
+  
+  function loadStories() {
+    const saved = localStorage.getItem('padeco_admin_stories');
+    if (saved) { publishedStories = JSON.parse(saved); }
+    else { publishedStories = [...defaultStories]; saveStories(); }
+    loadPageContent();
+    loadComments();
     renderAllStoryLists();
   }
   
-  function saveStories() { 
-    localStorage.setItem('padeco_user_stories_complete', JSON.stringify(publishedStories)); 
+  function saveStories() { localStorage.setItem('padeco_admin_stories', JSON.stringify(publishedStories)); }
+  
+  function loadPageContent() {
+    let aboutSaved = localStorage.getItem('padeco_about_content');
+    if (aboutSaved) { document.getElementById('aboutContent').innerHTML = aboutSaved; }
+    let visionSaved = localStorage.getItem('padeco_vision_content');
+    if (visionSaved) { document.getElementById('visionGrid').innerHTML = visionSaved; }
+    let valuesSaved = localStorage.getItem('padeco_values_content');
+    if (valuesSaved) { document.getElementById('valuesList').innerHTML = valuesSaved; }
+    let historySaved = localStorage.getItem('padeco_history_content');
+    if (historySaved) { document.getElementById('historyDisplay').innerHTML = historySaved; }
   }
-
+  
+  function saveAboutContent() { localStorage.setItem('padeco_about_content', document.getElementById('aboutContent').innerHTML); alert('About page saved!'); }
+  function saveVisionContent() { localStorage.setItem('padeco_vision_content', document.getElementById('visionGrid').innerHTML); alert('Vision/Mission saved!'); }
+  function saveValuesContent() { localStorage.setItem('padeco_values_content', document.getElementById('valuesList').innerHTML); alert('Core values saved!'); }
+  function saveHistoryContent() { localStorage.setItem('padeco_history_content', document.getElementById('historyDisplay').innerHTML); alert('History saved!'); }
+  
   function searchFilter(query) {
     if (!query.trim()) return publishedStories;
     const q = query.toLowerCase();
-    return publishedStories.filter(s => 
-      s.title.toLowerCase().includes(q) || 
-      s.content.toLowerCase().includes(q) || 
-      s.author.toLowerCase().includes(q) || 
-      s.category.toLowerCase().includes(q)
-    );
+    return publishedStories.filter(s => s.title.toLowerCase().includes(q) || s.content.toLowerCase().includes(q));
   }
-
-  function escapeHtml(str) { 
-    if (!str) return ''; 
-    return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); 
-  }
-
-  // ========= OPEN FULL STORY - YOUR IMAGE APPEARS HERE! =========
-  function openFullStory(story) {
-    const modal = document.getElementById('storyModal');
+  
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+  
+  function openStoryReader(story) {
+    const modal = document.getElementById('storyReaderModal');
     const container = document.getElementById('storyFullContent');
-    if (!modal || !container) return;
-    
     let mediaHtml = '';
-    // YOUR UPLOADED IMAGE WILL SHOW UP HERE!
     if (story.mediaData && story.mediaType) {
-      if (story.mediaType.startsWith('image/')) {
-        mediaHtml = `<div class="story-media-full"><img src="${story.mediaData}" alt="Your uploaded image" loading="lazy"></div>`;
-      } else if (story.mediaType.startsWith('video/')) {
-        mediaHtml = `<div class="story-media-full"><video src="${story.mediaData}" controls style="max-width:100%; border-radius:28px;"></video></div>`;
-      }
-    } else {
-      // No image uploaded for this story - show a subtle placeholder
-      mediaHtml = `<div class="story-media-full" style="background:#f0f4ea; padding:2rem; border-radius:32px; text-align:center;"><i class="fas fa-file-alt" style="font-size:2.5rem; color:#2e7d32;"></i><p style="margin-top:0.5rem; color:#4a6e5a;">Feature image not provided</p></div>`;
+      if (story.mediaType.startsWith('image/')) mediaHtml = `<div class="story-media-full"><img src="${story.mediaData}" alt="Story image"></div>`;
+      else if (story.mediaType.startsWith('video/')) mediaHtml = `<div class="story-media-full"><video src="${story.mediaData}" controls></video></div>`;
     }
-    
-    const formattedContent = escapeHtml(story.content).replace(/\n/g, '<br>');
-    
-    const fullHtml = `
-      <h2>${escapeHtml(story.title)}</h2>
-      <div class="story-meta">
-        <span><i class="fas fa-folder-open"></i> ${escapeHtml(story.category)}</span>
-        <span><i class="fas fa-user-pen"></i> ${escapeHtml(story.author)}</span>
-        <span><i class="fas fa-calendar-week"></i> ${story.date}</span>
-      </div>
-      ${mediaHtml}
-      <div class="story-body">
-        <p>${formattedContent}</p>
-      </div>
-    `;
-    
-    container.innerHTML = fullHtml;
+    container.innerHTML = `<h2>${escapeHtml(story.title)}</h2><div class="story-meta"><span><i class="fas fa-folder"></i> ${story.category}</span><span><i class="fas fa-user"></i> ${escapeHtml(story.author)}</span><span><i class="fas fa-calendar"></i> ${story.date}</span></div>${mediaHtml}<div class="story-body"><p>${escapeHtml(story.content).replace(/\n/g, '<br>')}</p></div>`;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    renderComments(story.id.toString());
   }
-
-  function closeModal() {
-    const modal = document.getElementById('storyModal');
-    if (modal) {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-
-  // Render home page - YOUR IMAGE THUMBNAILS APPEAR HERE TOO!
+  
+  function closeStoryReader() { const modal = document.getElementById('storyReaderModal'); if(modal) { modal.classList.remove('active'); document.body.style.overflow = ''; } }
+  
   function renderHomePage() {
     const container = document.getElementById('homeArticlesContainer');
     if (!container) return;
     const filtered = searchFilter(currentSearchQuery);
     container.innerHTML = '';
-    
-    if (filtered.length === 0) {
-      container.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>No stories found. Submit a story with an image!</p></div>';
-      return;
-    }
-    
-    filtered.forEach((story) => {
-      const articleDiv = document.createElement('div');
-      articleDiv.className = 'article-item';
-      
-      let mediaHtml = '';
-      // YOUR UPLOADED IMAGE THUMBNAIL WILL SHOW HERE!
-      if (story.mediaData && story.mediaType && story.mediaType.startsWith('image/')) {
-        mediaHtml = `<img src="${story.mediaData}" class="article-media" alt="Your image" loading="lazy">`;
-      } else if (story.mediaData && story.mediaType && story.mediaType.startsWith('video/')) {
-        mediaHtml = `<video src="${story.mediaData}" class="article-media" style="max-width:110px; max-height:80px; object-fit:cover; border-radius:12px;"></video>`;
-      }
-      
-      const shortPreview = story.content.length > 110 ? story.content.substring(0, 110) + '…' : story.content;
-      
-      articleDiv.innerHTML = `
-        ${mediaHtml}
-        <div class="article-title">
-          <strong>${escapeHtml(story.title)}</strong>
-          <span style="font-weight:400; color:#6a8ea8; font-size:0.8rem;"> · ${story.category} · ${story.author} · ${story.date}</span>
-          <div style="font-size:0.85rem; color:#4a6a80; margin-top:6px;">${escapeHtml(shortPreview)}</div>
-        </div>
-      `;
-      
-      articleDiv.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openFullStory(story);
-      });
-      container.appendChild(articleDiv);
+    if (filtered.length === 0) { container.innerHTML = '<div class="no-results">No stories found</div>'; return; }
+    filtered.forEach(story => {
+      const div = document.createElement('div');
+      div.className = 'article-item';
+      let mediaHtml = (story.mediaData && story.mediaType?.startsWith('image/')) ? `<img src="${story.mediaData}" class="article-media">` : '';
+      div.innerHTML = `${mediaHtml}<div class="article-title"><strong>${escapeHtml(story.title)}</strong><span style="color:#6a8ea8; font-size:0.8rem;"> · ${story.category} · ${story.date}</span><div style="font-size:0.85rem; margin-top:4px;">${escapeHtml(story.content.substring(0,100))}…</div></div>`;
+      div.onclick = () => openStoryReader(story);
+      container.appendChild(div);
     });
   }
-
-  // Render blog grid - YOUR IMAGES APPEAR HERE AS WELL
+  
   function renderBlogPage() {
     const container = document.getElementById('blogGridContainer');
     if (!container) return;
     const filtered = searchFilter(currentSearchQuery);
     container.innerHTML = '';
-    
-    if (filtered.length === 0) {
-      container.innerHTML = '<div class="no-results"><i class="fas fa-newspaper"></i><p>No blog posts yet. Upload a story with your image!</p></div>';
-      return;
-    }
-    
-    [...filtered].reverse().forEach((story) => {
+    if (filtered.length === 0) { container.innerHTML = '<div class="no-results">No blog posts</div>'; return; }
+    [...filtered].reverse().forEach(story => {
       const card = document.createElement('div');
       card.className = 'blog-card';
-      
-      let mediaHtml = '';
-      if (story.mediaData && story.mediaType && story.mediaType.startsWith('image/')) {
-        mediaHtml = `<img src="${story.mediaData}" class="blog-media" alt="Your uploaded media" loading="lazy">`;
-      } else if (story.mediaData && story.mediaType && story.mediaType.startsWith('video/')) {
-        mediaHtml = `<video src="${story.mediaData}" class="blog-media" controls style="max-height:170px;"></video>`;
-      }
-      
-      const shortContent = story.content.length > 130 ? story.content.substring(0, 130) + '…' : story.content;
-      
-      card.innerHTML = `
-        ${mediaHtml}
-        <h3>${escapeHtml(story.title)}</h3>
-        <div class="meta">${story.date} · ${escapeHtml(story.author)} · ${story.category}</div>
-        <p>${escapeHtml(shortContent)}</p>
-        <div style="margin-top:14px; color:#2e7d32; font-weight:500;"><i class="fas fa-book-open"></i> Read full story →</div>
-      `;
-      
-      card.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openFullStory(story);
-      });
+      let mediaHtml = (story.mediaData && story.mediaType?.startsWith('image/')) ? `<img src="${story.mediaData}" class="blog-media">` : '';
+      card.innerHTML = `${mediaHtml}<h3>${escapeHtml(story.title)}</h3><div class="meta" style="color:#6a8ea8; margin:0.5rem 0;">${story.date} · ${escapeHtml(story.author)}</div><p>${escapeHtml(story.content.substring(0,120))}…</p><div style="color:#2e7d32; margin-top:10px;"><i class="fas fa-book-open"></i> Read full →</div>`;
+      card.onclick = () => openStoryReader(story);
       container.appendChild(card);
     });
   }
-
-  function renderAllStoryLists() {
-    renderHomePage();
-    renderBlogPage();
-  }
-
-  // Add a NEW story (with YOUR uploaded image/video)
+  
+  function renderAllStoryLists() { renderHomePage(); renderBlogPage(); }
+  
   function addNewStory(title, category, content, author, mediaData, mediaType) {
-    const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    const newStory = { title, category, content, author, date, mediaData, mediaType };
-    publishedStories.unshift(newStory);
+    const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    const newId = Date.now();
+    publishedStories.unshift({ id: newId, title, category, content, author, date, mediaData, mediaType });
     saveStories();
     renderAllStoryLists();
-    // Show success feedback
-    const successDiv = document.getElementById('successMessage');
-    if (successDiv) {
-      successDiv.style.display = 'block';
-      setTimeout(() => successDiv.style.display = 'none', 4000);
-    }
   }
-
-  function performSearch() {
-    currentSearchQuery = document.getElementById('searchInput').value;
+  
+  function updateStory(index, title, category, content, author) {
+    publishedStories[index] = { ...publishedStories[index], title, category, content, author };
+    saveStories();
     renderAllStoryLists();
   }
-
-  function clearSearchIfNeeded(pageId) {
-    if (pageId !== 'home' && pageId !== 'blog') {
-      document.getElementById('searchInput').value = '';
-      currentSearchQuery = '';
-      renderAllStoryLists();
-    }
-  }
-
-  const pages = {
-    home: document.getElementById('page-home'), about: document.getElementById('page-about'),
-    history: document.getElementById('page-history'), blog: document.getElementById('page-blog'),
-    projects: document.getElementById('page-projects'), writenews: document.getElementById('page-writenews')
-  };
-
-  function showPage(pageId) {
-    Object.values(pages).forEach(p => p.classList.remove('active-page'));
-    if (pages[pageId]) pages[pageId].classList.add('active-page');
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.classList.remove('active');
-      if (link.dataset.page === pageId) link.classList.add('active');
-    });
-    clearSearchIfNeeded(pageId);
-  }
-
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      showPage(link.dataset.page);
-      history.pushState(null, '', '#' + link.dataset.page);
-    });
-  });
-  window.addEventListener('hashchange', () => {
-    const hash = location.hash.replace('#', '') || 'home';
-    if (pages[hash]) showPage(hash);
-  });
-  if (location.hash) { const hash = location.hash.replace('#', ''); if (pages[hash]) showPage(hash); }
-  else showPage('home');
-
-  // Handle story submission with YOUR image
-  const form = document.getElementById('newsForm');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const title = document.getElementById('newsTitle').value.trim();
-      const category = document.getElementById('newsCategory').value;
-      const content = document.getElementById('newsContent').value.trim();
-      let author = document.getElementById('newsAuthor').value.trim();
-      if (!author) author = 'Anonymous Contributor';
-      const file = document.getElementById('newsMedia').files[0];
-      
-      if (!title || !content) {
-        alert('Please provide a headline and story content.');
-        return;
-      }
-      
-      const processSubmission = (mediaData, mediaType) => {
-        addNewStory(title, category, content, author, mediaData, mediaType);
-        form.reset();
-        document.getElementById('newsAuthor').value = 'Bush Smith';
-        // Navigate to home to see the new story with image
-        showPage('home');
-      };
-      
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (ev) => processSubmission(ev.target.result, file.type);
-        reader.readAsDataURL(file);
-      } else {
-        processSubmission(null, null);
-      }
-    });
-  }
-
-  document.getElementById('searchBtn').addEventListener('click', performSearch);
-  document.getElementById('searchInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
-  const closeBtn = document.getElementById('closeModalBtn');
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-  window.addEventListener('click', (e) => { if (e.target === document.getElementById('storyModal')) closeModal(); });
   
-  // Initialize - YOUR EBOLA STORY IMAGE WILL BE PRESERVED!
+  function deleteStory(index) { publishedStories.splice(index,1); saveStories(); renderAllStoryLists(); }
+  
+  // Admin Functions
+  function showAdminLogin() { document.getElementById('adminModal').classList.add('active'); }
+  function closeAdminLogin() { document.getElementById('adminModal').classList.remove('active'); }
+  function showDashboard() { document.getElementById('dashboardModal').classList.add('active'); }
+  function closeDashboard() { document.getElementById('dashboardModal').classList.remove('active'); }
+  
+  function editAboutPage() { const newContent = prompt('Edit About Page Content:', document.getElementById('aboutContent').innerHTML); if(newContent) { document.getElementById('aboutContent').innerHTML = newContent; saveAboutContent(); } }
+  function editVisionPage() { const newContent = prompt('Edit Vision & Mission:', document.getElementById('visionGrid').innerHTML); if(newContent) { document.getElementById('visionGrid').innerHTML = newContent; saveVisionContent(); } }
+  function editValuesPage() { const newContent = prompt('Edit Core Values:', document.getElementById('valuesList').innerHTML); if(newContent) { document.getElementById('valuesList').innerHTML = newContent; saveValuesContent(); } }
+  function editHistoryPage() { const newContent = prompt('Edit History:', document.getElementById('historyDisplay').innerHTML); if(newContent) { document.getElementById('historyDisplay').innerHTML = newContent; saveHistoryContent(); } }
+  
+  function manageStories() {
+    let storyList = '<div style="max-height:400px; overflow-y:auto;">';
+    publishedStories.forEach((story, idx) => {
+      storyList += `<div class="story-list-item"><div><strong>${escapeHtml(story.title)}</strong><br><small>${story.category} · ${story.author}</small></div><div class="story-actions"><button onclick="window.editStoryByIndex(${idx})" style="background:#2e7d32; padding:0.4rem 1rem; border:none; border-radius:40px; color:white; cursor:pointer;">Edit</button><button onclick="window.deleteStoryByIndex(${idx})" style="background:#c62828; padding:0.4rem 1rem; border:none; border-radius:40px; color:white; cursor:pointer;">Delete</button></div></div>`;
+    });
+    storyList += '</div>';
+    document.getElementById('adminDashboardContent').innerHTML = `<h3>Manage Stories</h3>${storyList}<button class="btn-submit" style="margin-top:1rem;" onclick="location.reload()">Refresh</button>`;
+  }
+  
+  function manageComments() {
+    let allComments = [];
+    for (let storyId in currentStoryComments) {
+      currentStoryComments[storyId].forEach(comment => {
+        allComments.push({ storyId, ...comment });
+      });
+    }
+    if (allComments.length === 0) {
+      document.getElementById('adminDashboardContent').innerHTML = '<h3>Manage Comments</h3><p>No comments yet.</p><button class="btn-submit" onclick="location.reload()">Refresh</button>';
+      return;
+    }
+    let commentsHtml = '<h3>All Comments</h3><div style="max-height:400px; overflow-y:auto;">';
+    allComments.forEach(comment => {
+      commentsHtml += `<div class="comment-item" style="margin-bottom:0.5rem;"><div><strong>${escapeHtml(comment.author)}</strong> <small>${comment.date}</small></div><div>${escapeHtml(comment.text).substring(0,100)}...</div><button onclick="window.deleteCommentAndRefresh('${comment.storyId}', ${comment.id}); setTimeout(()=>manageComments(),200);" style="background:#c62828; color:white; border:none; padding:0.2rem 0.8rem; border-radius:20px; margin-top:0.5rem; cursor:pointer;">Delete</button></div>`;
+    });
+    commentsHtml += '</div><button class="btn-submit" style="margin-top:1rem;" onclick="location.reload()">Refresh</button>';
+    document.getElementById('adminDashboardContent').innerHTML = commentsHtml;
+  }
+  
+  window.editStoryByIndex = function(idx) {
+    const story = publishedStories[idx];
+    document.getElementById('editStoryTitle').value = story.title;
+    document.getElementById('editStoryCategory').value = story.category;
+    document.getElementById('editStoryContent').value = story.content;
+    document.getElementById('editStoryAuthor').value = story.author;
+    document.getElementById('editStoryIndex').value = idx;
+    document.getElementById('editStoryModal').classList.add('active');
+  };
+  
+  window.deleteStoryByIndex = function(idx) { if(confirm('Delete this story?')) { deleteStory(idx); manageStories(); } };
+  function closeEditModal() { document.getElementById('editStoryModal').classList.remove('active'); }
+  
+  // Form handlers
+  document.getElementById('newsForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = document.getElementById('newsTitle').value.trim();
+    const category = document.getElementById('newsCategory').value;
+    const content = document.getElementById('newsContent').value.trim();
+    const author = document.getElementById('newsAuthor').value.trim() || 'Bush Smith';
+    const file = document.getElementById('newsMedia').files[0];
+    if(!title || !content) { alert('Please fill all fields'); return; }
+    const process = (mediaData, mediaType) => { addNewStory(title, category, content, author, mediaData, mediaType); document.getElementById('successMessage').style.display = 'block'; setTimeout(() => document.getElementById('successMessage').style.display = 'none',3000); e.target.reset(); };
+    if(file) { const reader = new FileReader(); reader.onload = ev => process(ev.target.result, file.type); reader.readAsDataURL(file); }
+    else process(null,null);
+  });
+  
+  document.getElementById('editStoryForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const idx = parseInt(document.getElementById('editStoryIndex').value);
+    const title = document.getElementById('editStoryTitle').value;
+    const category = document.getElementById('editStoryCategory').value;
+    const content = document.getElementById('editStoryContent').value;
+    const author = document.getElementById('editStoryAuthor').value;
+    updateStory(idx, title, category, content, author);
+    closeEditModal();
+    alert('Story updated!');
+  });
+  
+  document.getElementById('deleteStoryBtn')?.addEventListener('click', () => {
+    const idx = parseInt(document.getElementById('editStoryIndex').value);
+    if(confirm('Delete this story?')) { deleteStory(idx); closeEditModal(); alert('Deleted'); if(isAdmin) manageStories(); }
+  });
+  
+  document.getElementById('adminLoginForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pwd = document.getElementById('adminPassword').value;
+    if(pwd === 'admin123') { 
+      isAdmin = true; 
+      closeAdminLogin(); 
+      showDashboard(); 
+      document.getElementById('writeNewsNav').style.display = 'list-item';
+      alert('Welcome Admin! You can now write news and manage comments.'); 
+    } else { alert('Wrong password! Use: admin123'); }
+  });
+  
+  document.getElementById('editAboutBtn')?.addEventListener('click', editAboutPage);
+  document.getElementById('editVisionBtn')?.addEventListener('click', editVisionPage);
+  document.getElementById('editValuesBtn')?.addEventListener('click', editValuesPage);
+  document.getElementById('editHistoryBtn')?.addEventListener('click', editHistoryPage);
+  document.getElementById('manageStoriesBtn')?.addEventListener('click', manageStories);
+  document.getElementById('manageCommentsBtn')?.addEventListener('click', manageComments);
+  document.getElementById('logoutAdminBtn')?.addEventListener('click', () => { isAdmin = false; closeDashboard(); document.getElementById('writeNewsNav').style.display = 'none'; alert('Logged out'); });
+  
+  document.getElementById('adminLoginBtn')?.addEventListener('click', showAdminLogin);
+  document.getElementById('closeAdminModal')?.addEventListener('click', closeAdminLogin);
+  document.getElementById('closeDashboardModal')?.addEventListener('click', closeDashboard);
+  document.getElementById('closeEditStoryModal')?.addEventListener('click', closeEditModal);
+  document.getElementById('closeReaderModal')?.addEventListener('click', closeStoryReader);
+  window.addEventListener('click', (e) => { if(e.target.classList.contains('story-modal')) closeStoryReader(); if(e.target.classList.contains('modal')) e.target.classList.remove('active'); });
+  
+  function performSearch() { currentSearchQuery = document.getElementById('searchInput').value; renderAllStoryLists(); }
+  document.getElementById('searchBtn')?.addEventListener('click', performSearch);
+  document.getElementById('searchInput')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') performSearch(); });
+  
+  // Navigation
+  const pages = { home:document.getElementById('page-home'), about:document.getElementById('page-about'), history:document.getElementById('page-history'), blog:document.getElementById('page-blog'), projects:document.getElementById('page-projects'), writenews:document.getElementById('page-writenews') };
+  function showPage(pageId) { Object.values(pages).forEach(p => p.classList.remove('active-page')); if(pages[pageId]) pages[pageId].classList.add('active-page'); document.querySelectorAll('.nav-links a[data-page]').forEach(link => { link.classList.remove('active'); if(link.dataset?.page === pageId) link.classList.add('active'); }); }
+  document.querySelectorAll('.nav-links a[data-page]').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); history.pushState(null,'','#'+link.dataset.page); }));
+  window.addEventListener('hashchange', () => { const hash = location.hash.replace('#','') || 'home'; if(pages[hash]) showPage(hash); });
+  if(location.hash) { const hash = location.hash.replace('#',''); if(pages[hash]) showPage(hash); } else showPage('home');
+  
   loadStories();
 </script>
 </body>
