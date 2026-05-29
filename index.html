@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ===== YOUR ORIGINAL STYLES (PRESERVED) ===== */
+    /* ===== YOUR ORIGINAL STYLES FULLY PRESERVED ===== */
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'Inter',sans-serif; background:#fafcff; color:#0a1e2f; line-height:1.5; }
     .container { max-width:1280px; margin:0 auto; padding:0 2rem; }
@@ -57,7 +57,7 @@
     footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid #e2ecf5; margin-top:2rem; color:#4e6e8a; }
     .no-results { text-align:center; padding:3rem; color:#6a8ea8; }
     
-    /* ===== NEW ADMIN NEWSROOM STYLES (ADDED) ===== */
+    /* ===== NEW ADMIN NEWSROOM STYLES ===== */
     .admin-writing-panel { background: white; border-radius: 48px; padding: 2.5rem; margin: 2rem 0; border: 1px solid #e9f0f5; box-shadow: 0 20px 35px rgba(0,20,0,0.05); }
     .admin-writing-panel h2 { font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.8rem; color: #2e7d32; }
     .admin-writing-panel .subtitle { color: #6a8ea8; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #eef2f8; }
@@ -130,7 +130,7 @@
     </ul>
   </div>
 
-  <!-- YOUR ORIGINAL PAGES (PRESERVED) -->
+  <!-- YOUR ORIGINAL PAGES (FULLY PRESERVED) -->
   <div id="page-home" class="page active-page">
     <div class="hero"><h1>Stories that matter. Perspectives that count.</h1><p><strong>PADECO NEWS</strong> — independent reporting by <strong>Bush Smith</strong>.</p></div>
     <div class="section-title">What PADECO NEWS covers</div>
@@ -147,7 +147,7 @@
   <div id="page-blog" class="page"><div class="blog-wrap"><h2><i class="fas fa-newspaper"></i> Blog & Longform</h2><div id="blogGridContainer" class="blog-grid"></div></div></div>
   <div id="page-projects" class="page"><div class="projects-wrap"><h2><i class="fas fa-folder-open"></i> Projects</h2><div class="blog-grid"><div class="blog-card"><h3>Open Source Newsroom</h3><p>Toolkit for independent journalists.</p></div><div class="blog-card"><h3>Transparency Watch</h3><p>Tracking political donations.</p></div><div class="blog-card"><h3>Local News Fund</h3><p>Grant program for reporters.</p></div></div></div></div>
 
-  <!-- NEW: ADMIN WRITING PANEL (NEWSROOM CODE ADDED) -->
+  <!-- NEW ADMIN WRITING PANEL (REPLACED WITH NEWSROOM CODE) -->
   <div id="page-writenews" class="page">
     <div class="admin-writing-panel">
       <h2><i class="fas fa-feather-alt"></i> Write a New Story</h2>
@@ -162,12 +162,16 @@
         <div id="publishSuccess" class="success-message" style="display:none;">✅ Story published successfully!</div>
       </form>
     </div>
-    <div class="admin-writing-panel" style="margin-top:0;"><h2><i class="fas fa-edit"></i> Recent Stories</h2><div class="subtitle">Manage or delete your published articles</div><div id="recentStoriesList" style="max-height:400px; overflow-y:auto;"></div></div>
+    <div class="admin-writing-panel" style="margin-top:0;">
+      <h2><i class="fas fa-edit"></i> Recent Stories</h2>
+      <div class="subtitle">Manage or delete your published articles</div>
+      <div id="recentStoriesList" style="max-height:400px; overflow-y:auto;"></div>
+    </div>
   </div>
   <footer><p>© 2026 PADECO NEWS · Independent journalism by Bush Smith</p></footer>
 </div>
 
-<!-- MODALS -->
+<!-- MODALS (UPDATED WITH PASSWORD CHANGE) -->
 <div id="adminModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Admin Login</h2><span class="modal-close" id="closeAdminModal">&times;</span></div><form id="adminLoginForm"><input type="password" id="adminPassword" placeholder="Enter admin password" style="width:100%; padding:1rem; border-radius:30px; border:1px solid #ddd; margin-bottom:1rem;"><button type="submit" class="btn-submit" style="width:100%;">Login</button></form></div></div>
 
 <div id="dashboardModal" class="modal">
@@ -182,14 +186,14 @@
       <button id="uploadLogoBtn" class="btn-submit"><i class="fas fa-image"></i> Upload Site Logo</button>
       <button id="logoutAdminBtn" class="btn-submit btn-danger">Logout</button>
     </div>
-    <!-- CHANGE PASSWORD FEATURE (NEW) -->
+    <!-- NEW: CHANGE PASSWORD SECTION -->
     <div class="password-change-area">
       <h4><i class="fas fa-key"></i> Change Admin Password</h4>
       <input type="password" id="currentPasswordInput" placeholder="Current password" class="inline-input">
       <input type="password" id="newPasswordInput" placeholder="New password" class="inline-input">
       <input type="password" id="confirmPasswordInput" placeholder="Confirm new password" class="inline-input">
       <button id="changePasswordBtn" class="btn-submit" style="background:#2c3e66;">Update Password</button>
-      <div id="passwordMsg" style="font-size:0.75rem; margin-top:8px; color:#2e7d32;"></div>
+      <div id="passwordMsg" style="font-size:0.75rem; margin-top:8px;"></div>
     </div>
     <div id="adminDashboardContent" style="margin-top:1rem;"><p>🔐 You can change your admin password above. Keep it secure.</p></div>
   </div>
@@ -199,10 +203,10 @@
 <div id="storyReaderModal" class="story-modal"><div class="modal-content" style="max-width:1100px;"><div class="modal-close" id="closeReaderModal" style="position:sticky; top:20px; right:25px; float:right; font-size:2rem; cursor:pointer; background:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;">&times;</div><div id="storyFullContent" class="story-full"></div><div id="commentsSectionContainer" class="comments-section" style="margin:0 2rem 2rem 2rem;"></div></div></div>
 
 <script>
-  // ========== COMPLETE ADMIN NEWSROOM SCRIPT WITH PASSWORD CHANGE ==========
+  // ========== COMPLETE JAVASCRIPT WITH STORY SAVING + PASSWORD CHANGE ==========
   let publishedStories = [], currentSearchQuery = "", isAdmin = false, currentStoryComments = {}, currentOpenStory = null;
   
-  // Password management (default: admin123, stored in localStorage)
+  // Password management (default: admin123)
   let adminPasswordHash = localStorage.getItem('padeco_admin_password') || "admin123";
   function verifyPassword(inputPass) { return inputPass === adminPasswordHash; }
   function updateAdminPassword(newPass) { adminPasswordHash = newPass; localStorage.setItem('padeco_admin_password', newPass); return true; }
@@ -249,7 +253,7 @@
   document.getElementById('editAboutBtn')?.addEventListener('click', editAbout); document.getElementById('editVisionBtn')?.addEventListener('click', editVision); document.getElementById('editValuesBtn')?.addEventListener('click', editValues); document.getElementById('editHistoryBtn')?.addEventListener('click', editHistory); document.getElementById('manageCommentsBtn')?.addEventListener('click', manageComments); document.getElementById('logoutAdminBtn')?.addEventListener('click', () => { isAdmin = false; closeDashboard(); document.getElementById('writeNewsNav').style.display = 'none'; document.getElementById('adminLogoUploader').style.display = 'none'; alert('Logged out'); if(currentOpenStory) renderCommentsSection(currentOpenStory.id); });
   document.getElementById('adminLoginBtn')?.addEventListener('click', showAdminLogin); document.getElementById('closeAdminModal')?.addEventListener('click', closeAdminLogin); document.getElementById('closeDashboardModal')?.addEventListener('click', closeDashboard); document.getElementById('closeEditStoryModal')?.addEventListener('click', closeEditModal); document.getElementById('closeReaderModal')?.addEventListener('click', closeStoryReader); window.addEventListener('click', (e) => { if(e.target.classList.contains('story-modal')) closeStoryReader(); if(e.target.classList.contains('modal')) e.target.classList.remove('active'); });
   
-  // Change password handler
+  // CHANGE PASSWORD HANDLER
   document.getElementById('changePasswordBtn')?.addEventListener('click', () => { 
     const current = document.getElementById('currentPasswordInput').value;
     const newPass = document.getElementById('newPasswordInput').value;
