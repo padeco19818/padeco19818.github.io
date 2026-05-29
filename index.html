@@ -19,7 +19,6 @@
     .nav-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; align-items:center; }
     .nav-links a { text-decoration:none; font-weight:500; color:#1f3a5f; transition:color 0.2s; cursor:pointer; padding-bottom:4px; }
     .nav-links a:hover, .nav-links a.active { color:#2a6f8f; border-bottom:2px solid #2a6f8f; }
-    /* Admin link only shows when logged in */
     .admin-nav-link { display:none; background:#2e7d32; color:white !important; padding:0.3rem 0.8rem; border-radius:40px; font-size:0.75rem; font-weight:600; }
     .admin-nav-link:hover { background:#1f5c23; border-bottom:none !important; }
     .admin-nav-link.active-admin { display:inline-block; }
@@ -83,7 +82,6 @@
     .story-full .story-meta { display:flex; gap:1.5rem; margin:1rem 0 1.5rem; color:#5a7d9a; border-bottom:2px solid #eef2f8; padding-bottom:0.8rem; flex-wrap:wrap; font-size:0.9rem; }
     .story-full .story-body { font-size:1.05rem; line-height:1.7; }
     
-    /* Admin Panel Styles - Completely Separate, Only Shows When Authenticated */
     .admin-panel-container {
       position: fixed;
       top: 0;
@@ -147,7 +145,6 @@
     .admin-card button { background: #2e7d32; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 0.5rem; }
     .auto-save-badge { position: fixed; bottom: 20px; right: 20px; background: #2e7d32; color: white; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.7rem; z-index: 20001; }
     
-    /* Login Modal */
     .login-modal {
       position: fixed;
       top: 0;
@@ -193,15 +190,15 @@
       font-size: 0.75rem !important;
       margin-left: 0.5rem;
     }
+    .media-preview-area { margin-top: 0.5rem; padding: 1rem; background: #f8fafc; border-radius: 20px; display: none; }
+    .media-preview-area img, .media-preview-area video { max-width: 100%; max-height: 200px; border-radius: 12px; }
   </style>
 </head>
 <body>
-  <!-- Hidden admin trigger (only you know to click this) -->
+<!-- Hidden admin trigger (bottom-right corner, invisible) -->
 <div id="secretAdminTrigger" style="position:fixed; bottom:10px; right:10px; width:50px; height:50px; opacity:0; cursor:pointer; z-index:99999;"></div>
 
-<!-- PUBLIC WEBSITE - No admin code visible to regular users -->
-<div class="container">
-<!-- PUBLIC WEBSITE - No admin code visible to regular users -->
+<!-- PUBLIC WEBSITE -->
 <div class="container">
   <div class="nav-holder">
     <div class="logo-area">
@@ -215,7 +212,6 @@
       <li><a data-page="history">History</a></li>
       <li><a data-page="blog">Blog</a></li>
       <li><a data-page="projects">Projects</a></li>
-      <!-- Admin link - hidden by default, only shows after login -->
       <li id="adminNavItem" style="display:none;"><a id="openAdminPanelBtn" class="admin-nav-link" style="cursor:pointer;"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
       <li id="logoutNavItem" style="display:none;"><a id="logoutBtn" class="logout-btn" style="cursor:pointer;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
@@ -244,7 +240,7 @@
   <footer><p>© 2026 PADECO NEWS · Independent journalism by Bush Smith</p></footer>
 </div>
 
-<!-- ADMIN PANEL - Dynamically injected only after login (separate from public view) -->
+<!-- ADMIN PANEL -->
 <div id="adminPanel" class="admin-panel-container">
   <div class="admin-header">
     <h2><i class="fas fa-newspaper"></i> PADECO NEWS — Admin Dashboard</h2>
@@ -266,6 +262,15 @@
         </div>
         <input type="text" id="storyAuthor" placeholder="Author name" value="Bush Smith">
         <textarea id="storyContent" placeholder="Write your story here..." rows="10"></textarea>
+        
+        <!-- Media Upload Section -->
+        <input type="file" id="storyMedia" accept="image/*,video/*" style="padding:0.5rem;">
+        <div id="mediaPreview" class="media-preview-area">
+          <strong>Media Preview:</strong>
+          <div id="mediaPreviewContent"></div>
+          <button type="button" id="removeMediaBtn" style="background:#dc2626;color:white;border:none;padding:0.3rem 0.8rem;border-radius:20px;margin-top:0.5rem;cursor:pointer;">Remove Media</button>
+        </div>
+        
         <div class="stats-bar" id="statsBar">
           <span>📝 Characters: 0</span>
           <span>📊 Words: 0</span>
@@ -329,13 +334,12 @@
 
 <script>
   // ============================================
-  // ADMIN AUTHENTICATION - SEPARATE FROM PUBLIC
+  // ADMIN AUTHENTICATION
   // ============================================
   let isAdminLoggedIn = false;
   const ADMIN_PASSWORD = "PadecoAdmin2026"; // CHANGE THIS PASSWORD!
   
   function showLoginModal() {
-    // Remove any existing login modal
     const existingModal = document.getElementById('adminLoginModal');
     if(existingModal) existingModal.remove();
     
@@ -367,17 +371,13 @@
       }
     };
     
-    document.getElementById('cancelAdminLogin').onclick = () => {
-      modal.remove();
-    };
-    
+    document.getElementById('cancelAdminLogin').onclick = () => modal.remove();
     document.getElementById('adminPassword').addEventListener('keypress', (e) => {
       if(e.key === 'Enter') document.getElementById('submitAdminLogin').click();
     });
   }
   
   function showAdminUI() {
-    // Show admin nav link and logout button
     document.getElementById('adminNavItem').style.display = 'list-item';
     document.getElementById('logoutNavItem').style.display = 'list-item';
   }
@@ -385,7 +385,6 @@
   function hideAdminUI() {
     document.getElementById('adminNavItem').style.display = 'none';
     document.getElementById('logoutNavItem').style.display = 'none';
-    // Close admin panel if open
     document.getElementById('adminPanel').classList.remove('active');
   }
   
@@ -399,22 +398,25 @@
   }
   
   function checkExistingAuth() {
-    const savedAuth = localStorage.getItem('padeco_admin_auth');
-    if(savedAuth === 'true') {
+    if(localStorage.getItem('padeco_admin_auth') === 'true') {
       isAdminLoggedIn = true;
       showAdminUI();
     }
   }
   
   // ============================================
-  // DATA STORAGE (unchanged)
+  // DATA STORAGE
   // ============================================
   let publishedStories = [];
   let currentSearchQuery = "";
   let currentStoryComments = {};
   let currentOpenStory = null;
   
-  const STORIES_KEY = "padeco_stories_v4";
+  // Media variables
+  let currentMediaData = null;
+  let currentMediaType = null;
+  
+  const STORIES_KEY = "padeco_stories_v5";
   const COMMENTS_KEY = "padeco_comments_v4";
   
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=> m=='&'?'&amp;':m=='<'?'&lt;':'&gt;'); }
@@ -494,8 +496,11 @@
     currentOpenStory = story;
     let mediaHtml = '';
     if(story.mediaData && story.mediaType) {
-      if(story.mediaType.startsWith('image/')) mediaHtml = `<div style="margin:1rem 0;"><img src="${story.mediaData}" style="max-width:100%; border-radius:28px;"></div>`;
-      else if(story.mediaType.startsWith('video/')) mediaHtml = `<div style="margin:1rem 0;"><video src="${story.mediaData}" controls style="max-width:100%; border-radius:28px;"></video></div>`;
+      if(story.mediaType.startsWith('image/')) {
+        mediaHtml = `<div style="margin:1rem 0; text-align:center;"><img src="${story.mediaData}" style="max-width:100%; border-radius:28px; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>`;
+      } else if(story.mediaType.startsWith('video/')) {
+        mediaHtml = `<div style="margin:1rem 0; text-align:center;"><video src="${story.mediaData}" controls style="max-width:100%; border-radius:28px;"></video></div>`;
+      }
     }
     container.innerHTML = `<h2>${escapeHtml(story.title)}</h2><div class="story-meta"><span><i class="fas fa-folder"></i> ${story.category}</span><span><i class="fas fa-user"></i> ${escapeHtml(story.author)}</span><span><i class="fas fa-calendar"></i> ${story.date}</span></div>${mediaHtml}<div class="story-body"><p>${escapeHtml(story.content).replace(/\n/g, '<br>')}</p></div>`;
     modal.classList.add('active');
@@ -541,7 +546,12 @@
     [...filtered].reverse().forEach(story => {
       const card = document.createElement('div');
       card.className = 'blog-card';
-      card.innerHTML = `<h3>${escapeHtml(story.title)}</h3><div style="color:#6a8ea8; margin:0.5rem 0;">${story.date} · ${escapeHtml(story.author)}</div><p>${escapeHtml(story.content.substring(0,120))}…</p><div style="color:#2e7d32; margin-top:10px;"><i class="fas fa-book-open"></i> Read full →</div>`;
+      let mediaIcon = '';
+      if(story.mediaData) {
+        if(story.mediaType.startsWith('image/')) mediaIcon = '<i class="fas fa-image" style="color:#2e7d32; margin-right:5px;"></i>';
+        else if(story.mediaType.startsWith('video/')) mediaIcon = '<i class="fas fa-video" style="color:#2e7d32; margin-right:5px;"></i>';
+      }
+      card.innerHTML = `<h3>${mediaIcon}${escapeHtml(story.title)}</h3><div style="color:#6a8ea8; margin:0.5rem 0;">${story.date} · ${escapeHtml(story.author)}</div><p>${escapeHtml(story.content.substring(0,120))}…</p><div style="color:#2e7d32; margin-top:10px;"><i class="fas fa-book-open"></i> Read full →</div>`;
       card.onclick = () => openFullStory(story);
       container.appendChild(card);
     });
@@ -553,13 +563,16 @@
     if(publishedStories.length === 0) { container.innerHTML = '<p style="padding:1rem; text-align:center;">No stories yet.</p>'; return; }
     let html = '';
     [...publishedStories].reverse().forEach(story => {
-      html += `<div class="story-list-item"><div><strong>${escapeHtml(story.title)}</strong><br><small>${story.date} · ${story.category}</small></div><div><button onclick="editStoryPrompt('${story.id}')" style="background:#e0e7ff; border:none; padding:0.3rem 0.8rem; border-radius:20px; margin-right:0.5rem; cursor:pointer;">Edit</button><button onclick="deleteStoryById('${story.id}')" style="background:#fee2e2; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">Delete</button></div></div>`;
+      let mediaBadge = '';
+      if(story.mediaData) mediaBadge = story.mediaType.startsWith('image/') ? ' 📷' : (story.mediaType.startsWith('video/') ? ' 🎥' : '');
+      html += `<div class="story-list-item"><div><strong>${escapeHtml(story.title)}${mediaBadge}</strong><br><small>${story.date} · ${story.category}</small></div><div><button onclick="editStoryPrompt('${story.id}')" style="background:#e0e7ff; border:none; padding:0.3rem 0.8rem; border-radius:20px; margin-right:0.5rem; cursor:pointer;">Edit</button><button onclick="deleteStoryById('${story.id}')" style="background:#fee2e2; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">Delete</button></div></div>`;
     });
     container.innerHTML = html;
   }
   
-  function addNewStory(title, category, content, author) {
-    const newStory = { id: 'story_' + Date.now(), title, category, content, author, date: formatDate(), mediaData: null, mediaType: null };
+  // UPDATED: addNewStory with media parameters
+  function addNewStory(title, category, content, author, mediaData = null, mediaType = null) {
+    const newStory = { id: 'story_' + Date.now(), title, category, content, author, date: formatDate(), mediaData: mediaData, mediaType: mediaType };
     publishedStories.unshift(newStory);
     saveStories();
     renderAll();
@@ -604,7 +617,7 @@
   
   function autoSaveDraft() {
     if(!isAdminLoggedIn) return;
-    const draft = { title: document.getElementById('storyTitle').value, category: document.getElementById('storyCategory').value, author: document.getElementById('storyAuthor').value, content: document.getElementById('storyContent').value, timestamp: Date.now() };
+    const draft = { title: document.getElementById('storyTitle').value, category: document.getElementById('storyCategory').value, author: document.getElementById('storyAuthor').value, content: document.getElementById('storyContent').value, mediaData: currentMediaData, mediaType: currentMediaType, timestamp: Date.now() };
     localStorage.setItem('admin_draft', JSON.stringify(draft));
   }
   
@@ -613,11 +626,85 @@
     const draft = localStorage.getItem('admin_draft');
     if(draft) {
       const d = JSON.parse(draft);
-      if(d.title || d.content) { if(confirm('Load unsaved draft?')) { document.getElementById('storyTitle').value = d.title || ''; document.getElementById('storyCategory').value = d.category || 'Politics & Policy'; document.getElementById('storyAuthor').value = d.author || 'Bush Smith'; document.getElementById('storyContent').value = d.content || ''; updateStats(); updatePreview(); } }
+      if(d.title || d.content) { 
+        if(confirm('Load unsaved draft?')) { 
+          document.getElementById('storyTitle').value = d.title || ''; 
+          document.getElementById('storyCategory').value = d.category || 'Politics & Policy'; 
+          document.getElementById('storyAuthor').value = d.author || 'Bush Smith'; 
+          document.getElementById('storyContent').value = d.content || ''; 
+          if(d.mediaData) {
+            currentMediaData = d.mediaData;
+            currentMediaType = d.mediaType;
+            const previewDiv = document.getElementById('mediaPreview');
+            const previewContent = document.getElementById('mediaPreviewContent');
+            if(currentMediaType.startsWith('image/')) {
+              previewContent.innerHTML = `<img src="${currentMediaData}" style="max-width:100%; max-height:200px; border-radius:12px;">`;
+            } else if(currentMediaType.startsWith('video/')) {
+              previewContent.innerHTML = `<video src="${currentMediaData}" controls style="max-width:100%; max-height:200px; border-radius:12px;"></video>`;
+            }
+            previewDiv.style.display = 'block';
+          }
+          updateStats(); 
+          updatePreview(); 
+        } 
+      }
     }
   }
   
-  function clearForm() { if(confirm('Clear form?')) { document.getElementById('adminStoryForm').reset(); document.getElementById('storyAuthor').value = 'Bush Smith'; updateStats(); updatePreview(); localStorage.removeItem('admin_draft'); } }
+  function clearForm() { 
+    if(confirm('Clear form?')) { 
+      document.getElementById('adminStoryForm').reset(); 
+      document.getElementById('storyAuthor').value = 'Bush Smith'; 
+      updateStats(); 
+      updatePreview(); 
+      localStorage.removeItem('admin_draft');
+      // Reset media
+      currentMediaData = null;
+      currentMediaType = null;
+      document.getElementById('storyMedia').value = '';
+      document.getElementById('mediaPreview').style.display = 'none';
+      document.getElementById('mediaPreviewContent').innerHTML = '';
+    } 
+  }
+  
+  // Media upload handlers
+  document.getElementById('storyMedia')?.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if(!file) return;
+    
+    if(file.size > 10 * 1024 * 1024) {
+      alert('File too large! Max 10MB');
+      this.value = '';
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      currentMediaData = ev.target.result;
+      currentMediaType = file.type;
+      
+      const previewDiv = document.getElementById('mediaPreview');
+      const previewContent = document.getElementById('mediaPreviewContent');
+      
+      if(file.type.startsWith('image/')) {
+        previewContent.innerHTML = `<img src="${currentMediaData}" style="max-width:100%; max-height:200px; border-radius:12px;">`;
+      } else if(file.type.startsWith('video/')) {
+        previewContent.innerHTML = `<video src="${currentMediaData}" controls style="max-width:100%; max-height:200px; border-radius:12px;"></video>`;
+      }
+      previewDiv.style.display = 'block';
+      autoSaveDraft();
+    };
+    reader.readAsDataURL(file);
+  });
+  
+  document.getElementById('removeMediaBtn')?.addEventListener('click', function() {
+    currentMediaData = null;
+    currentMediaType = null;
+    document.getElementById('storyMedia').value = '';
+    document.getElementById('mediaPreview').style.display = 'none';
+    document.getElementById('mediaPreviewContent').innerHTML = '';
+    autoSaveDraft();
+  });
   
   function handlePublishStory(e) {
     e.preventDefault();
@@ -627,10 +714,19 @@
     if(!title || !content) { alert('Please fill title and content'); return; }
     const category = document.getElementById('storyCategory').value;
     const author = document.getElementById('storyAuthor').value.trim() || 'Bush Smith';
-    addNewStory(title, category, content, author);
+    
+    addNewStory(title, category, content, author, currentMediaData, currentMediaType);
+    
     document.getElementById('publishSuccess').style.display = 'block';
     document.getElementById('publishSuccess').innerHTML = '✅ Story published successfully!';
     setTimeout(() => document.getElementById('publishSuccess').style.display = 'none', 3000);
+    
+    // Reset media after publish
+    currentMediaData = null;
+    currentMediaType = null;
+    document.getElementById('storyMedia').value = '';
+    document.getElementById('mediaPreview').style.display = 'none';
+    document.getElementById('mediaPreviewContent').innerHTML = '';
     clearForm();
     renderRecentStoriesList();
   }
@@ -667,9 +763,7 @@
   const pages = { home: document.getElementById('page-home'), about: document.getElementById('page-about'), history: document.getElementById('page-history'), blog: document.getElementById('page-blog'), projects: document.getElementById('page-projects') };
   function showPage(pageId) { Object.values(pages).forEach(p => { if(p) p.classList.remove('active-page'); }); if(pages[pageId]) pages[pageId].classList.add('active-page'); document.querySelectorAll('.nav-links a[data-page]').forEach(link => { link.classList.remove('active'); if(link.dataset?.page === pageId) link.classList.add('active'); }); }
   
-  // ============================================
   // EVENT LISTENERS
-  // ============================================
   document.getElementById('adminStoryForm')?.addEventListener('submit', handlePublishStory);
   document.getElementById('clearFormBtn')?.addEventListener('click', clearForm);
   document.getElementById('deleteAllStoriesBtn')?.addEventListener('click', deleteAllStories);
@@ -686,6 +780,7 @@
   document.getElementById('uploadLogoBtn')?.addEventListener('click', uploadSiteLogo);
   document.getElementById('closeReaderModal')?.addEventListener('click', closeStoryReader);
   document.getElementById('logoutBtn')?.addEventListener('click', logoutAdmin);
+  document.getElementById('secretAdminTrigger')?.addEventListener('click', () => { showLoginModal(); });
   window.addEventListener('click', (e) => { if(e.target.classList.contains('story-modal')) closeStoryReader(); });
   document.querySelectorAll('.nav-links a[data-page]').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); showPage(link.dataset.page); history.pushState(null, '', '#' + link.dataset.page); }); });
   window.addEventListener('hashchange', () => { let hash = location.hash.replace('#', '') || 'home'; if(pages[hash]) showPage(hash); });
@@ -698,10 +793,6 @@
   updateStats();
   updatePreview();
   if(location.hash) { let hash = location.hash.replace('#', ''); if(pages[hash]) showPage(hash); else showPage('home'); } else showPage('home');
-  // Secret admin trigger click handler
-document.getElementById('secretAdminTrigger')?.addEventListener('click', () => {
-    showLoginModal();
-});
 </script>
 </body>
 </html>
