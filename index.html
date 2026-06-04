@@ -736,5 +736,57 @@
   if(location.hash) { let hash = location.hash.replace('#', ''); if(pages[hash]) showPage(hash); else showPage('home'); } else showPage('home');
 })();
 </script>
+  <script>
+// Add this to YOUR existing webpage
+(async function() {
+    // Find your form - REPLACE 'yourFormId' with your actual form ID or class
+    const yourForm = document.querySelector('#yourFormId') || document.querySelector('form');
+    
+    if (!yourForm) {
+        console.error('Form not found! Add id="storyForm" to your form');
+        return;
+    }
+    
+    // Add save function to your form
+    yourForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get values from YOUR form fields - ADJUST THESE SELECTORS
+        const title = document.querySelector('#title, [name="title"], input[placeholder*="Title"]')?.value || '';
+        const content = document.querySelector('#content, [name="content"], textarea')?.value || '';
+        const author = document.querySelector('#author, [name="author"], input[placeholder*="Author"]')?.value || 'Anonymous';
+        
+        if (!title || !content) {
+            alert('Please fill in title and content');
+            return;
+        }
+        
+        // Show saving status (optional - add a div with id="saveStatus" to your page)
+        const statusDiv = document.getElementById('saveStatus');
+        if (statusDiv) statusDiv.innerHTML = 'Saving to server...';
+        
+        try {
+            const response = await fetch('/api/save-story.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, content, author })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('✅ Story saved permanently on server!');
+                if (statusDiv) statusDiv.innerHTML = '✅ Saved successfully!';
+                yourForm.reset(); // Optional: clear form
+            } else {
+                throw new Error(result.error);
+            }
+        } catch (error) {
+            alert('❌ Error: ' + error.message);
+            if (statusDiv) statusDiv.innerHTML = '❌ Save failed: ' + error.message;
+        }
+    });
+})();
+</script>
 </body>
 </html>
