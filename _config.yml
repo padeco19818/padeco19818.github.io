@@ -1,3 +1,4 @@
-theme: jekyll-theme-minimal
-title: My Stories
-description: Stories by padeco19818
+title: My Stories Site
+description: Personal stories and blog
+baseurl: ""
+url: "https://padeco19818.github.io"
