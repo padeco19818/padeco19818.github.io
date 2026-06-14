@@ -814,5 +814,15 @@
   {% endfor %}
 </ul>
 <!-- END STORIES LIST -->
+  <h1>My Stories</h1>
+
+{% for post in site.posts %}
+  <div style="margin-bottom: 30px;">
+    <h2>{{ post.title }}</h2>
+    <p style="color: gray;">{{ post.date | date: "%B %d, %Y" }}</p>
+    <p>{{ post.excerpt }}</p>
+    <a href="{{ post.url }}">Read more</a>
+  </div>
+{% endfor %}
 </body>
 </html>
