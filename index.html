@@ -48,6 +48,17 @@
     .blog-card .post-excerpt { margin-bottom:1rem; line-height:1.5; }
     .blog-card .read-more { color:#2a6f8f; text-decoration:none; font-weight:500; display:inline-block; margin-top:0.5rem; }
     .blog-card .read-more:hover { text-decoration:underline; }
+    
+    /* Liquid-style blog post cards */
+    .liquid-blog-container { max-width: 900px; margin: 0 auto; }
+    .liquid-post-card { margin-bottom: 40px; padding: 2rem; background: white; border-radius: 28px; border: 1px solid #eef2f8; transition: 0.3s; }
+    .liquid-post-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+    .liquid-post-card h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.75rem; color: #000000 !important; }
+    .liquid-post-card .post-date { color: gray; font-size: 0.9rem; margin-bottom: 1rem; display: block; }
+    .liquid-post-card .post-excerpt { margin-bottom: 1.5rem; line-height: 1.7; color: #2c475e; }
+    .liquid-post-card .read-more { color: #000000; text-decoration: none; font-weight: 600; border-bottom: 2px solid #000000; padding-bottom: 2px; transition: 0.2s; }
+    .liquid-post-card .read-more:hover { color: #2a6f8f; border-bottom-color: #2a6f8f; }
+    
     .vision-grid { display:flex; flex-wrap:wrap; gap:2.5rem; justify-content:center; margin-top:1rem; }
     .vision-card { flex:1 1 280px; max-width:500px; text-align:center; padding:1.5rem; }
     .vision-card .icon { font-size:2.5rem; color:#000000; margin-bottom:0.8rem; }
@@ -89,6 +100,7 @@
     .story-full .story-meta { display:flex; gap:1.5rem; margin:1rem 0 1.5rem; color:#5a7d9a; border-bottom:2px solid #eef2f8; padding-bottom:0.8rem; flex-wrap:wrap; font-size:0.9rem; }
     .story-full .story-body { font-size:1.05rem; line-height:1.7; }
     
+    /* EXPANDED ADMIN PANEL */
     .admin-panel-container {
       position: fixed;
       top: 0;
@@ -302,6 +314,545 @@
 
   <div id="page-history" class="page"><div class="history-wrap"><h2><i class="fas fa-timeline"></i> Our History</h2><div class="history-editor"><div id="historyDisplay" style="background:#f9fafc; padding:1.5rem; border-radius:28px;">PADECO NEWS was founded in 2018 by Bush Smith. Starting as a small newsletter, it grew into an independent journalism platform covering politics, technology, culture, and investigations. By 2026, it reaches over 150,000 monthly readers.</div></div></div></div>
 
-  <div id="page-blog" class="page"><div class="blog-wrap"><h2><i class="fas fa-newspaper"></i> Blog & Longform</h2><div id="blogGridContainer" class="blog-grid"></div></div></div>
+  <div id="page-blog" class="page">
+    <div class="blog-wrap">
+      <h2><i class="fas fa-newspaper"></i> Blog & Longform</h2>
+      <!-- LIQUID-STYLE BLOG LOOP CONTAINER -->
+      <!-- This replaces {% for post in site.posts %} with JavaScript -->
+      <div id="liquidBlogContainer" class="liquid-blog-container"></div>
+    </div>
+  </div>
 
-  <div id="page-projects" class="page"><div class="projects-wrap"><h2><i class="fas fa-folder-open"></i> Projects</h2><div class="blog-grid"><div class="blog-card"><h3>Open Source Newsroom</h3><p>Toolkit for independen
+  <div id="page-projects" class="page"><div class="projects-wrap"><h2><i class="fas fa-folder-open"></i> Projects</h2><div class="blog-grid"><div class="blog-card"><h3>Open Source Newsroom</h3><p>Toolkit for independent journalists.</p></div><div class="blog-card"><h3>Transparency Watch</h3><p>Tracking political donations.</p></div><div class="blog-card"><h3>Local News Fund</h3><p>Grant program for reporters.</p></div></div></div></div>
+  
+  <footer><p>© 2026 PADECO NEWS · Independent journalism by Bush Smith</p></footer>
+</div>
+
+<div id="adminPanel" class="admin-panel-container">
+  <div class="admin-header">
+    <h2><i class="fas fa-user-shield"></i> PADECO NEWS Admin</h2>
+    <button id="closeAdminPanelBtn" class="btn-outline" style="background:white;">Close</button>
+  </div>
+  <div class="admin-content">
+    <div class="admin-writing-panel">
+      <h3><i class="fas fa-feather-alt"></i> Write New Story</h3>
+      <form id="storyForm" class="story-form">
+        <div class="form-row">
+          <input type="text" id="storyTitle" placeholder="Story title *" required>
+          <select id="storyCategory">
+            <option value="Politics">Politics & Policy</option>
+            <option value="Technology">Technology & Society</option>
+            <option value="Culture">Culture & Identity</option>
+            <option value="Investigations">Investigations</option>
+          </select>
+        </div>
+        <textarea id="storyContent" placeholder="Write your story content here... (supports HTML)" rows="12"></textarea>
+        <div class="form-row">
+          <input type="text" id="storyExcerpt" placeholder="Short excerpt (optional)">
+        </div>
+        <div class="media-preview-area" id="mediaPreviewArea">
+          <div id="mediaPreview"></div>
+          <button type="button" id="removeMediaBtn">Remove Media</button>
+        </div>
+        <button type="submit" class="btn-publish"><i class="fas fa-paper-plane"></i> Publish Story</button>
+      </form>
+    </div>
+    <div class="admin-writing-panel">
+      <h3><i class="fas fa-edit"></i> Manage Stories</h3>
+      <div id="adminStoriesList"></div>
+    </div>
+  </div>
+</div>
+
+<div id="storyViewModal" class="story-modal">
+  <div class="modal-content story-full">
+    <div class="modal-header"><h2 id="modalStoryTitle"></h2><span class="modal-close" id="closeStoryModal">&times;</span></div>
+    <div class="story-meta" id="modalStoryMeta"></div>
+    <div id="modalStoryBody" class="story-body"></div>
+    <div id="modalCommentsSection" class="comments-section"></div>
+  </div>
+</div>
+
+<script>
+// ==================== DATA STORAGE ====================
+let posts = [];
+
+// Load posts from localStorage
+function loadPosts() {
+  const saved = localStorage.getItem('padeco_posts');
+  if (saved) {
+    posts = JSON.parse(saved);
+  } else {
+    // Sample posts to demonstrate the Liquid-style loop
+    posts = [
+      {
+        id: 1,
+        title: "The Future of Digital Journalism",
+        date: "2026-06-10",
+        excerpt: "How AI is transforming newsrooms and what it means for independent reporting. A deep dive into the ethical implications and opportunities for journalists.",
+        content: "<p>Artificial intelligence is reshaping the news industry at an unprecedented pace. From automated fact-checking to personalized news delivery, journalists must adapt to new tools while maintaining ethical standards.</p><p>This investigation explores how independent reporters can leverage AI without compromising their integrity or losing the human touch that defines great journalism.</p>",
+        category: "Technology",
+        comments: [],
+        media: null
+      },
+      {
+        id: 2,
+        title: "Accountability in Local Government",
+        date: "2026-06-05",
+        excerpt: "Investigative report on city council spending and transparency gaps in the budgeting process.",
+        content: "<p>Our six-month investigation reveals concerning patterns in how local tax dollars are being allocated. Multiple sources within city hall have raised red flags about lack of oversight.</p><p>This report includes document analysis and interviews with whistleblowers who requested anonymity for fear of retaliation.</p>",
+        category: "Investigations",
+        comments: [],
+        media: null
+      },
+      {
+        id: 3,
+        title: "Preserving Cultural Identity in a Digital Age",
+        date: "2026-05-28",
+        excerpt: "Exploring how communities maintain heritage amid globalization and technological change.",
+        content: "<p>As the world becomes increasingly connected, local traditions face both threats and opportunities. This feature examines three communities successfully navigating digital transformation while preserving their unique cultural identities.</p><p>From indigenous language apps to virtual museum tours, technology can be a powerful ally in cultural preservation when used thoughtfully.</p>",
+        category: "Culture",
+        comments: [],
+        media: null
+      }
+    ];
+    savePosts();
+  }
+}
+
+function savePosts() {
+  localStorage.setItem('padeco_posts', JSON.stringify(posts));
+}
+
+// Format date like Liquid's {{ post.date | date: "%B %d, %Y" }}
+function formatDateLiquid(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    month: 'long', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+// ==================== LIQUID-STYLE BLOG LOOP ====================
+// This converts {% for post in site.posts %} to JavaScript
+function renderLiquidBlogLoop() {
+  const container = document.getElementById('liquidBlogContainer');
+  if (!container) return;
+  
+  if (posts.length === 0) {
+    container.innerHTML = '<div class="no-results">No stories yet. Check back soon!</div>';
+    return;
+  }
+  
+  // Sort posts by date (newest first) - like Jekyll's site.posts
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+  // THIS IS YOUR LIQUID LOOP CONVERTED TO JAVASCRIPT:
+  // {% for post in site.posts %}
+  //   <div style="margin-bottom: 30px;">
+  //     <h2>{{ post.title }}</h2>
+  //     <p style="color: gray;">{{ post.date | date: "%B %d, %Y" }}</p>
+  //     <p>{{ post.excerpt }}</p>
+  //     <a href="{{ post.url }}">Read more</a>
+  //   </div>
+  // {% endfor %}
+  
+  let html = '';
+  for (let i = 0; i < sortedPosts.length; i++) {
+    const post = sortedPosts[i];
+    html += `
+      <div class="liquid-post-card" style="margin-bottom: 40px;">
+        <h2>${escapeHtml(post.title)}</h2>
+        <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
+        <p class="post-excerpt">${escapeHtml(post.excerpt || (post.content || '').substring(0, 160) + '...')}</p>
+        <a href="#" class="read-more" onclick="viewStory(${post.id}); return false;">Read more →</a>
+      </div>
+    `;
+  }
+  
+  container.innerHTML = html;
+}
+
+// ==================== HOME PAGE RENDERING ====================
+function renderHomeArticles() {
+  const container = document.getElementById('homeArticlesContainer');
+  if (!container) return;
+  
+  const latestPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+  
+  if (latestPosts.length === 0) {
+    container.innerHTML = '<div class="no-results">No articles yet.</div>';
+    return;
+  }
+  
+  let html = '';
+  for (let post of latestPosts) {
+    html += `
+      <div class="article-item" onclick="viewStory(${post.id})">
+        <div style="flex:1;">
+          <h3 style="margin-bottom:0.3rem;">${escapeHtml(post.title)}</h3>
+          <p style="color: gray; font-size:0.85rem;">${formatDateLiquid(post.date)} · ${post.category}</p>
+          <p>${escapeHtml(post.excerpt || (post.content || '').substring(0, 100) + '...')}</p>
+        </div>
+        <i class="fas fa-arrow-right" style="color:#000000;"></i>
+      </div>
+    `;
+  }
+  
+  container.innerHTML = html;
+}
+
+// ==================== STORY VIEW WITH COMMENTS ====================
+function viewStory(postId) {
+  const post = posts.find(p => p.id === postId);
+  if (!post) return;
+  
+  document.getElementById('modalStoryTitle').innerText = post.title;
+  document.getElementById('modalStoryMeta').innerHTML = `
+    <span><i class="far fa-calendar-alt"></i> ${formatDateLiquid(post.date)}</span>
+    <span><i class="fas fa-tag"></i> ${post.category}</span>
+    <span><i class="far fa-comment"></i> ${post.comments.length} comments</span>
+  `;
+  document.getElementById('modalStoryBody').innerHTML = post.content;
+  
+  renderCommentsSection(post);
+  
+  document.getElementById('storyViewModal').classList.add('active');
+}
+
+function renderCommentsSection(post) {
+  const commentsHtml = `
+    <div class="comments-title">
+      <i class="fas fa-comments"></i> Discussion
+    </div>
+    <div class="comment-form">
+      <input type="text" id="commentAuthorName" placeholder="Your name">
+      <textarea id="commentText" rows="3" placeholder="Share your thoughts..."></textarea>
+      <button id="submitCommentBtn" onclick="addComment(${post.id})">Post Comment</button>
+    </div>
+    <div class="comments-list" id="commentsList">
+      ${post.comments.length === 0 ? '<div class="empty-comments">No comments yet. Be the first to share your thoughts.</div>' : 
+        post.comments.map((c, idx) => `
+          <div class="comment-item">
+            <div class="comment-header">
+              <span class="comment-author"><i class="fas fa-user-circle"></i> ${escapeHtml(c.author)}</span>
+              <span class="comment-date">${formatDateLiquid(c.date)}</span>
+              <button class="delete-comment" onclick="deleteComment(${post.id}, ${idx})"><i class="fas fa-trash-alt"></i> Delete</button>
+            </div>
+            <div class="comment-text">${escapeHtml(c.text)}</div>
+          </div>
+        `).join('')
+      }
+    </div>
+  `;
+  document.getElementById('modalCommentsSection').innerHTML = commentsHtml;
+}
+
+function addComment(postId) {
+  const author = document.getElementById('commentAuthorName')?.value.trim();
+  const text = document.getElementById('commentText')?.value.trim();
+  
+  if (!author || !text) {
+    alert('Please enter both name and comment.');
+    return;
+  }
+  
+  const post = posts.find(p => p.id === postId);
+  if (post) {
+    post.comments.push({
+      author: author,
+      text: text,
+      date: new Date().toISOString().split('T')[0]
+    });
+    savePosts();
+    viewStory(postId);
+  }
+}
+
+function deleteComment(postId, commentIndex) {
+  const post = posts.find(p => p.id === postId);
+  if (post && post.comments[commentIndex]) {
+    post.comments.splice(commentIndex, 1);
+    savePosts();
+    viewStory(postId);
+  }
+}
+
+// ==================== SEARCH FUNCTIONALITY ====================
+function searchPosts() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  if (!query.trim()) {
+    renderLiquidBlogLoop();
+    return;
+  }
+  
+  const filtered = posts.filter(post => 
+    post.title.toLowerCase().includes(query) || 
+    (post.excerpt && post.excerpt.toLowerCase().includes(query)) ||
+    (post.content && post.content.toLowerCase().includes(query))
+  );
+  
+  const container = document.getElementById('liquidBlogContainer');
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">No stories match your search.</div>';
+    return;
+  }
+  
+  let html = '';
+  for (let post of filtered) {
+    html += `
+      <div class="liquid-post-card" style="margin-bottom: 40px;">
+        <h2>${escapeHtml(post.title)}</h2>
+        <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
+        <p class="post-excerpt">${escapeHtml(post.excerpt || (post.content || '').substring(0, 160) + '...')}</p>
+        <a href="#" class="read-more" onclick="viewStory(${post.id}); return false;">Read more →</a>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+// ==================== ADMIN PANEL ====================
+let isAdminLoggedIn = false;
+
+function checkAdminAuth() {
+  const loggedIn = localStorage.getItem('padeco_admin');
+  if (loggedIn === 'true') {
+    isAdminLoggedIn = true;
+    document.getElementById('adminNavItem').style.display = 'list-item';
+    document.getElementById('logoutNavItem').style.display = 'list-item';
+  } else {
+    isAdminLoggedIn = false;
+    document.getElementById('adminNavItem').style.display = 'none';
+    document.getElementById('logoutNavItem').style.display = 'none';
+  }
+}
+
+function showLoginModal() {
+  const modalHtml = `
+    <div id="adminLoginModal" class="login-modal">
+      <div class="login-box">
+        <h3><i class="fas fa-lock"></i> Admin Login</h3>
+        <input type="password" id="adminPassword" placeholder="Enter admin password">
+        <button onclick="verifyAdmin()">Login</button>
+        <button onclick="closeLoginModal()" style="background:#ccc; margin-top:0.5rem;">Cancel</button>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function verifyAdmin() {
+  const password = document.getElementById('adminPassword')?.value;
+  if (password === 'admin123') {
+    localStorage.setItem('padeco_admin', 'true');
+    isAdminLoggedIn = true;
+    closeLoginModal();
+    checkAdminAuth();
+    openAdminPanel();
+    alert('Logged in successfully!');
+  } else {
+    alert('Incorrect password');
+  }
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('adminLoginModal');
+  if (modal) modal.remove();
+}
+
+function openAdminPanel() {
+  if (!isAdminLoggedIn) {
+    showLoginModal();
+    return;
+  }
+  document.getElementById('adminPanel').classList.add('active');
+  renderAdminStoriesList();
+}
+
+function closeAdminPanel() {
+  document.getElementById('adminPanel').classList.remove('active');
+}
+
+function renderAdminStoriesList() {
+  const container = document.getElementById('adminStoriesList');
+  if (!container) return;
+  
+  if (posts.length === 0) {
+    container.innerHTML = '<div class="no-results">No stories yet. Create your first story above!</div>';
+    return;
+  }
+  
+  let html = '';
+  for (let post of posts) {
+    html += `
+      <div class="story-list-item">
+        <div>
+          <strong>${escapeHtml(post.title)}</strong><br>
+          <small>${formatDateLiquid(post.date)} · ${post.category}</small>
+        </div>
+        <div>
+          <button class="btn-outline" onclick="editStory(${post.id})" style="margin-right:0.5rem;">Edit</button>
+          <button class="btn-danger" onclick="deleteStory(${post.id})">Delete</button>
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+function editStory(postId) {
+  const post = posts.find(p => p.id === postId);
+  if (!post) return;
+  
+  document.getElementById('storyTitle').value = post.title;
+  document.getElementById('storyCategory').value = post.category;
+  document.getElementById('storyContent').value = post.content;
+  document.getElementById('storyExcerpt').value = post.excerpt || '';
+  
+  const oldSubmit = document.getElementById('storyForm').onsubmit;
+  document.getElementById('storyForm').onsubmit = (e) => {
+    e.preventDefault();
+    post.title = document.getElementById('storyTitle').value;
+    post.category = document.getElementById('storyCategory').value;
+    post.content = document.getElementById('storyContent').value;
+    post.excerpt = document.getElementById('storyExcerpt').value;
+    savePosts();
+    renderAdminStoriesList();
+    renderLiquidBlogLoop();
+    renderHomeArticles();
+    document.getElementById('storyForm').onsubmit = oldSubmit;
+    alert('Story updated!');
+    document.getElementById('storyForm').reset();
+    closeAdminPanel();
+  };
+  
+  closeAdminPanel();
+  openAdminPanel();
+}
+
+function deleteStory(postId) {
+  if (confirm('Are you sure you want to delete this story?')) {
+    posts = posts.filter(p => p.id !== postId);
+    savePosts();
+    renderAdminStoriesList();
+    renderLiquidBlogLoop();
+    renderHomeArticles();
+  }
+}
+
+// Handle new story submission
+document.getElementById('storyForm')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const title = document.getElementById('storyTitle').value;
+  const category = document.getElementById('storyCategory').value;
+  const content = document.getElementById('storyContent').value;
+  const excerpt = document.getElementById('storyExcerpt').value;
+  
+  if (!title || !content) {
+    alert('Please enter a title and content.');
+    return;
+  }
+  
+  const newId = posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+  const newPost = {
+    id: newId,
+    title: title,
+    date: new Date().toISOString().split('T')[0],
+    excerpt: excerpt || content.substring(0, 150) + '...',
+    content: content,
+    category: category,
+    comments: [],
+    media: null
+  };
+  
+  posts.unshift(newPost);
+  savePosts();
+  renderLiquidBlogLoop();
+  renderHomeArticles();
+  renderAdminStoriesList();
+  
+  e.target.reset();
+  alert('Story published successfully!');
+});
+
+// ==================== PAGE NAVIGATION ====================
+function initNavigation() {
+  const navLinks = document.querySelectorAll('.nav-links a[data-page]');
+  const pages = document.querySelectorAll('.page');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const pageName = link.getAttribute('data-page');
+      if (!pageName) return;
+      
+      pages.forEach(page => page.classList.remove('active-page'));
+      document.getElementById(`page-${pageName}`).classList.add('active-page');
+      
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      
+      // Refresh content when switching pages
+      if (pageName === 'blog') renderLiquidBlogLoop();
+      if (pageName === 'home') renderHomeArticles();
+    });
+  });
+}
+
+// ==================== EVENT LISTENERS ====================
+document.getElementById('searchBtn')?.addEventListener('click', searchPosts);
+document.getElementById('searchInput')?.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') searchPosts();
+});
+
+document.getElementById('openAdminPanelBtn')?.addEventListener('click', openAdminPanel);
+document.getElementById('closeAdminPanelBtn')?.addEventListener('click', closeAdminPanel);
+document.getElementById('closeStoryModal')?.addEventListener('click', () => {
+  document.getElementById('storyViewModal').classList.remove('active');
+});
+
+document.getElementById('secretAdminTrigger')?.addEventListener('dblclick', () => {
+  if (!isAdminLoggedIn) {
+    showLoginModal();
+  } else {
+    openAdminPanel();
+  }
+});
+
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+  localStorage.removeItem('padeco_admin');
+  isAdminLoggedIn = false;
+  checkAdminAuth();
+  alert('Logged out');
+  location.reload();
+});
+
+// Close modal when clicking outside
+document.getElementById('storyViewModal')?.addEventListener('click', (e) => {
+  if (e.target === document.getElementById('storyViewModal')) {
+    document.getElementById('storyViewModal').classList.remove('active');
+  }
+});
+
+// ==================== INITIALIZATION ====================
+loadPosts();
+initNavigation();
+checkAdminAuth();
+renderLiquidBlogLoop();
+renderHomeArticles();
+</script>
+</body>
+</html>
