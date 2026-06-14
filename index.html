@@ -852,67 +852,11 @@ loadPosts();
 initNavigation();
 checkAdminAuth();
 renderLiquidBlogLoop();
-renderHomeArticles();
-</script>
-  // DISPLAY POSTS ON BLOG PAGE - This was completely missing from your code!
-function renderBlogPosts() {
-  const container = document.getElementById('blogGridContainer');
-  if (!container) {
-    console.error('blogGridContainer not found');
-    return;
-  }
-  
-  if (!posts || posts.length === 0) {
-    container.innerHTML = '<div class="no-results">No stories yet. Create one in Admin Panel.</div>';
-    return;
-  }
-  
-  // Sort by date, newest first
-  const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  let html = '';
-  for (let i = 0; i < sortedPosts.length; i++) {
-    const post = sortedPosts[i];
-    html += `
-      <div class="blog-card" onclick="viewStory(${post.id})">
-        <h3>${escapeHtml(post.title)}</h3>
-        <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
-        <p class="post-excerpt">${escapeHtml(post.excerpt || (post.content || '').substring(0, 120) + '...')}</p>
-        <a class="read-more">Read more →</a>
-      </div>
-    `;
-  }
-  
-  container.innerHTML = html;
+renderHomeArticles();function savePosts() {
+  localStorage.setItem('padeco_posts', JSON.stringify(posts));
 }
-
-// DISPLAY POSTS ON HOME PAGE - Also missing!
-function renderHomePosts() {
-  const container = document.getElementById('homeArticlesContainer');
-  if (!container) return;
+</script>
   
-  if (!posts || posts.length === 0) {
-    container.innerHTML = '<div class="no-results">No articles yet.</div>';
-    return;
-  }
-  
-  const latestPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
-  
-  let html = '';
-  for (let post of latestPosts) {
-    html += `
-      <div class="article-item" onclick="viewStory(${post.id})">
-        <div style="flex:1;">
-          <h3 style="margin-bottom:0.3rem;">${escapeHtml(post.title)}</h3>
-          <p style="color: gray; font-size:0.85rem;">${formatDateLiquid(post.date)} · ${post.category}</p>
-          <p>${escapeHtml(post.excerpt || (post.content || '').substring(0, 100) + '...')}</p>
-        </div>
-        <i class="fas fa-arrow-right" style="color:#000000;"></i>
-      </div>
-    `;
-  }
-  
-  container.innerHTML = html;
 }
 </body>
 </html>
