@@ -789,5 +789,30 @@
 })();
 </script>
   <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdaCm7ZfOZfOfNZ8YhiWelJ9h5RibWG0ks63rSUvM_oeJqRlQ/viewform?embedded=true" width="700" height="693" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  <!-- BEGIN STORIES LIST -->
+<h2>Published Stories</h2>
+
+{% if site.posts.size == 0 %}
+  <p>No stories published yet. Check back soon!</p>
+{% endif %}
+
+<ul class="stories-list">
+  {% for post in site.posts %}
+    <li>
+      <strong>
+        <a href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+      </strong>
+      <br>
+      <small>Published: {{ post.date | date: "%B %d, %Y" }}</small>
+      {% if post.excerpt %}
+        <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+      {% endif %}
+    </li>
+    <hr>
+  {% endfor %}
+</ul>
+<!-- END STORIES LIST -->
 </body>
 </html>
