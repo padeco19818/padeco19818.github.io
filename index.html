@@ -49,7 +49,6 @@
     .blog-card .read-more { color:#2a6f8f; text-decoration:none; font-weight:500; display:inline-block; margin-top:0.5rem; }
     .blog-card .read-more:hover { text-decoration:underline; }
     
-    /* Liquid-style blog post cards */
     .liquid-blog-container { max-width: 900px; margin: 0 auto; }
     .liquid-post-card { margin-bottom: 40px; padding: 2rem; background: white; border-radius: 28px; border: 1px solid #eef2f8; transition: 0.3s; }
     .liquid-post-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
@@ -100,7 +99,6 @@
     .story-full .story-meta { display:flex; gap:1.5rem; margin:1rem 0 1.5rem; color:#5a7d9a; border-bottom:2px solid #eef2f8; padding-bottom:0.8rem; flex-wrap:wrap; font-size:0.9rem; }
     .story-full .story-body { font-size:1.05rem; line-height:1.7; }
     
-    /* EXPANDED ADMIN PANEL */
     .admin-panel-container {
       position: fixed;
       top: 0;
@@ -317,8 +315,6 @@
   <div id="page-blog" class="page">
     <div class="blog-wrap">
       <h2><i class="fas fa-newspaper"></i> Blog & Longform</h2>
-      <!-- LIQUID-STYLE BLOG LOOP CONTAINER -->
-      <!-- This replaces {% for post in site.posts %} with JavaScript -->
       <div id="liquidBlogContainer" class="liquid-blog-container"></div>
     </div>
   </div>
@@ -374,23 +370,148 @@
 </div>
 
 <script>
-// ==================== DATA STORAGE ====================
+// ============ GITHUB POSTS API - FETCH FROM _posts FOLDER ============
+// ✅ Your GitHub credentials are already set!
+const GITHUB_USERNAME = 'padeco19818';
+const GITHUB_REPO = 'padeco19818.github.io';
+const POSTS_PATH = '_posts';
+
+async function fetchPostsFromGitHub() {
+  try {
+    const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${POSTS_PATH}`;
+    console.log('Fetching from:', apiUrl);
+    const response = await fetch(apiUrl);
+    const files = await response.json();
+    
+    if (!Array.isArray(files)) {
+      console.error('No _posts folder found on GitHub');
+      return [];
+    }
+    
+    const posts = await Promise.all(
+      files
+        .filter(file => file.name.endsWith('.md'))
+        .map(async (file) => {
+          const contentResponse = await fetch(file.download_url);
+          const markdown = await contentResponse.text();
+          
+          const frontMatterMatch = markdown.match(/^---\n([\s\S]*?)\n---/);
+          let frontMatter = {};
+          let content = markdown;
+          
+          if (frontMatterMatch) {
+            content = markdown.replace(frontMatterMatch[0], '').trim();
+            const yamlContent = frontMatterMatch[1];
+            const titleMatch = yamlContent.match(/title:\s*(.+)/);
+            const dateMatch = yamlContent.match(/date:\s*(.+)/);
+            const excerptMatch = yamlContent.match(/excerpt:\s*(.+)/);
+            const categoryMatch = yamlContent.match(/category:\s*(.+)/);
+            
+            frontMatter = {
+              title: titleMatch ? titleMatch[1].replace(/['"]/g, '') : file.name.replace(/\.md$/, '').replace(/^\d{4}-\d{2}-\d{2}-/, ''),
+              date: dateMatch ? dateMatch[1] : file.name.substring(0, 10),
+              excerpt: excerptMatch ? excerptMatch[1] : content.substring(0, 160).replace(/#/g, ''),
+              category: categoryMatch ? categoryMatch[1] : 'General'
+            };
+          }
+          
+          return {
+            id: file.sha,
+            title: frontMatter.title,
+            date: frontMatter.date,
+            excerpt: frontMatter.excerpt,
+            content: content,
+            category: frontMatter.category,
+            rawUrl: file.download_url
+          };
+        })
+    );
+    
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    console.log('Fetched', posts.length, 'posts from GitHub');
+    return posts;
+    
+  } catch (error) {
+    console.error('Error fetching posts from GitHub:', error);
+    return [];
+  }
+}
+
+async function renderBlogFromGitHub() {
+  const container = document.getElementById('liquidBlogContainer');
+  if (!container) {
+    console.warn('liquidBlogContainer not found');
+    return;
+  }
+  
+  container.innerHTML = '<div style="text-align:center; padding:40px;">📡 Loading posts from GitHub...</div>';
+  
+  const githubPosts = await fetchPostsFromGitHub();
+  
+  if (githubPosts.length === 0) {
+    container.innerHTML = '<div class="no-results">📁 No posts found in GitHub _posts folder. Add markdown files to your repository.</div>';
+    return;
+  }
+  
+  let html = '';
+  for (let post of githubPosts) {
+    html += `
+      <div class="liquid-post-card" style="margin-bottom: 40px;">
+        <h2>${escapeHtml(post.title)}</h2>
+        <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
+        <p class="post-excerpt">${escapeHtml(post.excerpt || post.content.substring(0, 160))}...</p>
+        <a href="#" class="read-more" onclick="viewGitHubPostContent('${post.id}', this); return false;">Read more →</a>
+        <div class="post-full-content" style="display:none; margin-top:20px; padding-top:20px; border-top:1px solid #eee;"></div>
+      </div>
+    `;
+  }
+  
+  container.innerHTML = html;
+}
+
+async function viewGitHubPostContent(postId, element) {
+  const postDiv = element.closest('.liquid-post-card');
+  const contentDiv = postDiv.querySelector('.post-full-content');
+  
+  if (contentDiv.style.display === 'none') {
+    if (!contentDiv.innerHTML) {
+      const posts = await fetchPostsFromGitHub();
+      const post = posts.find(p => p.id === postId);
+      if (post && post.content) {
+        let htmlContent = post.content
+          .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+          .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+          .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+          .replace(/\*\*(.*)\*\*/gm, '<strong>$1</strong>')
+          .replace(/\*(.*)\*/gm, '<em>$1</em>')
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/\n/g, '<br>');
+        contentDiv.innerHTML = `<div style="line-height:1.7;">${htmlContent}</div>`;
+      }
+    }
+    contentDiv.style.display = 'block';
+    element.textContent = 'Show less ↑';
+  } else {
+    contentDiv.style.display = 'none';
+    element.textContent = 'Read more →';
+  }
+}
+
+// ==================== LOCAL STORAGE FOR ADMIN ====================
 let posts = [];
 
-// Load posts from localStorage
 function loadPosts() {
   const saved = localStorage.getItem('padeco_posts');
   if (saved) {
     posts = JSON.parse(saved);
   } else {
-    // Sample posts to demonstrate the Liquid-style loop
     posts = [
       {
         id: 1,
         title: "The Future of Digital Journalism",
         date: "2026-06-10",
-        excerpt: "How AI is transforming newsrooms and what it means for independent reporting. A deep dive into the ethical implications and opportunities for journalists.",
-        content: "<p>Artificial intelligence is reshaping the news industry at an unprecedented pace. From automated fact-checking to personalized news delivery, journalists must adapt to new tools while maintaining ethical standards.</p><p>This investigation explores how independent reporters can leverage AI without compromising their integrity or losing the human touch that defines great journalism.</p>",
+        excerpt: "How AI is transforming newsrooms and what it means for independent reporting.",
+        content: "<p>Artificial intelligence is reshaping the news industry at an unprecedented pace.</p>",
         category: "Technology",
         comments: [],
         media: null
@@ -399,8 +520,8 @@ function loadPosts() {
         id: 2,
         title: "Accountability in Local Government",
         date: "2026-06-05",
-        excerpt: "Investigative report on city council spending and transparency gaps in the budgeting process.",
-        content: "<p>Our six-month investigation reveals concerning patterns in how local tax dollars are being allocated. Multiple sources within city hall have raised red flags about lack of oversight.</p><p>This report includes document analysis and interviews with whistleblowers who requested anonymity for fear of retaliation.</p>",
+        excerpt: "Investigative report on city council spending and transparency gaps.",
+        content: "<p>Our six-month investigation reveals concerning patterns in how local tax dollars are being allocated.</p>",
         category: "Investigations",
         comments: [],
         media: null
@@ -409,8 +530,8 @@ function loadPosts() {
         id: 3,
         title: "Preserving Cultural Identity in a Digital Age",
         date: "2026-05-28",
-        excerpt: "Exploring how communities maintain heritage amid globalization and technological change.",
-        content: "<p>As the world becomes increasingly connected, local traditions face both threats and opportunities. This feature examines three communities successfully navigating digital transformation while preserving their unique cultural identities.</p><p>From indigenous language apps to virtual museum tours, technology can be a powerful ally in cultural preservation when used thoughtfully.</p>",
+        excerpt: "Exploring how communities maintain heritage amid globalization.",
+        content: "<p>As the world becomes increasingly connected, local traditions face both threats and opportunities.</p>",
         category: "Culture",
         comments: [],
         media: null
@@ -424,17 +545,11 @@ function savePosts() {
   localStorage.setItem('padeco_posts', JSON.stringify(posts));
 }
 
-// Format date like Liquid's {{ post.date | date: "%B %d, %Y" }}
 function formatDateLiquid(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { 
-    month: 'long', 
-    day: 'numeric', 
-    year: 'numeric' 
-  });
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-// Escape HTML to prevent XSS
 function escapeHtml(str) {
   if (!str) return '';
   return str.replace(/[&<>]/g, function(m) {
@@ -443,46 +558,6 @@ function escapeHtml(str) {
     if (m === '>') return '&gt;';
     return m;
   });
-}
-
-// ==================== LIQUID-STYLE BLOG LOOP ====================
-// This converts {% for post in site.posts %} to JavaScript
-function renderLiquidBlogLoop() {
-  const container = document.getElementById('liquidBlogContainer');
-  if (!container) return;
-  
-  if (posts.length === 0) {
-    container.innerHTML = '<div class="no-results">No stories yet. Check back soon!</div>';
-    return;
-  }
-  
-  // Sort posts by date (newest first) - like Jekyll's site.posts
-  const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  // THIS IS YOUR LIQUID LOOP CONVERTED TO JAVASCRIPT:
-  // {% for post in site.posts %}
-  //   <div style="margin-bottom: 30px;">
-  //     <h2>{{ post.title }}</h2>
-  //     <p style="color: gray;">{{ post.date | date: "%B %d, %Y" }}</p>
-  //     <p>{{ post.excerpt }}</p>
-  //     <a href="{{ post.url }}">Read more</a>
-  //   </div>
-  // {% endfor %}
-  
-  let html = '';
-  for (let i = 0; i < sortedPosts.length; i++) {
-    const post = sortedPosts[i];
-    html += `
-      <div class="liquid-post-card" style="margin-bottom: 40px;">
-        <h2>${escapeHtml(post.title)}</h2>
-        <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
-        <p class="post-excerpt">${escapeHtml(post.excerpt || (post.content || '').substring(0, 160) + '...')}</p>
-        <a href="#" class="read-more" onclick="viewStory(${post.id}); return false;">Read more →</a>
-      </div>
-    `;
-  }
-  
-  container.innerHTML = html;
 }
 
 // ==================== HOME PAGE RENDERING ====================
@@ -594,34 +669,37 @@ function deleteComment(postId, commentIndex) {
 function searchPosts() {
   const query = document.getElementById('searchInput').value.toLowerCase();
   if (!query.trim()) {
-    renderLiquidBlogLoop();
+    renderBlogFromGitHub();
     return;
   }
   
-  const filtered = posts.filter(post => 
-    post.title.toLowerCase().includes(query) || 
-    (post.excerpt && post.excerpt.toLowerCase().includes(query)) ||
-    (post.content && post.content.toLowerCase().includes(query))
-  );
-  
-  const container = document.getElementById('liquidBlogContainer');
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="no-results">No stories match your search.</div>';
-    return;
-  }
-  
-  let html = '';
-  for (let post of filtered) {
-    html += `
-      <div class="liquid-post-card" style="margin-bottom: 40px;">
-        <h2>${escapeHtml(post.title)}</h2>
-        <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
-        <p class="post-excerpt">${escapeHtml(post.excerpt || (post.content || '').substring(0, 160) + '...')}</p>
-        <a href="#" class="read-more" onclick="viewStory(${post.id}); return false;">Read more →</a>
-      </div>
-    `;
-  }
-  container.innerHTML = html;
+  fetchPostsFromGitHub().then(githubPosts => {
+    const filtered = githubPosts.filter(post => 
+      post.title.toLowerCase().includes(query) || 
+      (post.excerpt && post.excerpt.toLowerCase().includes(query)) ||
+      (post.content && post.content.toLowerCase().includes(query))
+    );
+    
+    const container = document.getElementById('liquidBlogContainer');
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="no-results">No stories match your search.</div>';
+      return;
+    }
+    
+    let html = '';
+    for (let post of filtered) {
+      html += `
+        <div class="liquid-post-card" style="margin-bottom: 40px;">
+          <h2>${escapeHtml(post.title)}</h2>
+          <p class="post-date" style="color: gray;">${formatDateLiquid(post.date)}</p>
+          <p class="post-excerpt">${escapeHtml(post.excerpt || post.content.substring(0, 160))}...</p>
+          <a href="#" class="read-more" onclick="viewGitHubPostContent('${post.id}', this); return false;">Read more →</a>
+          <div class="post-full-content" style="display:none; margin-top:20px; padding-top:20px; border-top:1px solid #eee;"></div>
+        </div>
+      `;
+    }
+    container.innerHTML = html;
+  });
 }
 
 // ==================== ADMIN PANEL ====================
@@ -731,7 +809,6 @@ function editStory(postId) {
     post.excerpt = document.getElementById('storyExcerpt').value;
     savePosts();
     renderAdminStoriesList();
-    renderLiquidBlogLoop();
     renderHomeArticles();
     document.getElementById('storyForm').onsubmit = oldSubmit;
     alert('Story updated!');
@@ -748,12 +825,10 @@ function deleteStory(postId) {
     posts = posts.filter(p => p.id !== postId);
     savePosts();
     renderAdminStoriesList();
-    renderLiquidBlogLoop();
     renderHomeArticles();
   }
 }
 
-// Handle new story submission
 document.getElementById('storyForm')?.addEventListener('submit', (e) => {
   e.preventDefault();
   
@@ -781,7 +856,6 @@ document.getElementById('storyForm')?.addEventListener('submit', (e) => {
   
   posts.unshift(newPost);
   savePosts();
-  renderLiquidBlogLoop();
   renderHomeArticles();
   renderAdminStoriesList();
   
@@ -805,8 +879,7 @@ function initNavigation() {
       navLinks.forEach(l => l.classList.remove('active'));
       link.classList.add('active');
       
-      // Refresh content when switching pages
-      if (pageName === 'blog') renderLiquidBlogLoop();
+      if (pageName === 'blog') renderBlogFromGitHub();
       if (pageName === 'home') renderHomeArticles();
     });
   });
@@ -840,7 +913,6 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
   location.reload();
 });
 
-// Close modal when clicking outside
 document.getElementById('storyViewModal')?.addEventListener('click', (e) => {
   if (e.target === document.getElementById('storyViewModal')) {
     document.getElementById('storyViewModal').classList.remove('active');
@@ -851,12 +923,8 @@ document.getElementById('storyViewModal')?.addEventListener('click', (e) => {
 loadPosts();
 initNavigation();
 checkAdminAuth();
-renderLiquidBlogLoop();
-renderHomeArticles();function savePosts() {
-  localStorage.setItem('padeco_posts', JSON.stringify(posts));
-}
+renderHomeArticles();
+renderBlogFromGitHub();  // ✅ THIS LOADS POSTS FROM YOUR GITHUB _posts FOLDER
 </script>
-  
-}
 </body>
 </html>
