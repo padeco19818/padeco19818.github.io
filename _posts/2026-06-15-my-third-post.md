@@ -19,6 +19,13 @@ Parallel to the kinetic conflict, there is an ongoing, often stalled, diplomatic
 
 https://imgur.com/NN0MebE
 
-Important Note: Because this conflict involves active military maneuvers and heavy use of propaganda by all involved parties, information originating from social media or partisan news sources should be viewed with extreme caution. Disinformation is a primary tactic in modern hybrid warfare, and reports of "dead" leadership or "imminent" regime collapse are often part of strategic influence operations rather than confirmed intelligence.
+
+
+
+
+
+
+
+
 
 If you are following this for research or situational awareness, it is recommended to prioritize reports from independent international monitors and official government statements from the respective Ministries of Defense, while cross-referencing them against independent verification.
