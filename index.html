@@ -484,6 +484,8 @@ async function viewGitHubPostContent(postId, element) {
           .replace(/^### (.*$)/gm, '<h3>$1</h3>')
           .replace(/\*\*(.*)\*\*/gm, '<strong>$1</strong>')
           .replace(/\*(.*)\*/gm, '<em>$1</em>')
+          // NEW: Markdown image syntax support
+          .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%; border-radius:12px; margin: 1rem 0; display:block;">')
           .replace(/\n\n/g, '</p><p>')
           .replace(/\n/g, '<br>');
         contentDiv.innerHTML = `<div style="line-height:1.7;">${htmlContent}</div>`;
@@ -560,12 +562,19 @@ function escapeHtml(str) {
   });
 }
 
-// ==================== HOME PAGE RENDERING ====================
-function renderHomeArticles() {
+// ==================== HOME PAGE RENDERING (UPDATED) ====================
+async function renderHomeArticles() {
   const container = document.getElementById('homeArticlesContainer');
   if (!container) return;
   
-  const latestPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+  container.innerHTML = '<div style="text-align:center; padding:20px; color:gray;">📡 Loading latest stories...</div>';
+
+  // Fetch posts from GitHub
+  const githubPosts = await fetchPostsFromGitHub();
+  
+  // Combine local posts and GitHub posts, then sort by date
+  const allPosts = [...posts, ...githubPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const latestPosts = allPosts.slice(0, 3); // Get the 3 most recent
   
   if (latestPosts.length === 0) {
     container.innerHTML = '<div class="no-results">No articles yet.</div>';
@@ -574,11 +583,15 @@ function renderHomeArticles() {
   
   let html = '';
   for (let post of latestPosts) {
+    // Determine if the post is from GitHub (it will have a rawUrl property)
+    const isGithub = !!post.rawUrl;
+    const clickAction = isGithub ? `viewGithubStoryInModal('${post.id}')` : `viewStory(${post.id})`;
+    
     html += `
-      <div class="article-item" onclick="viewStory(${post.id})">
+      <div class="article-item" onclick="${clickAction}">
         <div style="flex:1;">
           <h3 style="margin-bottom:0.3rem;">${escapeHtml(post.title)}</h3>
-          <p style="color: gray; font-size:0.85rem;">${formatDateLiquid(post.date)} · ${post.category}</p>
+          <p style="color: gray; font-size:0.85rem;">${formatDateLiquid(post.date)} · ${post.category || 'General'}</p>
           <p>${escapeHtml(post.excerpt || (post.content || '').substring(0, 100) + '...')}</p>
         </div>
         <i class="fas fa-arrow-right" style="color:#000000;"></i>
@@ -589,7 +602,38 @@ function renderHomeArticles() {
   container.innerHTML = html;
 }
 
-// ==================== STORY VIEW WITH COMMENTS ====================
+// Function to open GitHub stories in the modal from the Home page
+async function viewGithubStoryInModal(postId) {
+  const githubPosts = await fetchPostsFromGitHub();
+  const post = githubPosts.find(p => p.id === postId);
+  if (!post) return;
+  
+  document.getElementById('modalStoryTitle').innerText = post.title;
+  document.getElementById('modalStoryMeta').innerHTML = `
+    <span><i class="far fa-calendar-alt"></i> ${formatDateLiquid(post.date)}</span>
+    <span><i class="fas fa-tag"></i> ${post.category || 'General'}</span>
+  `;
+  
+  // Parse markdown for the modal, adding image support
+  let htmlContent = post.content
+    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.*)\*\*/gm, '<strong>$1</strong>')
+    .replace(/\*(.*)\*/gm, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%; border-radius:12px; margin: 1rem 0;">')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+    
+  document.getElementById('modalStoryBody').innerHTML = `<div style="line-height:1.7;"><p>${htmlContent}</p></div>`;
+  
+  // Clear comments for GitHub posts (or you can link a database later)
+  document.getElementById('modalCommentsSection').innerHTML = '<div class="empty-comments">Comments are disabled for GitHub posts.</div>';
+  
+  document.getElementById('storyViewModal').classList.add('active');
+}
+
+// ==================== STORY VIEW WITH COMMENTS (LOCAL ONLY) ====================
 function viewStory(postId) {
   const post = posts.find(p => p.id === postId);
   if (!post) return;
@@ -924,7 +968,7 @@ loadPosts();
 initNavigation();
 checkAdminAuth();
 renderHomeArticles();
-renderBlogFromGitHub();  // ✅ THIS LOADS POSTS FROM YOUR GITHUB _posts FOLDER
+renderBlogFromGitHub();
 </script>
 </body>
 </html>
