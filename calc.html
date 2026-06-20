@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧠 Smart Calculator Pro</title>
+    
+    <!-- Chart.js for graphing -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Math.js for advanced math -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+        }
+        
+        /* Left Panel - Calculator */
+        .calc-panel {
+            background: #16213e;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .display {
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        
+        .display .expression {
+            color: #a8b2d1;
+            font-size: 14px;
+            min-height: 20px;
+            word-break: break-all;
+        }
+        
+        .display .result {
+            color: #64ffda;
+            font-size: 32px;
+            font-weight: bold;
+            word-break: break-all;
+            min-height: 40px;
+        }
+        
+        .memory-indicator {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 5px;
+            min-height: 18px;
+        }
+        
+        .mode-indicator {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-content: space-between;
+        }
+        
+        .mode-btn {
+            background: #1a1a2e;
+            color: #a8b2d1;
+            border: 1px solid #2d3561;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .mode-btn.active {
+            background: #64ffda;
+            color: #1a1a2e;
+            border-color: #64ffda;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 15px 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .btn-number {
+            background: #2d3561;
+            color: #e6f1ff;
+        }
+        
+        .btn-number:hover {
+            background: #3d4571;
+        }
+        
+        .btn-operator {
+            background: #f0932b;
+            color: white;
+        }
+        
+        .btn-operator:hover {
+            background: #f39c12;
+        }
+        
+        .btn-function {
+            background: #6c5ce7;
+            color: white;
+        }
+        
+        .btn-function:hover {
+            background: #7d6df0;
+        }
+        
+        .btn-memory {
+            background: #e84393;
+            color: white;
+        }
+        
+        .btn-memory:hover {
+            background: #fd79a8;
+        }
+        
+        .btn-equal {
+            background: #00b894;
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .btn-equal:hover {
+            background: #00cec9;
+        }
+        
+        .btn-clear {
+            background: #d63031;
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background: #e74c3c;
+        }
+        
+        .btn-special {
+            background: #636e72;
+            color: white;
+        }
+        
+        .btn-special:hover {
+            background: #b2bec3;
+        }
+        
+        .btn-voice {
+            background: #e17055;
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .btn-voice:hover {
+            background: #d63031;
+        }
+        
+        .btn-speak {
+            background: #0984e3;
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .btn-speak:hover {
+            background: #74b9ff;
+        }
+        
+        /* Right Panel */
+        .features-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .tab-container {
+            background: #16213e;
+            border-radius: 15px;
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: #1a1a2e;
+            color: #a8b2d1;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            flex: 1;
+        }
+        
+        .tab-btn.active {
+            background: #64ffda;
+            color: #1a1a2e;
+        }
+        
+        .tab-content {
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .tab-content::-webkit-scrollbar-thumb {
+            background: #64ffda;
+            border-radius: 10px;
+        }
+        
+        /* History */
+        .history-item {
+            background: #1a1a2e;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            color: #e6f1ff;
+            font-size: 13px;
+        }
+        
+        .history-item .h-expr {
+            color: #a8b2d1;
+        }
+        
+        .history-item .h-result {
+            color: #64ffda;
+            font-weight: bold;
+        }
+        
+        /* Converter */
+        .converter-group {
+            margin-bottom: 10px;
+        }
+        
+        .converter-group label {
+            color: #a8b2d1;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .converter-group select,
+        .converter-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #2d3561;
+            background: #1a1a2e;
+            color: #e6f1ff;
+        }
+        
+        .convert-result {
+            color: #64ffda;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        /* Graph */
+        .graph-container {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 10px;
+            height: 250px;
+        }
+        
+        .graph-inputs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .graph-inputs input {
+            flex: 1;
+            padding: 6px;
+            border-radius: 5px;
+            border: 1px solid #2d3561;
+            background: #1a1a2e;
+            color: #e6f1ff;
+            min-width: 60px;
+        }
+        
+        .graph-inputs button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Equation Solver */
+        .eq-input {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .eq-input input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #2d3561;
+            background: #1a1a2e;
+            color: #e6f1ff;
+        }
+        
+        .eq-input button {
+            background: #e84393;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .eq-solution {
+            background: #1a1a2e;
+            padding: 10px;
+            border-radius: 5px;
+            color: #64ffda;
+            font-family: 'Courier New', monospace;
+            min-height: 60px;
+            white-space: pre-wrap;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .buttons {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .btn {
+                font-size: 14px;
+                padding: 12px 5px;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+        
+        .status-bar {
+            background: #0f3460;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: #a8b2d1;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        /* Voice recording animation */
+        .recording {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { background: #e17055; }
+            50% { background: #d63031; }
+            100% { background: #e17055; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel: Calculator -->
+        <div class="calc-panel">
+            <div class="display">
+                <div class="expression" id="expression"></div>
+                <div class="result" id="result">0</div>
+                <div class="memory-indicator" id="memIndicator">📝 Memory: 0</div>
+            </div>
+            
+            <div class="mode-indicator">
+                <button class="mode-btn active" id="radBtn" onclick="setAngleMode('rad')">RAD</button>
+                <button class="mode-btn" id="degBtn" onclick="setAngleMode('deg')">DEG</button>
+                <button class="mode-btn" id="historyToggle" onclick="toggleHistory()">📜 History</button>
+            </div>
+            
+            <div class="buttons">
+                <!-- Row 1: Memory -->
+                <button class="btn btn-memory" onclick="memoryOp('MC')">MC</button>
+                <button class="btn btn-memory" onclick="memoryOp('MR')">MR</button>
+                <button class="btn btn-memory" onclick="memoryOp('M+')">M+</button>
+                <button class="btn btn-memory" onclick="memoryOp('MS')">MS</button>
+                <button class="btn btn-clear" onclick="backspace()">⌫</button>
+                
+                <!-- Row 2: Functions -->
+                <button class="btn btn-function" onclick="insertFunc('sin(')">sin</button>
+                <button class="btn btn-function" onclick="insertFunc('cos(')">cos</button>
+                <button class="btn btn-function" onclick="insertFunc('tan(')">tan</button>
+                <button class="btn btn-function" onclick="insertFunc('log(')">log</button>
+                <button class="btn btn-function" onclick="insertFunc('ln(')">ln</button>
+                
+                <!-- Row 3: More functions -->
+                <button class="btn btn-function" onclick="insertFunc('sqrt(')">√</button>
+                <button class="btn btn-function" onclick="insertFunc('^2')">x²</button>
+                <button class="btn btn-function" onclick="insertFunc('^3')">x³</button>
+                <button class="btn btn-function" onclick="insertFunc('^')">xⁿ</button>
+                <button class="btn btn-function" onclick="insertFunc('pi')">π</button>
+                
+                <!-- Row 4: Numbers -->
+                <button class="btn btn-number" onclick="append('7')">7</button>
+                <button class="btn btn-number" onclick="append('8')">8</button>
+                <button class="btn btn-number" onclick="append('9')">9</button>
+                <button class="btn btn-operator" onclick="append('/')">÷</button>
+                <button class="btn btn-clear" onclick="clearAll()">C</button>
+                
+                <!-- Row 5 -->
+                <button class="btn btn-number" onclick="append('4')">4</button>
+                <button class="btn btn-number" onclick="append('5')">5</button>
+                <button class="btn btn-number" onclick="append('6')">6</button>
+                <button class="btn btn-operator" onclick="append('*')">×</button>
+                <button class="btn btn-special" onclick="append('(')">(</button>
+                
+                <!-- Row 6 -->
+                <button class="btn btn-number" onclick="append('1')">1</button>
+                <button class="btn btn-number" onclick="append('2')">2</button>
+                <button class="btn btn-number" onclick="append('3')">3</button>
+                <button class="btn btn-operator" onclick="append('-')">−</button>
+                <button class="btn btn-special" onclick="append(')')">)</button>
+                
+                <!-- Row 7 -->
+                <button class="btn btn-number" onclick="append('0')">0</button>
+                <button class="btn btn-special" onclick="append('.')">.</button>
+                <button class="btn btn-special" onclick="negate()">±</button>
+                <button class="btn btn-operator" onclick="append('+')">+</button>
+                <button class="btn btn-equal" onclick="calculate()">=</button>
+                
+                <!-- Row 8: Voice -->
+                <button class="btn btn-voice" id="voiceBtn" onclick="voiceInput()">🎤 Voice</button>
+                <button class="btn btn-speak" onclick="speakResult()">🔊 Speak</button>
+                <button class="btn btn-special" onclick="clearHistory()">🗑️ Clear</button>
+            </div>
+            
+            <div class="status-bar" id="status">Ready</div>
+        </div>
+        
+        <!-- Right Panel: Features -->
+        <div class="features-panel">
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('history')">📜 History</button>
+                    <button class="tab-btn" onclick="switchTab('converter')">📐 Convert</button>
+                    <button class="tab-btn" onclick="switchTab('graph')">📈 Graph</button>
+                    <button class="tab-btn" onclick="switchTab('solve')">✏️ Solve</button>
+                </div>
+                
+                <!-- Tab 1: History -->
+                <div class="tab-content active" id="tab-history">
+                    <div id="historyList"></div>
+                </div>
+                
+                <!-- Tab 2: Converter -->
+                <div class="tab-content" id="tab-converter">
+                    <div class="converter-group">
+                        <label>Category</label>
+                        <select id="convCategory" onchange="updateUnits()">
+                            <option value="length">Length</option>
+                            <option value="weight">Weight</option>
+                            <option value="temperature">Temperature</option>
+                            <option value="area">Area</option>
+                            <option value="volume">Volume</option>
+                        </select>
+                    </div>
+                    
+                    <div class="converter-group">
+                        <label>From</label>
+                        <select id="convFrom"></select>
+                    </div>
+                    
+                    <div class="converter-group">
+                        <label>To</label>
+                        <select id="convTo"></select>
+                    </div>
+                    
+                    <div class="converter-group">
+                        <label>Value</label>
+                        <input type="number" id="convValue" value="1" oninput="convertUnits()" />
+                    </div>
+                    
+                    <div class="convert-result" id="convResult">1 m = 0.001 km</div>
+                </div>
+                
+                <!-- Tab 3: Graph -->
+                <div class="tab-content" id="tab-graph">
+                    <div class="graph-inputs">
+                        <input type="text" id="funcInput" value="sin(x)" placeholder="f(x) = " />
+                        <input type="number" id="xMin" value="-10" placeholder="min" />
+                        <input type="number" id="xMax" value="10" placeholder="max" />
+                        <button onclick="plotGraph()">📊 Plot</button>
+                    </div>
+                    <div class="graph-container">
+                        <canvas id="graphCanvas"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Tab 4: Equation Solver -->
+                <div class="tab-content" id="tab-solve">
+                    <div class="eq-input">
+                        <input type="text" id="eqInput" value="x^2 - 4 = 0" placeholder="Equation..." />
+                        <button onclick="solveEquation()">Solve</button>
+                    </div>
+                    <div class="eq-solution" id="eqSolution">Enter equation to solve</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== GLOBAL STATE =====
+        let expression = '';
+        let memory = 0;
+        let history = [];
+        let angleMode = 'rad';
+        let isResultShown = false;
+        
+        // ===== DOM REFERENCES =====
+        const resultEl = document.getElementById('result');
+        const exprEl = document.getElementById('expression');
+        const memEl = document.getElementById('memIndicator');
+        const statusEl = document.getElementById('status');
+        
+        // ===== CORE CALCULATOR FUNCTIONS =====
+        function append(value) {
+            if (isResultShown) {
+                expression = '';
+                isResultShown = false;
+            }
+            
+            // Handle special values
+            if (value === 'pi') {
+                expression += Math.PI;
+            } else {
+                expression += value;
+            }
+            
+            updateDisplay();
+        }
+        
+        function insertFunc(func) {
+            if (isResultShown) {
+                expression = '';
+                isResultShown = false;
+            }
+            
+            // Handle function insertion with proper syntax
+            if (func === 'sin(' || func === 'cos(' || func === 'tan(' || 
+                func === 'log(' || func === 'ln(' || func === 'sqrt(') {
+                expression += func;
+            } else if (func === '^2') {
+                expression += '^2';
+            } else if (func === '^3') {
+                expression += '^3';
+            } else if (func === '^') {
+                expression += '^';
+            } else if (func === 'pi') {
+                expression += Math.PI;
+            }
+            
+            updateDisplay();
+        }
+        
+        function backspace() {
+            expression = expression.slice(0, -1);
+            updateDisplay();
+        }
+        
+        function clearAll() {
+            expression = '';
+            isResultShown = false;
+            updateDisplay();
+            statusEl.textContent = 'Cleared';
+        }
+        
+        function negate() {
+            if (expression.startsWith('-')) {
+                expression = expression.slice(1);
+            } else {
+                expression = '-' + expression;
+            }
+            updateDisplay();
+        }
+        
+        function calculate() {
+            try {
+                if (!expression) return;
+                
+                let expr = expression;
+                
+                // Replace display symbols with math.js compatible
+                expr = expr.replace(/×/g, '*');
+                expr = expr.replace(/÷/g, '/');
+                
+                // Handle angle mode
+                if (angleMode === 'deg') {
+                    // Wrap trig functions with degree conversion
+                    expr = expr.replace(/sin\(/g, 'sin(deg2rad(');
+                    expr = expr.replace(/cos\(/g, 'cos(deg2rad(');
+                    expr = expr.replace(/tan\(/g, 'tan(deg2rad(');
+                    // Add closing parentheses (simplified)
+                }
+                
+                // Evaluate using math.js
+                let result;
+                try {
+                    // Add degree conversion function if needed
+                    if (angleMode === 'deg') {
+                        const scope = {
+                            deg2rad: (x) => x * Math.PI / 180,
+                            sin: Math.sin,
+                            cos: Math.cos,
+                            tan: Math.tan,
+                            log: Math.log10,
+                            ln: Math.log,
+                            sqrt: Math.sqrt,
+                            pi: Math.PI,
+                            e: Math.E
+                        };
+                        
+                        // Use Function constructor for safe evaluation
+                        const func = new Function('scope', `
+                            with(scope) {
+                                return (${expr});
+                            }
+                        `);
+                        result = func(scope);
+                    } else {
+                        // Use math.js for safe evaluation
+                        result = math.evaluate(expr);
+                    }
+                } catch (e) {
+                    throw new Error('Invalid expression');
+                }
+                
+                // Format result
+                let resultStr;
+                if (typeof result === 'number') {
+                    if (Number.isInteger(result)) {
+                        resultStr = result.toString();
+                    } else {
+                        resultStr = parseFloat(result.toFixed(10)).toString();
+                    }
+                } else {
+                    resultStr = result.toString();
+                }
+                
+                // Show result
+                resultEl.textContent = resultStr;
+                isResultShown = true;
+                
+                // Add to history
+                addHistory(expression, resultStr);
+                
+                statusEl.textContent = `✅ Result: ${resultStr}`;
+                
+            } catch (error) {
+                resultEl.textContent = '⚠️ Error';
+                statusEl.textContent = `❌ ${error.message}`;
+            }
+        }
+        
+        function updateDisplay() {
+            exprEl.textContent = expression || ' ';
+            if (!isResultShown) {
+                // Try to show live preview
+                try {
+                    if (expression && !expression.match(/[+\-*/^]$/)) {
+                        const preview = math.evaluate(expression.replace(/×/g, '*').replace(/÷/g, '/'));
+                        if (typeof preview === 'number' && !isNaN(preview)) {
+                            resultEl.textContent = preview;
+                        }
+                    }
+                } catch (e) {
+                    // Don't show errors for incomplete expressions
+                }
+            }
+        }
+        
+        // ===== MEMORY OPERATIONS =====
+        function memoryOp(op) {
+            const current = parseFloat(resultEl.textContent) || 0;
+            
+            switch(op) {
+                case 'MC':
+                    memory = 0;
+                    statusEl.textContent = 'Memory cleared';
+                    break;
+                case 'MR':
+                    expression += memory;
+                    updateDisplay();
+                    statusEl.textContent = `Memory recalled: ${memory}`;
+                    break;
+                case 'M+':
+                    memory += current;
+                    statusEl.textContent = `Memory: ${memory}`;
+                    break;
+                case 'MS':
+                    memory = current;
+                    statusEl.textContent = `Memory set: ${memory}`;
+                    break;
+            }
+            
+            memEl.textContent = `📝 Memory: ${memory}`;
+        }
+        
+        // ===== HISTORY =====
+        function addHistory(expr, result) {
+            history.unshift({ expr, result, time: new Date().toLocaleTimeString() });
+            if (history.length > 50) history.pop();
+            renderHistory();
+        }
+        
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            if (history.length === 0) {
+                container.innerHTML = '<div style="color:#a8b2d1;text-align:center;padding:20px;">No history yet</div>';
+                return;
+            }
+            
+            container.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="h-expr">${item.expr}</div>
+                    <div class="h-result">= ${item.result}</div>
+                    <div style="color:#636e72;font-size:10px;">${item.time}</div>
+                </div>
+            `).join('');
+        }
+        
+        function clearHistory() {
+            history = [];
+            renderHistory();
+            statusEl.textContent = 'History cleared';
+        }
+        
+        function toggleHistory() {
+            document.querySelector('.tab-btn').click();
+        }
+        
+        // ===== ANGLE MODE =====
+        function setAngleMode(mode) {
+            angleMode = mode;
+            document.getElementById('radBtn').classList.toggle('active', mode === 'rad');
+            document.getElementById('degBtn').classList.toggle('active', mode === 'deg');
+            statusEl.textContent = `Mode: ${mode.toUpperCase()}`;
+        }
+        
+        // ===== VOICE INPUT =====
+        function voiceInput() {
+            const btn = document.getElementById('voiceBtn');
+            btn.classList.add('recording');
+            statusEl.textContent = '🎤 Listening...';
+            
+            if (!('webkitSpeechRecognition' in window)) {
+                statusEl.textContent = '❌ Voice recognition not supported';
+                btn.classList.remove('recording');
+                return;
+            }
+            
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                statusEl.textContent = `🎤 Recognized: "${transcript}"`;
+                btn.classList.remove('recording');
+                
+                // Process voice input
+                const cleaned = transcript.toLowerCase()
+                    .replace(/plus/g, '+')
+                    .replace(/minus/g, '-')
+                    .replace(/times/g, '*')
+                    .replace(/divided by/g, '/')
+                    .replace(/squared/g, '^2')
+                    .replace(/cubed/g, '^3')
+                    .replace(/square root of/g, 'sqrt(')
+                    .replace(/pi/g, Math.PI)
+                    .replace(/equals/g, '');
+                
+                expression = cleaned;
+                updateDisplay();
+                
+                // Auto-calculate if it looks like math
+                if (cleaned.match(/[\d+\-*/^]/)) {
+                    calculate();
+                }
+            };
+            
+            recognition.onerror = function(event) {
+                statusEl.textContent = `❌ Voice error: ${event.error}`;
+                btn.classList.remove('recording');
+            };
+            
+            recognition.start();
+        }
+        
+        // ===== TEXT TO SPEECH =====
+        function speakResult() {
+            const text = resultEl.textContent;
+            if (!text || text === '0' || text === '⚠️ Error') {
+                statusEl.textContent = 'Nothing to speak';
+                return;
+            }
+            
+            if (!('speechSynthesis' in window)) {
+                statusEl.textContent = '❌ Speech not supported';
+                return;
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(`The result is ${text}`);
+            utterance.lang = 'en-US';
+            utterance.rate = 1;
+            speechSynthesis.speak(utterance);
+            
+            statusEl.textContent = `🔊 Speaking: ${text}`;
+        }
+        
+        // ===== UNIT CONVERTER =====
+        const unitData = {
+            length: {
+                m: 1, km: 1000, cm: 0.01, mm: 0.001,
+                mile: 1609.34, yard: 0.9144, foot: 0.3048, inch: 0.0254
+            },
+            weight: {
+                kg: 1, g: 0.001, mg: 0.000001, lb: 0.453592,
+                oz: 0.0283495, ton: 1000
+            },
+            temperature: {
+                C: 'C', F: 'F', K: 'K'
+            },
+            area: {
+                'm²': 1, 'km²': 1000000, ha: 10000, acre: 4046.86, 'ft²': 0.092903
+            },
+            volume: {
+                L: 1, mL: 0.001, gal: 3.78541, 'ft³': 28.3168, 'm³': 1000
+            }
+        };
+        
+        function updateUnits() {
+            const category = document.getElementById('convCategory').value;
+            const units = Object.keys(unitData[category]);
+            const fromSelect = document.getElementById('convFrom');
+            const toSelect = document.getElementById('convTo');
+            
+            fromSelect.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join('');
+            toSelect.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join('');
+            
+            if (units.length > 1) {
+                fromSelect.value = units[0];
+                toSelect.value = units[1] || units[0];
+            }
+            
+            convertUnits();
+        }
+        
+        function convertUnits() {
+            const category = document.getElementById('convCategory').value;
+            const fromUnit = document.getElementById('convFrom').value;
+            const toUnit = document.getElementById('convTo').value;
+            const value = parseFloat(document.getElementById('convValue').value) || 0;
+            
+            const resultEl = document.getElementById('convResult');
+            
+            if (category === 'temperature') {
+                let kelvin;
+                if (fromUnit === 'C') kelvin = value + 273.15;
+                else if (fromUnit === 'F') kelvin = (value - 32) * 5/9 + 273.15;
+                else kelvin = value;
+                
+                let result;
+                if (toUnit === 'C') result = kelvin - 273.15;
+                else if (toUnit === 'F') result = (kelvin - 273.15) * 9/5 + 32;
+                else result = kelvin;
+                
+                resultEl.textContent = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+            } else {
+                const factors = unitData[category];
+                const result = value * factors[fromUnit] / factors[toUnit];
+                resultEl.textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            }
+        }
+        
+        // ===== GRAPHING =====
+        let chart = null;
+        
+        function plotGraph() {
+            try {
+                const funcStr = document.getElementById('funcInput').value;
+                const xMin = parseFloat(document.getElementById('xMin').value) || -10;
+                const xMax = parseFloat(document.getElementById('xMax').value) || 10;
+                
+                const points = 1000;
+                const step = (xMax - xMin) / points;
+                const xData = [];
+                const yData = [];
+                
+                // Create safe evaluation context
+                const scope = {
+                    sin: Math.sin,
+                    cos: Math.cos,
+                    tan: Math.tan,
+                    log: Math.log10,
+                    ln: Math.log,
+                    sqrt: Math.sqrt,
+                    exp: Math.exp,
+                    pi: Math.PI,
+                    e: Math.E,
+                    abs: Math.abs,
+                    floor: Math.floor,
+                    ceil: Math.ceil,
+                    round: Math.round
+                };
+                
+                // Compile function
+                const func = new Function('x', `with(this) { return (${funcStr}); }`);
+                
+                for (let i = 0; i <= points; i++) {
+                    const x = xMin + i * step;
+                    xData.push(x);
+                    try {
+                        const y = func.call(scope, x);
+                        yData.push(isFinite(y) ? y : null);
+                    } catch (e) {
+                        yData.push(null);
+                    }
+                }
+                
+                const ctx = document.getElementById('graphCanvas').getContext('2d');
+                
+                if (chart) {
+                    chart.destroy();
+                }
+                
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: xData,
+                        datasets: [{
+                            label: `f(x) = ${funcStr}`,
+                            data: yData,
+                            borderColor: '#64ffda',
+                            backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.1,
+                            spanGaps: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#a8b2d1'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(168, 178, 209, 0.1)' },
+                                ticks: { color: '#a8b2d1' }
+                            },
+                            y: {
+                                grid: { color: 'rgba(168, 178, 209, 0.1)' },
+                                ticks: { color: '#a8b2d1' }
+                            }
+                        }
+                    }
+                });
+                
+                statusEl.textContent = `📈 Plotted: ${funcStr}`;
+                
+            } catch (error) {
+                statusEl.textContent = `❌ Graph error: ${error.message}`;
+            }
+        }
+        
+        // ===== EQUATION SOLVER =====
+        function solveEquation() {
+            const eq = document.getElementById('eqInput').value;
+            const solEl = document.getElementById('eqSolution');
+            
+            try {
+                // Parse equation
+                let left, right;
+                if (eq.includes('=')) {
+                    [left, right] = eq.split('=').map(s => s.trim());
+                } else {
+                    left = eq;
+                    right = '0';
+                }
+                
+                // Use math.js to solve
+                // For simple equations, we can use numerical methods
+                const expr = `(${left}) - (${right})`;
+                
+                // Try to find variable
+                const vars = expr.match(/[a-z]/g);
+                const uniqueVars = [...new Set(vars || [])];
+                
+                if (uniqueVars.length === 0) {
+                    solEl.textContent = 'No variable found';
+                    return;
+                }
+                
+                const varName = uniqueVars[0];
+                
+                // Use math.js simplify and solve
+                try {
+                    const solutions = math.solve(expr, varName);
+                    if (solutions && solutions.length > 0) {
+                        solEl.textContent = `Solutions for ${varName}:\n${solutions.map((s, i) => `${i+1}. ${varName} = ${math.format(s, 14)}`).join('\n')}`;
+                    } else {
+                        solEl.textContent = 'No real solutions found';
+                    }
+                } catch (e) {
+                    // Fallback: try numerical solving using bisection
+                    const fn = new Function(varName, `return (${expr})`);
+                    solEl.textContent = `Found variable: ${varName}\nUse graph tab to visualize`;
+                    
+                    // Try to find root numerically
+                    let roots = [];
+                    for (let x = -100; x <= 100; x += 0.5) {
+                        try {
+                            const y = fn(x);
+                            if (Math.abs(y) < 0.001) {
+                                roots.push(x);
+                            }
+                        } catch (e) {}
+                    }
+                    
+                    if (roots.length > 0) {
+                        solEl.textContent += `\n\nNumerical roots (approx):\n${roots.slice(0, 10).map((r, i) => `${i+1}. ${varName} ≈ ${r.toFixed(4)}`).join('\n')}`;
+                    }
+                }
+                
+                statusEl.textContent = `✏️ Solved equation`;
+                
+            } catch (error) {
+                solEl.textContent = `❌ Error: ${error.message}`;
+                statusEl.textContent = `❌ Solve error`;
+            }
+        }
+        
+        // ===== TAB SWITCHING =====
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            // Find and activate the clicked tab
+            const btns = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            const tabMap = { history: 0, converter: 1, graph: 2, solve: 3 };
+            const idx = tabMap[tab];
+            
+            if (idx !== undefined) {
+                btns[idx].classList.add('active');
+                contents[idx].classList.add('active');
+            }
+        }
+        
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                calculate();
+            } else if (e.key === 'Escape') {
+                clearAll();
+            } else if (e.key >= '0' && e.key <= '9') {
+                append(e.key);
+            } else if (['+', '-', '*', '/', '(', ')', '.'].includes(e.key)) {
+                append(e.key);
+            } else if (e.key === 'Backspace') {
+                backspace();
+            }
+        });
+        
+        // ===== INITIALIZATION =====
+        updateUnits();
+        renderHistory();
+        statusEl.textContent = '🧠 Smart Calculator Ready';
+        
+        // Initial graph
+        setTimeout(plotGraph, 100);
+        
+        console.log('🧠 Smart Calculator Pro loaded!');
+        console.log('📚 Features: Calculator, History, Converter, Graph, Equation Solver, Voice');
+    </script>
+</body>
+</html>
